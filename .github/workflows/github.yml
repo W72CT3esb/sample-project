@@ -12,19 +12,4 @@ jobs:
         echo "cmd OK!"
         echo "############"
         chdir
-    
-    - name: Check pwsh
-      shell: C:\Users\NES\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell
-      run: |
-        echo "############"
-        echo "pwsh OK!"
-        echo "############"
-        # chdir
-
-    - name: Check bash
-      shell: bash
-      run: |
-        echo "############"
-        echo "bash OK!"
-        echo "############"
-        chdir
+        MSBuild
