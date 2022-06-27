@@ -5,9 +5,11 @@ jobs:
     name: MSBuild
     runs-on: self-hosted
     steps:
-    - name: run multi command
+    - name: run test command
       shell: cmd
       run: |
         echo "############"
         echo "Hello World!"
         echo "############"
+        chdir
+        dir
