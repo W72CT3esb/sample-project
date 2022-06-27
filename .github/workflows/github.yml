@@ -1,7 +1,5 @@
 name: MSBuild
 on: push
-  branches:
-    - master
 jobs:
   build:
     name: MSBuild
@@ -30,4 +28,3 @@ jobs:
         echo "bash OK!"
         echo "############"
         chdir
-        
