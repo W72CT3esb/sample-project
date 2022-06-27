@@ -8,6 +8,9 @@ jobs:
     - name: Check cmd
       shell: cmd
       run: |
+        # chcp 65001
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "############"
         echo "cmd OK!"
         echo "############"
