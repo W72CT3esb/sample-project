@@ -1,0 +1,15 @@
+name: MSBuild
+on: push
+  branches:
+    - main
+jobs:
+  build:
+    name: MSBuild
+    runs-on: self-hosted
+    steps:
+    - name: run multi command
+      shell: cmd
+      run: |
+        echo "############"
+        echo "Hello World!"
+        echo "############"
