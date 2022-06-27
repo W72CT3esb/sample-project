@@ -19,7 +19,7 @@ jobs:
         echo "############"
         echo "pwsh OK!"
         echo "############"
-        chdir
+        # chdir
 
     - name: Check bash
       shell: bash
