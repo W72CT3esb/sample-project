@@ -1,15 +1,33 @@
 name: MSBuild
 on: push
+  branches:
+    - master
 jobs:
   build:
     name: MSBuild
     runs-on: self-hosted
     steps:
-    - name: run test command
+    - name: Check cmd
       shell: cmd
       run: |
         echo "############"
-        echo "Hello World!"
+        echo "cmd OK!"
         echo "############"
         chdir
-        dir
+    
+    - name: 
+      shell: pwsh
+      run: |
+        echo "############"
+        echo "pwsh OK!"
+        echo "############"
+        chdir
+
+    - name: 
+      shell: bash
+      run: |
+        echo "############"
+        echo "bash OK!"
+        echo "############"
+        chdir
+        
