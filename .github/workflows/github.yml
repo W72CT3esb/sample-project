@@ -13,7 +13,7 @@ jobs:
         echo "############"
         chdir
     
-    - name: 
+    - name: Check pwsh
       shell: pwsh
       run: |
         echo "############"
@@ -21,7 +21,7 @@ jobs:
         echo "############"
         chdir
 
-    - name: 
+    - name: Check bash
       shell: bash
       run: |
         echo "############"
