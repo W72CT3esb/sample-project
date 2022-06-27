@@ -14,7 +14,7 @@ jobs:
         chdir
     
     - name: Check pwsh
-      shell: pwsh
+      shell: C:\Users\NES\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell
       run: |
         echo "############"
         echo "pwsh OK!"
