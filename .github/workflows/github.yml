@@ -32,6 +32,7 @@ jobs:
     - name: test
       shell: cmd
       run: |
+        MSBuild
         :# set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         :# set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "test on windows"
