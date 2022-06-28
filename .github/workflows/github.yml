@@ -5,16 +5,15 @@ on:
     - main
 jobs:
   build:
-    name: MSBuild
+    name: build-job
     runs-on: self-hosted
     steps:
     - name: Checkout
       uses: actions/checkout@main
       with:
-        clean: true
+        clean: false
 
-
-    - name: Check build
+    - name: build
       shell: cmd
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
@@ -25,3 +24,18 @@ jobs:
         MSBuild sample\sample2\sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         MSBuild sample\test_sample2\test_sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!"
+
+jobs:
+  test:
+    name: test-job
+    runs-on: self-hosted
+    steps:
+    - name: test
+      shell: cmd
+      run: |
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+        echo "test on windows"
+        :# sample\test_sample1\x64\Release\test_sample1.exe
+        sample\test_sample2\x64\Release\test_sample2.exe
+        echo "test successful!!"
