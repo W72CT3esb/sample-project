@@ -15,7 +15,7 @@ int main(void)
 	std::cout << "#####Start Testing#####\n" << std::endl;
 	if (test1() == true && test2() == true)
 	{
-		std::cout << "\n@@@Test successful!@@@\n" << std::endl;
+		std::cout << "\n@@@Test successful@@@\n" << std::endl;
 	}
 	else
 	{
