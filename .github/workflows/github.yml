@@ -36,6 +36,9 @@ jobs:
         echo "test on windows"
         :# sample\test_sample1\x64\Release\test_sample1.exe
         chdir
-        sample\test_sample2\x64\Release\test_sample2.exe
+        cd C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証
+        chdir
+        sample.png
+        :# sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
 
