@@ -25,7 +25,6 @@ jobs:
         MSBuild sample\test_sample2\test_sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!"
 
-jobs:
   test:
     name: test-job
     runs-on: self-hosted
@@ -33,8 +32,8 @@ jobs:
     - name: test
       shell: cmd
       run: |
-        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+        :# set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        :# set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "test on windows"
         :# sample\test_sample1\x64\Release\test_sample1.exe
         sample\test_sample2\x64\Release\test_sample2.exe
