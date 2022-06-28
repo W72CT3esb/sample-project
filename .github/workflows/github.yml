@@ -1,4 +1,4 @@
-name: MSBuild
+name: Test CI/CD
 on: 
   push:
    branches:
@@ -27,6 +27,7 @@ jobs:
 
   test:
     name: test-job
+    needs: build
     runs-on: self-hosted
     steps:
     - name: test
@@ -38,4 +39,5 @@ jobs:
         echo "test on windows"
         :# sample\test_sample1\x64\Release\test_sample1.exe
         sample\test_sample2\x64\Release\test_sample2.exe
-        echo "test successful!!"
+        echo "test successful!"
+
