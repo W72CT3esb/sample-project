@@ -32,8 +32,6 @@ jobs:
     - name: test
       shell: cmd
       run: |
-        chcp 65001
-        :# set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "test on windows"
         :# sample\test_sample1\x64\Release\test_sample1.exe

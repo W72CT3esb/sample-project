@@ -31,7 +31,7 @@ int main(void)
 
 bool test1(void)
 {
-	std::string path = "C:/Users/NES/Desktop/sample.png";
+	std::string path = "C:/Users/NES/Desktop/hayakawa/FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ/sample.png";
 	if (myfunc(path) == "file is ok")
 	{
 		std::cout << "test1 OK" << std::endl;
