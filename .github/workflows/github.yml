@@ -20,6 +20,8 @@ jobs:
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "build on windows"
-        MSBuild sample\sample1\sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
-        MSBuild sample\test_sample1\test_sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        :# MSBuild sample\sample1\sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        :# MSBuild sample\test_sample1\test_sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        MSBuild sample\sample2\sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        MSBuild sample\test_sample2\test_sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!"
