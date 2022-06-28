@@ -5,7 +5,10 @@ jobs:
     name: MSBuild
     runs-on: self-hosted
     steps:
-    - name: Check cmd
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Check build
       shell: cmd
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
