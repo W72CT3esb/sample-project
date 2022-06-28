@@ -1,5 +1,6 @@
 name: MSBuild
 on: push
+  branches: [ master ]
 jobs:
   build:
     name: MSBuild
@@ -7,6 +8,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
+      with:
+        clean: true
+
 
     - name: Check build
       shell: cmd
@@ -17,4 +21,4 @@ jobs:
         MSBuild sample\sample1\sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         MSBuild sample\test_sample1\test_sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!!"
-        echo "hello world!"
+        echo "hello world"
