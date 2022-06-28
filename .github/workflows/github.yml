@@ -1,6 +1,8 @@
 name: MSBuild
 on: 
-  push
+  push:
+   branches:
+    - main
 jobs:
   build:
     name: MSBuild
