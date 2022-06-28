@@ -18,5 +18,4 @@ jobs:
         MSBuild sample\test_sample1\test_sample1.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!!"
         echo "hello world"
-      with:
-        clean :false
+        
