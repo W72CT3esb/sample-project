@@ -39,6 +39,7 @@ jobs:
         echo "test successful!"
 
     - name: upload-artifact
+      shell: cmd
       run: | 
         mkdir -p path/to/artifacts
         echo hello > path/to/artifact/world.txt
