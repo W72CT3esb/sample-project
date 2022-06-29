@@ -48,6 +48,9 @@ jobs:
         cd ..
         chdir
         cd ..
+        chdir
+        cd Users
+        chdir
         :# sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
 
