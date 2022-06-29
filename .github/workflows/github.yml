@@ -38,9 +38,10 @@ jobs:
         sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
 
-    - run: | 
-        echo hello > path/to/artifact/world.txt
+    - name: upload-artifact
+      run: | 
         mkdir -p path/to/artifacts
+        echo hello > path/to/artifact/world.txt
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
