@@ -51,7 +51,7 @@ jobs:
         chdir
         cd Users
         chdir
-        cd user1
+        cd Public
         chdir
         :# sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
