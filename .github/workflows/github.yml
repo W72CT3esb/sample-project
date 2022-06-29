@@ -35,11 +35,17 @@ jobs:
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         echo "test on windows"
         :# sample\test_sample1\x64\Release\test_sample1.exe
+        :#cd C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証
         chdir
-        su
-        cd C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証
+        cd ..
         chdir
-        sample.png
+        cd ..
+        chdir
+        cd ..
+        chdir
+        cd ..
+        chdir
+        cd ..
         :# sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
 
