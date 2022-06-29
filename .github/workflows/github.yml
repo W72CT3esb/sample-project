@@ -41,7 +41,7 @@ jobs:
     - name: upload-artifact
       shell: cmd
       run: | 
-        mkdir -p path/to/artifacts
+        mkdir -p path/to/artifact
         echo hello > path/to/artifact/world.txt
     - uses: actions/upload-artifact@v3
       with: 
