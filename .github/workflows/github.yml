@@ -41,7 +41,7 @@ jobs:
     - name: upload-artifact
       shell: cmd
       run: | 
-        rmdir /s path\to\artifact
+        rmdir /s /q path\to\artifact
         mkdir path\to\artifact
         echo hello > path\to\artifact\world.txt
     - uses: actions/upload-artifact@v3
