@@ -41,12 +41,13 @@ jobs:
     - name: upload-artifact
       shell: cmd
       run: | 
+        rmdir /s path\to\artifact
         mkdir path\to\artifact
         echo hello > path\to\artifact\world.txt
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
-        path: path\to\artifact\world.txt
+        path: path/to/artifact/world.txt
 
   deploy:
     name: deploy-job
