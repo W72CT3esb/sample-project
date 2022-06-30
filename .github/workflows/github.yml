@@ -49,7 +49,7 @@ jobs:
         name: my-artifact
         path: path/to/artifact
         env-url: FOOBAR
-      run: echo "${{ env.FOOBAR }}"
+    - run: echo "${{ env.FOOBAR }}"
 
   deploy:
     name: deploy-job
