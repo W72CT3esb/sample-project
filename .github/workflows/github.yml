@@ -38,16 +38,16 @@ jobs:
         sample\test_sample2\x64\Release\test_sample2.exe
         echo "test successful!"
 
-    - name: upload-artifact
+    - name: copy
       shell: cmd
       run: | 
         rmdir /s /q path\to\artifact
         mkdir path\to\artifact
-        echo hello > path\to\artifact\world.txt
+        xcopy sample\sample2\x64\sample2.exe path\to\artifact
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
-        path: path/to/artifact/world.txt
+        path: path/to/artifact
     - uses: actions/download-artifact@v3
       with:
         name: my-artifact
@@ -58,7 +58,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     steps:
-    - name: test
+    - name: deploy
       shell: cmd
       run: |
         echo "deploy on windows"
