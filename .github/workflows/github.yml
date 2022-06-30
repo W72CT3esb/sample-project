@@ -54,11 +54,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     steps:
-    - name: deploy
-      shell: cmd
-      run: |
-        echo "deploy on windows"
-        echo "deploy successful!"
+    - run: echo "deploy on windows"
     - uses: actions/download-artifact@v3
       name: deploy
       with:
