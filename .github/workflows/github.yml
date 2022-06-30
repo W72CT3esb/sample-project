@@ -48,10 +48,6 @@ jobs:
       with: 
         name: my-artifact
         path: path/to/artifact
-    - uses: actions/download-artifact@v3
-      with:
-        name: my-artifact
-        path: C:\Users\NES\Desktop\deploy
 
   deploy:
     name: deploy-job
@@ -60,6 +56,9 @@ jobs:
     steps:
     - name: deploy
       shell: cmd
-      run: |
-        echo "deploy on windows"
-        echo "deploy successful!"
+      run: echo "deploy on windows"
+    - uses: actions/download-artifact@v3
+      with:
+        name: my-artifact
+        path: C:\Users\NES\Desktop\deploy
+      run: echo "deploy successful!"
