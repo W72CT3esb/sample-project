@@ -54,10 +54,12 @@ jobs:
     needs: test
     runs-on: self-hosted
     steps:
-    - run: echo "deploy on windows"
-      shell: cmd
+    - shell: cmd
+      run: echo "deploy on windows"
     - uses: actions/download-artifact@v3
       name: deploy
       with:
         name: my-artifact
         path: C:\Users\NES\Desktop\deploy
+    - shell: cmd
+      run: echo "deploy successful!"
