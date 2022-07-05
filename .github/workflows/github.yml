@@ -26,6 +26,7 @@ jobs:
 
   check:
     name: check-job
+    needs: build
     runs-on: self-hosted
     steps:
     - name: cppcheck
@@ -37,7 +38,7 @@ jobs:
 
   test:
     name: test-job
-    needs: build
+    needs: check
     runs-on: self-hosted
     steps:
     - name: test
