@@ -24,6 +24,17 @@ jobs:
         MSBuild sample\test_sample2\test_sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!"
 
+  check:
+    name: check-job
+    runs-on: self-hosted
+    steps:
+    - name: cppcheck
+      shell: cmd
+      run: |
+        echo "cppcheck on windows"
+        cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j %NUMBER_OF_PROCESSORS% --template=vs --project=C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\GitHub\sample-project\sample\sample2\sample2.vcxproj --output-file=cppcheck.txt
+        echo "cppcheck successful!"
+
   test:
     name: test-job
     needs: build
@@ -44,6 +55,7 @@ jobs:
         rmdir /s /q path\to\artifact
         mkdir path\to\artifact
         xcopy sample\sample2\x64\Release\sample2.exe path\to\artifact
+        xcopy cppcheck.txt path\to\artifact
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
