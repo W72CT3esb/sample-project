@@ -32,6 +32,7 @@ jobs:
     - name: cppcheck
       shell: cmd
       run: |
+        set PATH=D:\ICF_AutoCapsule_disabled\3rdparty\Cppcheck;%PATH%
         echo "cppcheck on windows"
         cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j %NUMBER_OF_PROCESSORS% --template=vs --project=C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\GitHub\sample-project\sample\sample2\sample2.vcxproj --output-file=cppcheck.txt
         echo "cppcheck successful!"
