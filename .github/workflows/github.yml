@@ -71,6 +71,7 @@ jobs:
         mkdir path\to\artifact
         xcopy sample\sample2\x64\Release\sample2.exe path\to\artifact
         xcopy cppcheck.txt path\to\artifact
+        xcopy coverage path\to\artifact
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
