@@ -24,7 +24,7 @@ jobs:
         MSBuild sample\test_sample2\test_sample2.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         echo "build successful!"
 
-  check:
+  analyze:
     name: check-job
     needs: build
     runs-on: self-hosted
@@ -36,6 +36,19 @@ jobs:
         echo "cppcheck on windows"
         cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j %NUMBER_OF_PROCESSORS% --template=vs --project=C:\Users\NES\Desktop\hayakawa\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\GitHub\sample-project\sample\sample2\sample2.vcxproj --output-file=cppcheck.txt
         echo "cppcheck successful!"
+
+  analyze:
+    name: coverage-job
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - name: coverage
+      shell: cmd
+      run: |
+        set PATH=C:\3rdparty\OpenCppCoverage;%PATH%
+        echo "coverage on windows"
+        OpenCppCoverage --source sample\sample1 --export_type html:coverage -- sample\test_sample1\x64\Release\test_sample1.exe
+        echo "coverage successful!"
 
   test:
     name: test-job
