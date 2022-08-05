@@ -3,6 +3,8 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 #include <fstream>
+#include <shlwapi.h>
+#include <direct.h>
 #include "dataloader.h"
 #include "facedetector.h"
 #include "paramloader.h"
@@ -58,7 +60,20 @@ int main()
 	// 結果を出力するファイルを開く
 	std::ofstream writing_file;
 	const std::string OUTPUT_FILE_NAME = "result.csv";
-	SetWorkingDirectory(); //カレントディレクトリに移動
+
+	if (!PathFileExists(params.output_dirpath.c_str())) // パスの場所に出力ディレクトリが存在するかどうか
+	{
+		if (_mkdir(params.output_dirpath.c_str()) == 0) // ディレクトリの作成できたかどうか
+		{
+			std::cout << "出力ディレクトリを作成しました" << std::endl;
+		}
+		else
+		{
+			std::cout << "出力ディレクトリを作成できませんでした" << std::endl;
+			return 0;
+		}
+	}
+
 	writing_file.open(params.output_dirpath + "\\" + OUTPUT_FILE_NAME);
 
 	if (!writing_file.is_open()) // 異常終了
