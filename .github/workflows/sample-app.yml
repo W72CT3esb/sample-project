@@ -40,7 +40,7 @@ jobs:
       run: | 
         rmdir /s /q path\to\artifact
         mkdir path\to\artifact
-        xcopy sample-app\sample-app\x64\Release\sample-app.exe path\to\artifact
+        xcopy sample-app\x64\Release path\to\artifact
     - uses: actions/upload-artifact@v3
       with: 
         name: my-artifact
