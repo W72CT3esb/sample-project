@@ -13,3 +13,10 @@ jobs:
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.1
+
+    - name: test shell
+      shell: cmd
+      run: |
+        echo "hello world"
+        dir
+        chdir
