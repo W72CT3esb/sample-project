@@ -59,4 +59,4 @@ jobs:
         name: my-artifact
         path: C:\Users\NES\Desktop\deploy
     - shell: cmd
-      run: echo "deploy successful!"
+      run: echo "deploy successful!!"
