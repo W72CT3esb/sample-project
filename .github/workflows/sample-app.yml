@@ -6,17 +6,57 @@ on:
 jobs:
   build:
     name: build-job
-    runs-on: windows-2019
+    runs-on: self-hosted
     steps:
     - name: Checkout
       uses: actions/checkout@main
+      with:
+        clean: false
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: test shell
+    - name: build
       shell: cmd
       run: |
-        echo "hello world"
-        dir
-        chdir
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        echo "build on windows"
+        rmdir /s /q sample-app\x64\Release
+        MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
+        xcopy sample-app\sample-app\config.ini sample-app\x64\Release
+        echo "build successful!"
+
+  test:
+    name: test-job
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - name: test
+      shell: cmd
+      run: |
+        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+        echo "test on windows"
+        echo "test successful!"
+
+    - name: copy
+      shell: cmd
+      run: | 
+        rmdir /s /q path\to\artifact
+        mkdir path\to\artifact
+        xcopy sample-app\x64\Release path\to\artifact
+    - uses: actions/upload-artifact@v3
+      with: 
+        name: my-artifact
+        path: path/to/artifact
+
+  deploy:
+    name: deploy-job
+    needs: test
+    runs-on: self-hosted
+    steps:
+    - shell: cmd
+      run: echo "deploy on windows"
+    - uses: actions/download-artifact@v3
+      name: deploy
+      with:
+        name: my-artifact
+        path: C:\Users\NES\Desktop\deploy
+    - shell: cmd
+      run: echo "deploy successful!!"
