@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <string>
 #include <Shlwapi.h>
 #include "paramloader.h"
@@ -6,125 +6,125 @@
 
 const int DEFINE_CHAR_SIZE = 1024;
 
-// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 ParamLoader::ParamLoader()
 {
-	//std::cout << "ParamLoaderã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ" << std::endl;
+	//std::cout << "ParamLoaderƒIƒuƒWƒFƒNƒg¶¬" << std::endl;
 }
 
-// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒfƒXƒgƒ‰ƒNƒ^
 ParamLoader::~ParamLoader()
 {
-	//std::cout << "ParamLoaderã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„" << std::endl;
+	//std::cout << "ParamLoaderƒIƒuƒWƒFƒNƒg”jŠü" << std::endl;
 }
 
-// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
+// İ’èƒtƒ@ƒCƒ‹‚©‚çƒpƒ‰ƒ[ƒ^‚ğƒ[ƒh‚·‚éŠÖ”
 int ParamLoader::load_param(Params &params)
 {
-	char str_buf[DEFINE_CHAR_SIZE]; // charå‹ã®ãƒãƒƒãƒ•ã‚¡
+	char str_buf[DEFINE_CHAR_SIZE]; // charŒ^‚Ìƒoƒbƒtƒ@
 	DWORD dret = 0;
 	bool iret = false;
 
-	iret = SetWorkingDirectory(); // ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
-	if (!iret) // ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•å¤±æ•—
+	iret = SetWorkingDirectory(); // ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
+	if (!iret) // ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®¸”s
 	{
 		return -1;
 	}
 
-	if (!PathFileExists(this->CONFIG_FILEPATH.c_str())) // è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ãŒãªãã¦å¤±æ•—
+	if (!PathFileExists(this->CONFIG_FILEPATH.c_str())) // İ’èƒtƒ@ƒCƒ‹‚ª‚È‚­‚Ä¸”s
 	{
 		return -2;
 	}
 	
 	params.device_id = GetPrivateProfileInt("camera", "device_id", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.device_id != 0) // 0ä»¥å¤–ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.device_id != 0) // 0ˆÈŠO‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -3;
 	}
 
 	params.c_frame_width = GetPrivateProfileInt("camera", "c_frame_width", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.c_frame_width == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.c_frame_width == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -4;
 	}
-	if (params.c_frame_width <= 0) // 0ä»¥ä¸‹ã¯å¤±æ•—
+	if (params.c_frame_width <= 0) // 0ˆÈ‰º‚Í¸”s
 	{
 		return -5;
 	}
 
 	params.c_frame_height = GetPrivateProfileInt("camera", "c_frame_height", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.c_frame_height == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.c_frame_height == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -6;
 	}
-	if (params.c_frame_height <= 0) // 0ä»¥ä¸‹ã¯å¤±æ•—
+	if (params.c_frame_height <= 0) // 0ˆÈ‰º‚Í¸”s
 	{
 		return -7;
 	}
 
 	params.c_fps = GetPrivateProfileInt("camera", "c_fps", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.c_fps == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.c_fps == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -8;
 	}
-	if (params.c_fps <= 0) // 0ä»¥ä¸‹ã¯å¤±æ•—
+	if (params.c_fps <= 0) // 0ˆÈ‰º‚Í¸”s
 	{
 		return -9;
 	}
 
 	params.data_type = GetPrivateProfileInt("input", "data_type", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.data_type == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.data_type == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -10;
 	}
-	if (params.data_type != 0 && params.data_type != 1 && params.data_type != 2) // 0,1,2ä»¥å¤–ã¯å¤±æ•—
+	if (params.data_type != 0 && params.data_type != 1 && params.data_type != 2) // 0,1,2ˆÈŠO‚Í¸”s
 	{
 		return -11;
 	}
 
 	dret = GetPrivateProfileString("input", "input_movie_path", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ä»¥ä¸‹ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰ã¾ãŸã¯ã€stringãŒç©ºã®å ´åˆã¯å¤±æ•—
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ˆÈ‰ºiƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j‚Ü‚½‚ÍAstring‚ª‹ó‚Ìê‡‚Í¸”s
 	{
 		return -12;
 	}
 	params.input_movie_path = str_buf;
 
 	dret = GetPrivateProfileString("input", "input_image_path", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ä»¥ä¸‹ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰ã¾ãŸã¯ã€stringãŒç©ºã®å ´åˆã¯å¤±æ•—
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ˆÈ‰ºiƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j‚Ü‚½‚ÍAstring‚ª‹ó‚Ìê‡‚Í¸”s
 	{
 		return -13;
 	}
 	params.input_image_path = str_buf;
 
 	dret = GetPrivateProfileString("detector", "cascade_filepath", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ä»¥ä¸‹ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰ã¾ãŸã¯ã€stringãŒç©ºã®å ´åˆã¯å¤±æ•—
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ˆÈ‰ºiƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j‚Ü‚½‚ÍAstring‚ª‹ó‚Ìê‡‚Í¸”s
 	{
 		return -14;
 	}
 	params.cascade_filepath = str_buf;
 
 	params.face_detect_width = GetPrivateProfileInt("detector", "face_detect_width", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.face_detect_width == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.face_detect_width == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -15;
 	}
-	if (params.face_detect_width <= 0) // 0ä»¥ä¸‹ã¯å¤±æ•—
+	if (params.face_detect_width <= 0) // 0ˆÈ‰º‚Í¸”s
 	{
 		return -16;
 	}
 
 	params.face_detect_height = GetPrivateProfileInt("detector", "face_detect_height", -1, this->CONFIG_FILEPATH.c_str());
-	if (params.face_detect_height == -1) // -1ã¯å¤±æ•—ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰
+	if (params.face_detect_height == -1) // -1‚Í¸”siƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j
 	{
 		return -17;
 	}
-	if (params.face_detect_height <= 0) // 0ä»¥ä¸‹ã¯å¤±æ•—
+	if (params.face_detect_height <= 0) // 0ˆÈ‰º‚Í¸”s
 	{
 		return -18;
 	}
 
 	dret = GetPrivateProfileString("output", "output_dirpath", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ä»¥ä¸‹ï¼ˆã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‹ã‚‰ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’å–ã‚Œã¦ã“ã‚Œãªã‹ã£ãŸï¼‰ã¾ãŸã¯ã€stringãŒç©ºã®å ´åˆã¯å¤±æ•—
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0ˆÈ‰ºiƒZƒNƒVƒ‡ƒ“‚©‚çƒL[ƒ[ƒh‚ğæ‚ê‚Ä‚±‚ê‚È‚©‚Á‚½j‚Ü‚½‚ÍAstring‚ª‹ó‚Ìê‡‚Í¸”s
 	{
 		return -19;
 	}

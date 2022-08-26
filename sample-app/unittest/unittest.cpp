@@ -1,4 +1,4 @@
-ï»¿#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <Shlwapi.h>
 #include <string.h>
@@ -13,47 +13,47 @@ using ::testing::Return;
 using ::testing::Test;
 
 const int DEFINE_STRING_SIZE = 1024;
-std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\GitHub\\sample-project\\sample-app\\sample-app\\config.ini";
+std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\GitHub\\sample-project\\sample-app\\sample-app\\config.ini";
 char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
-std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\movie\\sample.avi";
-char TMP_INPUT_MOVIE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\tmp\\sample.avi";
+std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\movie\\sample.avi";
+char TMP_INPUT_MOVIE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\tmp\\sample.avi";
 
-std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\image";
-char TMP_INPUT_IMAGE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\tmp\\image";
+std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\image";
+char TMP_INPUT_IMAGE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\tmp\\image";
 
-std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\cascade\\haarcascade_frontalface_alt.xml";
+std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\cascade\\haarcascade_frontalface_alt.xml";
 
 void copy_config_file();
 
-// ãƒ†ã‚¹ãƒˆãƒ•ã‚£ã‚¯ã‚¹ãƒãƒ£ã‚¯ãƒ©ã‚¹ã®å®šç¾©
+// ƒeƒXƒgƒtƒBƒNƒXƒ`ƒƒƒNƒ‰ƒX‚Ì’è‹`
 class ParamLoaderTest : public Test {
 protected:
 
-	// è©¦é¨“é–‹å§‹æ™‚ã«ä¸€å›ã ã‘å®Ÿè¡Œ
+	// Œ±ŠJn‚Éˆê‰ñ‚¾‚¯Às
 	static void SetUpTestCase() {
 		//std::cout << "#####Start Test#####\n" << std::endl;
 	}
 
-	// è©¦é¨“çµ‚äº†æ™‚ã«ä¸€å›ã ã‘å®Ÿè¡Œ
+	// Œ±I—¹‚Éˆê‰ñ‚¾‚¯Às
 	static void TearDownTestCase() {
 		//std::cout << "#####Finish Test#####" << std::endl;
 	}
 
-	// å„ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹å®Ÿè¡Œå‰ã«å®Ÿè¡Œ
+	// ŠeƒeƒXƒgƒP[ƒXÀs‘O‚ÉÀs
 	virtual void SetUp() {
-		// äº‹å‰ã«è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒã‚¹ã‚¿ãƒ¼ã‚’ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã‚³ãƒ”ãƒ¼
+		// –‘O‚Éİ’èƒtƒ@ƒCƒ‹‚Ìƒ}ƒXƒ^[‚ğƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ÉƒRƒs[
 		copy_config_file();
 		//std::cout << "#####Start TestCase#####\n" << std::endl;
 	}
 
-	// å„ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹å®Ÿè¡Œå¾Œã«å®Ÿè¡Œ
+	// ŠeƒeƒXƒgƒP[ƒXÀsŒã‚ÉÀs
 	virtual void TearDown() {
 		//std::cout << "#####Finish TestCase#####" << std::endl;
 	}
 };
 
-// DataLoaderã®ãƒ¢ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
+// DataLoader‚Ìƒ‚ƒbƒNƒNƒ‰ƒX
 class mock_DataLoader : public DataLoader {
 public:
 	MOCK_METHOD(int, load_mv, (cv::Mat&), (override));
@@ -66,27 +66,27 @@ void copy_config_file()
 	char drive[DEFINE_STRING_SIZE] = {};
 	char dir[DEFINE_STRING_SIZE] = {};
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒã‚¹ã‚¿ãƒ¼ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹ãŸã‚ã®æº–å‚™
+	// İ’èƒtƒ@ƒCƒ‹‚Ìƒ}ƒXƒ^[‚ğƒRƒs[‚·‚é‚½‚ß‚Ì€”õ
 	GetModuleFileName(nullptr, buff, DEFINE_STRING_SIZE);
 	_splitpath_s(buff, drive, DEFINE_STRING_SIZE, dir, DEFINE_STRING_SIZE, nullptr, 0, nullptr, 0);
 	sprintf_s(COPIED_CONFIG_FILEPATH, DEFINE_STRING_SIZE, "%s%s", drive, dir);
 	strcat_s(COPIED_CONFIG_FILEPATH, DEFINE_STRING_SIZE, "config.ini");
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒã‚¹ã‚¿ãƒ¼ã‚’ã‚³ãƒ”ãƒ¼
+	// İ’èƒtƒ@ƒCƒ‹‚Ìƒ}ƒXƒ^[‚ğƒRƒs[
 	CopyFile(CONFIG_FILEPATH.c_str(), COPIED_CONFIG_FILEPATH, FALSE);
 }
 
-// ###DataLoaderã®ãƒ†ã‚¹ãƒˆã“ã“ã‹ã‚‰###
+// ###DataLoader‚ÌƒeƒXƒg‚±‚±‚©‚ç###
 TEST(DataLoaderTest, initialize_data_type_0_PathFileExists_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 	params.data_type = 0;
 
-	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_movie_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\movie\\sample.avi";
+	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ƒpƒX‚ğİ’è
+	params.input_movie_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\movie\\sample.avi";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -96,12 +96,12 @@ TEST(DataLoaderTest, initialize_data_type_0_PathIsDirectory_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 	params.data_type = 0;
 
-	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\movie";
+	// ƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX‚ğİ’è
+	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\movie";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -111,12 +111,12 @@ TEST(DataLoaderTest, initialize_data_type_0_Positive_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 	params.data_type = 0;
 
-	// å­˜åœ¨ã™ã‚‹å‹•ç”»ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\movie\\sample.avi";
+	// ‘¶İ‚·‚é“®‰æ‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğİ’è
+	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\movie\\sample.avi";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -126,12 +126,12 @@ TEST(DataLoaderTest, initialize_data_type_1_PathFileExists_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ç”»åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ‰æ‘œ‚Éİ’è
 	Params params;
 	params.data_type = 1;
 
-	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå­˜åœ¨ã—ãªã„ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_image_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\image";
+	// ƒfƒBƒŒƒNƒgƒŠ‚ª‘¶İ‚µ‚È‚¢ƒpƒX‚ğİ’è
+	params.input_image_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\image";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-3, ans);
@@ -141,12 +141,12 @@ TEST(DataLoaderTest, initialize_data_type_1_PathIsDirectory_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ç”»åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ‰æ‘œ‚Éİ’è
 	Params params;
 	params.data_type = 1;
 
-	// ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\image\\pic_0000.jpg";
+	// ƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğİ’è
+	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\image\\pic_0000.jpg";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-4, ans);
@@ -156,12 +156,12 @@ TEST(DataLoaderTest, initialize_data_type_1_Positive_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 	params.data_type = 1;
 
-	// å­˜åœ¨ã™ã‚‹å‹•ç”»ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\image";
+	// ‘¶İ‚·‚é“®‰æ‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğİ’è
+	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\image";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -171,11 +171,11 @@ TEST(DataLoaderTest, initialize_data_type_2_Positive_Test) {
 	int ans = 0;
 	DataLoader dataloader;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ã‚«ãƒ¡ãƒ©æ˜ åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğƒJƒƒ‰‰f‘œ‚Éİ’è
 	Params params;
 	params.data_type = 2;
 
-	// ã‚«ãƒ¡ãƒ©æ˜ åƒã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®š
+	// ƒJƒƒ‰‰f‘œ‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è
 	params.device_id = 0;
 	params.c_frame_width = 0;
 	params.c_frame_height = 0;
@@ -191,14 +191,14 @@ TEST(DataLoaderTest, open_data_file_open_flag_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// äºŒå›open_data()ã‚’å‘¼ã‚“ã§flagã‚’trueã«ã™ã‚‹
+	// “ñ‰ñopen_data()‚ğŒÄ‚ñ‚Åflag‚ğtrue‚É‚·‚é
 	ans = dataloader.open_data();
 	ans = dataloader.open_data();
 	EXPECT_EQ(-1, ans);
@@ -210,20 +210,20 @@ TEST(DataLoaderTest, open_data_file_data_type_0_capisOpened_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ¥ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+	// “ü—Íƒf[ƒ^‚ğ•Ê‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-2, ans);
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’å…ƒã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+	// “ü—Íƒf[ƒ^‚ğŒ³‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
 }
 
@@ -233,11 +233,11 @@ TEST(DataLoaderTest, open_data_file_data_type_0_Positive_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
 	ans = dataloader.open_data();
@@ -250,20 +250,20 @@ TEST(DataLoaderTest, open_data_file_data_type_1_file_namessize_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ç”»åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ‰æ‘œ‚Éİ’è
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ¥ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+	// “ü—Íƒf[ƒ^‚ğ•Ê‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 	MoveFile(INPUT_IMAGE_PATH.c_str(), TMP_INPUT_IMAGE_PATH);
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-3, ans);
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’å…ƒã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+	// “ü—Íƒf[ƒ^‚ğŒ³‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 	MoveFile(TMP_INPUT_IMAGE_PATH, INPUT_IMAGE_PATH.c_str());
 }
 
@@ -273,11 +273,11 @@ TEST(DataLoaderTest, open_data_file_data_type_1_Positive_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ç”»åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ‰æ‘œ‚Éİ’è
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
 	ans = dataloader.open_data();
@@ -290,29 +290,29 @@ TEST(DataLoaderTest, open_data_file_data_type_2_file_namessize_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ã‚«ãƒ¡ãƒ©æ˜ åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğƒJƒƒ‰‰f‘œ‚Éİ’è
 	params.data_type = 2;
 	params.device_id = -1;
 
-	// ã‚«ãƒ¡ãƒ©æ˜ åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ƒJƒƒ‰‰f‘œˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-4, ans);
 }
 
-// ã‚«ãƒ¡ãƒ©æ˜ åƒã‚’å–å¾—ã™ã‚‹ã®ã«æ™‚é–“ãŒã‹ã‹ã‚‹ã“ã¨ã«æ³¨æ„
+// ƒJƒƒ‰‰f‘œ‚ğæ“¾‚·‚é‚Ì‚ÉŠÔ‚ª‚©‚©‚é‚±‚Æ‚É’ˆÓ
 TEST(DataLoaderTest, open_data_file_data_type_2_Positive_Test) {
 	int ans = 0;
 	int iret = -1;
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ã‚«ãƒ¡ãƒ©æ˜ åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğƒJƒƒ‰‰f‘œ‚Éİ’è
 	params.data_type = 2;
 	params.device_id = 0;
 
-	// ã‚«ãƒ¡ãƒ©æ˜ åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ƒJƒƒ‰‰f‘œˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
 	ans = dataloader.open_data();
@@ -325,47 +325,47 @@ TEST(DataLoaderTest, load_mv_file_open_flag_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
 	ans = dataloader.load_mv(img);
 	EXPECT_EQ(-1, ans);
 }
 
-// load_mvã®emptyã®ã‚„ã¤ãŒã§ããªã„ï¼ˆä¿ç•™ï¼‰
+// load_mv‚Ìempty‚Ì‚â‚Â‚ª‚Å‚«‚È‚¢i•Û—¯j
 //TEST(DataLoaderTest, load_mv_img_empty_Test) {
 //	int ans = 0;
 //	int iret = -1;
 //	DataLoader dataloader;
 //	Params params;
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+//	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 //	params.data_type = 0;
 //	params.input_movie_path = INPUT_MOVIE_PATH;
 //
-//	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+//	// “®‰æˆ—‚Å‰Šú‰»
 //	iret = dataloader.initialize(params);
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ¥ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+//	// “ü—Íƒf[ƒ^‚ğ•Ê‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 //	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
 //
-//	// open_data()ã‚’å‘¼ã‚“ã§flagã‚’trueã«ã™ã‚‹
+//	// open_data()‚ğŒÄ‚ñ‚Åflag‚ğtrue‚É‚·‚é
 //	iret = dataloader.open_data(); //-2
 //
-//	// GrabImageã®å¼•æ•°ç”¨
+//	// GrabImage‚Ìˆø”—p
 //	cv::Mat img;
 //
 //	ans = dataloader.load_mv(img);
 //	EXPECT_EQ(-2, ans);
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’å…ƒã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+//	// “ü—Íƒf[ƒ^‚ğŒ³‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 //	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
 //}
 
@@ -375,50 +375,50 @@ TEST(DataLoaderTest, load_mv_Positive_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// open_data()ã‚’å‘¼ã‚“ã§flagã‚’trueã«ã™ã‚‹
+	// open_data()‚ğŒÄ‚ñ‚Åflag‚ğtrue‚É‚·‚é
 	iret = dataloader.open_data();
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
 	ans = dataloader.load_mv(img);
 	EXPECT_EQ(0, ans);
 }
 
-// load_imgã®emptyã®ã‚„ã¤ãŒã§ããªã„ï¼ˆä¿ç•™ï¼‰
+// load_img‚Ìempty‚Ì‚â‚Â‚ª‚Å‚«‚È‚¢i•Û—¯j
 //TEST(DataLoaderTest, load_mv_img_empty_Test) {
 //	int ans = 0;
 //	int iret = -1;
 //	DataLoader dataloader;
 //	Params params;
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+//	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 //	params.data_type = 1;
 //	params.input_image_path = INPUT_IMAGE_PATH;
 //
-//	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+//	// “®‰æˆ—‚Å‰Šú‰»
 //	iret = dataloader.initialize(params);
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ¥ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+//	// “ü—Íƒf[ƒ^‚ğ•Ê‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 //	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
 //
-//	// open_data()ã‚’å‘¼ã‚“ã§flagã‚’trueã«ã™ã‚‹
+//	// open_data()‚ğŒÄ‚ñ‚Åflag‚ğtrue‚É‚·‚é
 //	iret = dataloader.open_data(); //-2
 //
-//	// GrabImageã®å¼•æ•°ç”¨
+//	// GrabImage‚Ìˆø”—p
 //	cv::Mat img;
 //
 //	ans = dataloader.load_mv(img);
 //	EXPECT_EQ(-2, ans);
 //
-//	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’å…ƒã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
+//	// “ü—Íƒf[ƒ^‚ğŒ³‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 //	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
 //}
 
@@ -428,24 +428,24 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// open_data()ã‚’å‘¼ã‚“ã§flagã‚’trueã«ã™ã‚‹
+	// open_data()‚ğŒÄ‚ñ‚Åflag‚ğtrue‚É‚·‚é
 	iret = dataloader.open_data();
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
 	ans = dataloader.load_img(img);
 	EXPECT_EQ(0, ans);
 }
 
-// stringã‹ã‚‰wchar_t*ã¸ã®å¤‰æ›ãŒã‚ã‹ã‚‰ãšä¿ç•™
+// string‚©‚çwchar_t*‚Ö‚Ì•ÏŠ·‚ª‚í‚©‚ç‚¸•Û—¯
 //TEST(DataLoaderTest, get_file_info_data_type_0_Test) {
 //	std::string ans = 0;
 //	int iret = -1;
@@ -458,7 +458,7 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 //	EXPECT_STREQ((std::to_string(get_frame_index() - 1)).c_str(), ans.c_str());
 //}
 
-// stringã‹ã‚‰wchar_t*ã¸ã®å¤‰æ›ãŒã‚ã‹ã‚‰ãšä¿ç•™
+// string‚©‚çwchar_t*‚Ö‚Ì•ÏŠ·‚ª‚í‚©‚ç‚¸•Û—¯
 //TEST(DataLoaderTest, get_file_info_data_type_1_Test) {
 //	std::string ans = 0;
 //	int iret = -1;
@@ -471,7 +471,7 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 //	EXPECT_STREQ();
 //}
 
-// stringã‹ã‚‰wchar_t*ã¸ã®å¤‰æ›ãŒã‚ã‹ã‚‰ãšä¿ç•™
+// string‚©‚çwchar_t*‚Ö‚Ì•ÏŠ·‚ª‚í‚©‚ç‚¸•Û—¯
 //TEST(DataLoaderTest, get_file_info_data_type_2_Test) {
 //	std::string ans = 0;
 //	int iret = -1;
@@ -488,25 +488,25 @@ TEST(DataLoaderTest, grab_image_data_type_0_Test) {
 	int ans = 0;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader *mock_d = new mock_DataLoader();
 
-	//å‹•ç”»å‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	//“®‰æˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_mvã®æˆ»ã‚Šå€¤ã¨ã—ã¦-1ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_mv‚Ì–ß‚è’l‚Æ‚µ‚Ä-1‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èAˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(-1));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = dataloader->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(-1, ans);
@@ -516,25 +516,25 @@ TEST(DataLoaderTest, grab_image_data_type_0_Positive_Test) {
 	int ans = 0;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader *mock_d = new mock_DataLoader();
 
-	//å‹•ç”»å‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	//“®‰æˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_mvã®æˆ»ã‚Šå€¤ã¨ã—ã¦0ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_mv‚Ì–ß‚è’l‚Æ‚µ‚Ä0‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èAˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(0));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = dataloader->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(0, ans);
@@ -544,28 +544,28 @@ TEST(DataLoaderTest, grab_image_data_type_1_Test) {
 	int ans = -1;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader* mock_d = new mock_DataLoader();
 
-	// ç”»åƒå‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	// ‰æ‘œˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = mock_d->initialize(params);
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_imgã®æˆ»ã‚Šå€¤ã¨ã—ã¦-1ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€‚å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_img‚Ì–ß‚è’l‚Æ‚µ‚Ä-1‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èBˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_img(testing::_)).WillRepeatedly(Return(-1));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = mock_d->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(ans, -2);
@@ -575,28 +575,28 @@ TEST(DataLoaderTest, grab_image_data_type_1_Positive_Test) {
 	int ans = -1;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader* mock_d = new mock_DataLoader();
 
-	// ç”»åƒå‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	// ‰æ‘œˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = mock_d->initialize(params);
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_imgã®æˆ»ã‚Šå€¤ã¨ã—ã¦-1ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€‚å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_img‚Ì–ß‚è’l‚Æ‚µ‚Ä-1‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èBˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_img(testing::_)).WillRepeatedly(Return(0));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = mock_d->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(0, ans);
@@ -606,27 +606,27 @@ TEST(DataLoaderTest, grab_image_data_type_2_Test) {
 	int ans = 0;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader *mock_d = new mock_DataLoader();
 
-	//å‹•ç”»å‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	//“®‰æˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 2;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = mock_d->initialize(params);
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_mvã®æˆ»ã‚Šå€¤ã¨ã—ã¦-1ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_mv‚Ì–ß‚è’l‚Æ‚µ‚Ä-1‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èAˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(-1));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = dataloader->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(ans, -3);
@@ -636,27 +636,27 @@ TEST(DataLoaderTest, grab_image_data_type_2_Positive_Test) {
 	int ans = 0;
 	int iret = -1;
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚ğì¬
 	mock_DataLoader *mock_d = new mock_DataLoader();
 
-	//å‹•ç”»å‡¦ç†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«è¨­å®š
+	//“®‰æˆ—‚Ìƒpƒ‰ƒ[ƒ^‚Éİ’è
 	Params params;
 	params.data_type = 2;
 
-	// ç”»åƒå‡¦ç†ã§åˆæœŸåŒ–
+	// ‰æ‘œˆ—‚Å‰Šú‰»
 	iret = mock_d->initialize(params);
 
-	// GrabImageã®å¼•æ•°ç”¨
+	// GrabImage‚Ìˆø”—p
 	cv::Mat img;
 
-	// load_mvã®æˆ»ã‚Šå€¤ã¨ã—ã¦-1ãŒè¿”å´ã•ã‚Œã‚‹ã‚ˆã†è¨­å®šã€å¼•æ•°ã¯ä»»æ„ã¨ã™ã‚‹
+	// load_mv‚Ì–ß‚è’l‚Æ‚µ‚Ä-1‚ª•Ô‹p‚³‚ê‚é‚æ‚¤İ’èAˆø”‚Í”CˆÓ‚Æ‚·‚é
 	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(0));
 
 	DataLoader* dataloader = mock_d;
 
 	ans = dataloader->grab_image(img);
 
-	// ãƒ¢ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è§£æ”¾
+	// ƒ‚ƒbƒNƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
 	delete mock_d;
 
 	EXPECT_EQ(ans, 0);
@@ -668,25 +668,25 @@ TEST(DataLoaderTest, get_filelist_Positive_Test) {
 	DataLoader dataloader;
 	Params params;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’ç”»åƒã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ‰æ‘œ‚Éİ’è
 	params.data_type = 1;
 	params.input_image_path = INPUT_IMAGE_PATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
 	ans = dataloader.get_filelist();
 	EXPECT_EQ(0, ans);
 }
-// ###DataLoaderã®ãƒ†ã‚¹ãƒˆã“ã“ã¾ã§###
+// ###DataLoader‚ÌƒeƒXƒg‚±‚±‚Ü‚Å###
 
-// ###ParamLoaderã®ãƒ†ã‚¹ãƒˆã“ã“ã‹ã‚‰###
+// ###ParamLoader‚ÌƒeƒXƒg‚±‚±‚©‚ç###
 TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {
 	int ans = 0;
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤
+	// İ’èƒtƒ@ƒCƒ‹‚ğíœ
 	DeleteFile(COPIED_CONFIG_FILEPATH);
 	
 	ans = paramloader.load_param(params);
@@ -698,7 +698,7 @@ TEST_F(ParamLoaderTest, load_param_params_device_id_Test) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "device_id", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -710,7 +710,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_frame_width", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -722,7 +722,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_frame_width", "-2", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -734,7 +734,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_frame_height", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -746,7 +746,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_frame_height", "-2", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -758,7 +758,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_fps_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_fps", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -770,7 +770,7 @@ TEST_F(ParamLoaderTest, load_param_params_c_fps_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("camera", "c_fps", "-2", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -782,7 +782,7 @@ TEST_F(ParamLoaderTest, load_param_params_data_type_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("input", "data_type", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -794,7 +794,7 @@ TEST_F(ParamLoaderTest, load_param_params_data_type_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("input", "data_type", "3", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -806,7 +806,7 @@ TEST_F(ParamLoaderTest, load_param_params_input_movie_path_Test) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("input", "input_movie_path", "", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -818,7 +818,7 @@ TEST_F(ParamLoaderTest, load_param_params_input_image_path_Test) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("input", "input_image_path", "", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -830,7 +830,7 @@ TEST_F(ParamLoaderTest, load_param_params_cascade_filepath_Test) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("detector", "cascade_filepath", "", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -842,7 +842,7 @@ TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("detector", "face_detect_width", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -854,7 +854,7 @@ TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("detector", "face_detect_width", "-2", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -866,7 +866,7 @@ TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test1) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("detector", "face_detect_height", "-1", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -878,7 +878,7 @@ TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test2) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("detector", "face_detect_height", "-2", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -890,7 +890,7 @@ TEST_F(ParamLoaderTest, load_param_params_output_dirpath_Test) {
 	Params params;
 	ParamLoader paramloader;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤‰æ›´
+	// İ’èƒtƒ@ƒCƒ‹“à‚Ìƒpƒ‰ƒ[ƒ^•ÏX
 	WritePrivateProfileString("output", "output_dirpath", "", COPIED_CONFIG_FILEPATH);
 
 	ans = paramloader.load_param(params);
@@ -905,18 +905,18 @@ TEST_F(ParamLoaderTest, load_param_Positive_Test) {
 	ans = paramloader.load_param(params);
 	EXPECT_EQ(0, ans);
 }
-// ###ParamLoaderã®ãƒ†ã‚¹ãƒˆã“ã“ã¾ã§###
+// ###ParamLoader‚ÌƒeƒXƒg‚±‚±‚Ü‚Å###
 
-// ###FaceDetectorã®ãƒ†ã‚¹ãƒˆã“ã“ã‹ã‚‰###
+// ###FaceDetector‚ÌƒeƒXƒg‚±‚±‚©‚ç###
 TEST(FaceDetectorTest, initialize_PathFileExists_Test) {
 	int ans = 0;
 	FaceDetector facedetector;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 
-	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.cascade_filepath = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\cascade\\haarcascade_frontalface_alt.xml";
+	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ƒpƒX‚ğİ’è
+	params.cascade_filepath = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\cascade\\haarcascade_frontalface_alt.xml";
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -926,11 +926,11 @@ TEST(FaceDetectorTest, initialize_PathIsDirectory_Test) {
 	int ans = 0;
 	FaceDetector facedetector;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 
-	// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\cascade";
+	// ƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX‚ğİ’è
+	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\cascade";
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -940,32 +940,32 @@ TEST(FaceDetectorTest, initialize_cascadeload_Test) {
 	int ans = 0;
 	FaceDetector facedetector;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 
-	// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã®ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
-	_mkdir("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\dummy");
-	CreateFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\dummy\\test.xml", GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+	// ƒJƒXƒP[ƒh•ª—ŞŠí‚Ìƒ_ƒ~[ƒf[ƒ^‚ğì¬
+	_mkdir("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\dummy");
+	CreateFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\dummy\\test.xml", GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã®ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¨­å®š
-	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\dummy\\test.xml";
+	// ƒJƒXƒP[ƒh•ª—ŞŠí‚Ìƒ_ƒ~[ƒf[ƒ^‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğİ’è
+	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\dummy\\test.xml";
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-3, ans);
 
-	// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã®ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‰Šé™¤
-	DeleteFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\dummy\\test.xml");
-	RemoveDirectory("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalystè£½å“é–‹ç™ºä½œæ¥­åŠ¹ç‡åŒ–ã«å‘ã‘ãŸCIï¼CDã®å°å…¥æ¤œè¨¼\\data\\dummy");
+	// ƒJƒXƒP[ƒh•ª—ŞŠí‚Ìƒ_ƒ~[ƒf[ƒ^‚Ìƒtƒ@ƒCƒ‹‚ÆƒfƒBƒŒƒNƒgƒŠ‚ğíœ
+	DeleteFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\dummy\\test.xml");
+	RemoveDirectory("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst»•iŠJ”­ì‹ÆŒø—¦‰»‚ÉŒü‚¯‚½CI^CD‚Ì“±“üŒŸØ\\data\\dummy");
 }
 
 TEST(FaceDetectorTest, initialize_Positive_Test) {
 	int ans = 0;
 	FaceDetector facedetector;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	Params params;
 
-	// ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¨­å®š
+	// ƒJƒXƒP[ƒh•ª—ŞŠí‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğİ’è
 	params.cascade_filepath = CASCADE_FILEPATH;
 
 	ans = facedetector.initialize(params);
@@ -983,21 +983,21 @@ TEST(FaceDetectorTest, detect_face_Positive_Test) {
 	cv::Mat img;
 	std::vector<cv::Rect> faces;
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ã‚¿ã‚¤ãƒ—ã‚’å‹•ç”»ã«è¨­å®š
+	// “ü—Íƒf[ƒ^‚Ìƒ^ƒCƒv‚ğ“®‰æ‚Éİ’è
 	params.data_type = 0;
 	params.input_movie_path = INPUT_MOVIE_PATH;
 	params.cascade_filepath = CASCADE_FILEPATH;
 
-	// å‹•ç”»å‡¦ç†ã§åˆæœŸåŒ–
+	// “®‰æˆ—‚Å‰Šú‰»
 	iret = dataloader.initialize(params);
 
-	// å‹•ç”»ãƒ‡ãƒ¼ã‚¿ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
+	// “®‰æƒf[ƒ^‚ğƒI[ƒvƒ“
 	iret = dataloader.open_data();
 
-	// é¡”æ¤œå‡ºå™¨ã®åˆæœŸåŒ–
+	// ŠçŒŸoŠí‚Ì‰Šú‰»
 	iret = facedetector.initialize(params);
 
 	ans = facedetector.detect_face(img, faces);
 	EXPECT_EQ(0, ans);
 }
-// ###FaceDetectorã®ãƒ†ã‚¹ãƒˆã“ã“ã¾ã§###
+// ###FaceDetector‚ÌƒeƒXƒg‚±‚±‚Ü‚Å###

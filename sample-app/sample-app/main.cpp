@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <vector>
@@ -19,112 +19,112 @@ int main()
 
 	int iret = -1;
 
-	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã¿
+	// İ’èƒtƒ@ƒCƒ‹‚©‚çƒpƒ‰ƒ[ƒ^‚ğ“Ç‚İ‚İ
 	iret = paramloader.load_param(params);
-	if (iret != 0) // ç•°å¸¸çµ‚äº†
+	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "load_paramãŒå¤±æ•—ã—ã¾ã—ãŸ! status code:" << iret << std::endl;
+		std::cout << "load_param‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
-	// ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿æ©Ÿèƒ½ã®åˆæœŸåŒ–
+	// ƒf[ƒ^“Ç‚İ‚İ‹@”\‚Ì‰Šú‰»
 	iret = dataloader.initialize(params);
-	if (iret != 0) // ç•°å¸¸çµ‚äº†
+	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initializeãŒå¤±æ•—ã—ã¾ã—ãŸ! status code:" << iret << std::endl;
+		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
-	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
+	// “ü—Íƒf[ƒ^‚ğƒI[ƒvƒ“
 	iret = dataloader.open_data();
-	if (iret != 0) // ç•°å¸¸çµ‚äº†
+	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "open_dataãŒå¤±æ•—ã—ã¾ã—ãŸ! status code:" << iret << std::endl;
+		std::cout << "open_data‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
-	// é¡”æ¤œå‡ºå™¨ã®åˆæœŸåŒ–
+	// ŠçŒŸoŠí‚Ì‰Šú‰»
 	iret = facedetector.initialize(params);
-	if (iret != 0) // ç•°å¸¸çµ‚äº†
+	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initializeãŒå¤±æ•—ã—ã¾ã—ãŸ! status code:" << iret << std::endl;
+		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
-	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ ¼ç´å ´æ‰€
+	// 1ƒtƒŒ[ƒ€‚ÌŠi”[êŠ
 	cv::Mat img;
 
-	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®è¼ªéƒ­æƒ…å ±æ ¼ç´å ´æ‰€
+	// 1ƒtƒŒ[ƒ€‚Ì—ÖŠsî•ñŠi”[êŠ
 	std::vector<cv::Rect> faces;
 
-	// çµæœã‚’å‡ºåŠ›ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
+	// Œ‹‰Ê‚ğo—Í‚·‚éƒtƒ@ƒCƒ‹‚ğŠJ‚­
 	std::ofstream writing_file;
 	const std::string OUTPUT_FILE_NAME = "result.csv";
 
-	if (!PathFileExists(params.output_dirpath.c_str())) // ãƒ‘ã‚¹ã®å ´æ‰€ã«å‡ºåŠ›ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹
+	if (!PathFileExists(params.output_dirpath.c_str())) // ƒpƒX‚ÌêŠ‚Éo—ÍƒfƒBƒŒƒNƒgƒŠ‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©
 	{
-		if (_mkdir(params.output_dirpath.c_str()) == 0) // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆã§ããŸã‹ã©ã†ã‹
+		if (_mkdir(params.output_dirpath.c_str()) == 0) // ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬‚Å‚«‚½‚©‚Ç‚¤‚©
 		{
-			std::cout << "å‡ºåŠ›ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œæˆã—ã¾ã—ãŸ" << std::endl;
+			std::cout << "o—ÍƒfƒBƒŒƒNƒgƒŠ‚ğì¬‚µ‚Ü‚µ‚½" << std::endl;
 		}
 		else
 		{
-			std::cout << "å‡ºåŠ›ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œæˆã§ãã¾ã›ã‚“ã§ã—ãŸ" << std::endl;
+			std::cout << "o—ÍƒfƒBƒŒƒNƒgƒŠ‚ğì¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½" << std::endl;
 			return 0;
 		}
 	}
 
 	writing_file.open(params.output_dirpath + "\\" + OUTPUT_FILE_NAME);
 
-	if (!writing_file.is_open()) // ç•°å¸¸çµ‚äº†
+	if (!writing_file.is_open()) // ˆÙíI—¹
 	{
-		std::cout << "ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ" << std::endl;
+		std::cout << "ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½" << std::endl;
 		return 0;
 	}
 
-	// å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã«ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¨˜å…¥
-	writing_file << "frameç•ªå·" << "," << "xåº§æ¨™" << "," << "yåº§æ¨™" << "," << "æ¨ªå¹…" << "," << "ç¸¦å¹…" << std::endl;
+	// o—Íƒtƒ@ƒCƒ‹‚ÉƒtƒB[ƒ‹ƒh‚ğ‹L“ü
+	writing_file << "frame”Ô†" << "," << "xÀ•W" << "," << "yÀ•W" << "," << "‰¡•" << "," << "c•" << std::endl;
 
 	while (1)
 	{
-		// 1ãƒ•ãƒ¬ãƒ¼ãƒ ãšã¤å–ã‚Šå‡ºã™
+		// 1ƒtƒŒ[ƒ€‚¸‚Âæ‚èo‚·
 		iret = dataloader.grab_image(img);
-		if (iret != 0) // ç•°å¸¸çµ‚äº†
+		if (iret != 0) // ˆÙíI—¹
 		{
-			std::cout << "GrabImageãŒå¤±æ•—ã—ã¾ã—ãŸ! status code:" << iret << std::endl;
+			std::cout << "GrabImage‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 			return 0;
 		}
 
-		// ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰é¡”æ¤œå‡º
+		// ƒtƒŒ[ƒ€‚©‚çŠçŒŸo
 		iret = facedetector.detect_face(img, faces);
 
-		if (faces.size() == 0) // ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰é¡”æ¤œå‡ºãŒãªã‹ã£ãŸå ´åˆ
+		if (faces.size() == 0) // ƒtƒŒ[ƒ€‚©‚çŠçŒŸo‚ª‚È‚©‚Á‚½ê‡
 		{
-			// ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
+			// ƒtƒ@ƒCƒ‹‘‚«‚İ
 			writing_file << dataloader.get_frame_info() << "," << "-1" << "," << "-1" << "," << "-1" << "," << "-1" << std::endl;
 		}
 		else
 		{
-			// æ¤œå‡ºã—ãŸé¡”ã®å€‹æ•°"faces.size()"åˆ†ãƒ«ãƒ¼ãƒ—ã‚’è¡Œã†
+			// ŒŸo‚µ‚½Šç‚ÌŒÂ”"faces.size()"•ªƒ‹[ƒv‚ğs‚¤
 			for (int i = 0; i < faces.size(); i++)
 			{
-				// æ¤œå‡ºã—ãŸé¡”ã‚’èµ¤è‰²çŸ©å½¢ã§å›²ã‚€
+				// ŒŸo‚µ‚½Šç‚ğÔF‹éŒ`‚ÅˆÍ‚Ş
 				cv::rectangle(img, cv::Point(faces[i].x, faces[i].y), cv::Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), cv::Scalar(0, 0, 255), 2);
 
-				// ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
+				// ƒtƒ@ƒCƒ‹‘‚«‚İ
 				writing_file << dataloader.get_frame_info() << "," << faces[i].x << "," << faces[i].y << "," << faces[i].width << "," << faces[i].height << std::endl;
 			}
 		}
 
-		// ç”»é¢è¡¨ç¤º
+		// ‰æ–Ê•\¦
 		cv::imshow("Window", img);
 		
-		if (cv::waitKey(10) == 'q') // "q"ãŒæŠ¼ã•ã‚ŒãŸã‚‰çµ‚äº†
+		if (cv::waitKey(10) == 'q') // "q"‚ª‰Ÿ‚³‚ê‚½‚çI—¹
 		{
 			break;
 		}
 
-		// æœ€çµ‚ãƒ•ãƒ¬ãƒ¼ãƒ ã«ãªã£ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
+		// ÅIƒtƒŒ[ƒ€‚É‚È‚Á‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
 		if (dataloader.get_frame_index() == dataloader.get_frame_num())
 		{
 			break;

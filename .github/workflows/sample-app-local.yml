@@ -16,9 +16,7 @@ jobs:
     - name: build
       shell: cmd
       run: |
-        chcp
         chcp 65001
-        chcp
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
@@ -41,9 +39,7 @@ jobs:
     - name: copy
       shell: cmd
       run: |
-        chcp
         chcp 65001
-        chcp
         rmdir /s /q path\to\artifact
         mkdir path\to\artifact
         xcopy sample-app\x64\Release path\to\artifact
