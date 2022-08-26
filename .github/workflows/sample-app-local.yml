@@ -17,11 +17,9 @@ jobs:
       shell: cmd
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-        echo "build on windows"
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
-        echo "build successful!"
 
   test:
     name: test-job
@@ -32,8 +30,7 @@ jobs:
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        echo "test on windows"
-        echo "test successful!"
+        sample-app\x64\Release\unittest.exe
 
     - name: copy
       shell: cmd
@@ -51,12 +48,8 @@ jobs:
     needs: test
     runs-on: self-hosted
     steps:
-    - shell: cmd
-      run: echo "deploy on windows"
     - uses: actions/download-artifact@v3
       name: deploy
       with:
         name: my-artifact
         path: C:\Users\NES\Desktop\deploy
-    - shell: cmd
-      run: echo "deploy successful!!"
