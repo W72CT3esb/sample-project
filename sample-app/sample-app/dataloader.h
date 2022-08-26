@@ -34,19 +34,19 @@ public:
 	void save_frame(cv::Mat &img);
 
 	// 動画を読み込む関数
-	int load_mv(cv::Mat &img);
+	virtual int load_mv(cv::Mat &img);
 
 	// 画像を読み込む関数
-	int load_img(cv::Mat &img);
+	virtual int load_img(cv::Mat &img);
 
 	// フレーム番号やファイルパスを返す関数
 	std::string DataLoader::get_frame_info();
 
 	// 1フレームずつ取り出す関数
-	int GrabImage(cv::Mat &img);
+	int grab_image(cv::Mat &img);
 
 	// 入力画像データのディレクトリからすべての画像ファイルのパスを取得する関数
-	void get_filelist();
+	int get_filelist();
 
 private:
 	int device_id; // カメラのdevice ID

@@ -9,7 +9,7 @@
 // コンストラクタ
 DataLoader::DataLoader()
 {
-	std::cout << "LoadDataオブジェクト生成" << std::endl;
+	//std::cout << "LoadDataオブジェクト生成" << std::endl;
 	this->frame_num = 0;
 	this->frame_index = 0;
 	this->img_h = 0;
@@ -25,7 +25,7 @@ DataLoader::DataLoader()
 // デストラクタ
 DataLoader::~DataLoader()
 {
-	std::cout << "LoadDataオブジェクト破棄" << std::endl;
+	//std::cout << "LoadDataオブジェクト破棄" << std::endl;
 }
 
 // フレーム番号を取得する関数
@@ -82,7 +82,7 @@ int DataLoader::initialize(const Params &params)
 // フレーム情報について表示する関数（デバッグ用）
 void DataLoader::print_info()
 {
-	//std::cout << "最大フレーム数" << this->frame_num << std::endl;
+	std::cout << "最大フレーム数" << this->frame_num << std::endl;
 	std::cout << "フレームの高さ:" << this->img_h << std::endl;
 	std::cout << "フレームの幅:" << this->img_w << std::endl;
 	std::cout << "フレームのfps:" << this->fps << std::endl;
@@ -91,6 +91,7 @@ void DataLoader::print_info()
 // 入力データをオープンする関数
 int DataLoader::open_data()
 {
+	int iret = -1;
 	if(this->file_open_flag) // 関数を二回以上は実行させない(falseの時に実行)
 	{
 		return -1;
@@ -103,6 +104,7 @@ int DataLoader::open_data()
 			std::cout << "動画ファイルが開けません" << std::endl;
 			return -2;
 		}
+
 		this->frame_num = (int)this->cap.get(cv::CAP_PROP_FRAME_COUNT);
 		this->img_h = (int)this->cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 		this->img_w = (int)this->cap.get(cv::CAP_PROP_FRAME_WIDTH);
@@ -110,7 +112,7 @@ int DataLoader::open_data()
 	}
 	else if (this->data_type == 1) // 入力データが画像の場合
 	{
-		get_filelist(); // 入力画像データのディレクトリからすべての画像ファイルのパスを取得
+		iret = get_filelist(); // 入力画像データのディレクトリからすべての画像ファイルのパスを取得
 		if (this->file_names.size() == 0) // ディレクトリ内に画像ファイルがなかった場合に失敗
 		{
 			return -3;
@@ -131,7 +133,7 @@ int DataLoader::open_data()
 		this->img_w = (int)this->cap.get(cv::CAP_PROP_FRAME_WIDTH);
 		this->img_h = (int)this->cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 		this->fps = this->cap.get(cv::CAP_PROP_FPS);
-		print_info();
+		//print_info();
 	}
 	this->file_open_flag = true; //関数を一度読んだらフラグをtrueにする
 
@@ -161,6 +163,7 @@ int DataLoader::load_mv(cv::Mat &img)
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
 	std::cout << "フレーム番号 " << this->frame_index << std::endl;
+	//save_frame(img);
 	return 0;
 }
 
@@ -196,7 +199,7 @@ std::string DataLoader::get_frame_info()
 }
 
 // 1フレームずつ取り出す関数
-int DataLoader::GrabImage(cv::Mat &img)
+int DataLoader::grab_image(cv::Mat &img)
 {
 	int iret = -1;
 	if (this->data_type == 0) // 入力データが動画の場合
@@ -230,7 +233,7 @@ int DataLoader::GrabImage(cv::Mat &img)
 }
 
 // 入力画像データのディレクトリからすべての画像ファイルのパスを取得する関数
-void DataLoader::get_filelist()
+int DataLoader::get_filelist()
 {
 	HANDLE hFind;
 	WIN32_FIND_DATA win32fd;
@@ -242,24 +245,21 @@ void DataLoader::get_filelist()
 	{
 
 		std::string search_name = this->input_image_path + "\\*." + extension[i];
+
+		// 指定したファイル名に一致するファイルやディレクトリを検索(戻り値は成功：検索ハンドル,失敗：-1(INVALID_HANDLE_VALUE))
 		hFind = FindFirstFile(search_name.c_str(), &win32fd);
 
-		if (hFind == INVALID_HANDLE_VALUE)
+		if (hFind == INVALID_HANDLE_VALUE) // ファイル検索に失敗した場合(returnをすると、画像ファイルがjpgだけの時などにpngとbmpは存在しないため、強制終了してしまう)
 		{
 			continue;
 		}
 		do
 		{
-			if (win32fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				continue;
-			}
-			else
-			{
-				this->file_names.push_back(this->input_image_path + "\\" + win32fd.cFileName);
-			}
-		} while (FindNextFile(hFind, &win32fd));
+			this->file_names.push_back(this->input_image_path + "\\" + win32fd.cFileName);
+		} while (FindNextFile(hFind, &win32fd)); // FindFirstFile 関数の呼び出しによる検索を続行(戻り値は成功：0以外,失敗：0)
 
+		// 指定された検索ハンドルをクローズ(戻り値は成功：0以外,失敗：0)
 		FindClose(hFind);
 	}
+	return 0;
 }

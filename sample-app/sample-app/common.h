@@ -30,8 +30,8 @@ struct Params{
 	// コンストラクタ
 	Params(){
 		device_id = 0;
-		c_frame_width = 1920;
-		c_frame_height = 1080;
+		c_frame_width = 1280;
+		c_frame_height = 720;
 		c_fps = 30;
 
 		data_type = 0;

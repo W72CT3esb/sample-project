@@ -146,7 +146,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\3rdparty\opencv\build\x64\vc15\lib;C:\3rdparty\googletest\build\lib\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_world430d.lib;opencv_world430.lib;Shlwapi.lib;gtest.lib;gtest_main.lib;gmock.lib;gmock_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_world430.lib;Shlwapi.lib;gtest.lib;gtest_main.lib;gmock.lib;gmock_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

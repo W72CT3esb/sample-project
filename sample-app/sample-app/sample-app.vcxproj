@@ -121,6 +121,7 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="dataloader.cpp" />
     <ClCompile Include="facedetector.cpp" />
+    <ClCompile Include="filewriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="paramloader.cpp" />
   </ItemGroup>

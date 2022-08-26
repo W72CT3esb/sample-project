@@ -7,7 +7,7 @@
 // コンストラクタ
 FaceDetector::FaceDetector()
 {
-	std::cout << "FaceDetectorオブジェクト生成" << std::endl;
+	//std::cout << "FaceDetectorオブジェクト生成" << std::endl;
 	this->cascade_filepath = "";
 	this->face_detect_width = 0;
 	this->face_detect_height = 0;
@@ -16,7 +16,7 @@ FaceDetector::FaceDetector()
 // デストラクタ
 FaceDetector::~FaceDetector()
 {
-	std::cout << "FaceDetectorオブジェクト破棄" << std::endl;
+	//std::cout << "FaceDetectorオブジェクト破棄" << std::endl;
 }
 
 // 初期化関数
@@ -36,7 +36,7 @@ int FaceDetector::initialize(const Params &params)
 	// 正面顔情報が入っているカスケード分類器をロード
 	bret = this->cascade.load(this->cascade_filepath);
 
-	if (!bret) //カスケード分類器をロードできない場合に失敗
+	if (!bret) // カスケード分類器をロードできない場合に失敗
 	{
 		return -3;
 	}
@@ -48,11 +48,13 @@ int FaceDetector::initialize(const Params &params)
 }
 
 // フレームから顔検出する関数
-void FaceDetector::detect_face(cv::Mat &img, std::vector<cv::Rect> &faces)
+int FaceDetector::detect_face(cv::Mat &img, std::vector<cv::Rect> &faces)
 {
 	// 顔検出の情報をクリア
 	faces.clear();
 
 	// 格納されたフレームに対してカスケードファイルに基づいて顔を検知
 	this->cascade.detectMultiScale(img, faces, 1.1, 3, 0, cv::Size(this->face_detect_width, this->face_detect_height));
+
+	return 0;
 }

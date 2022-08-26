@@ -9,13 +9,13 @@ const int DEFINE_CHAR_SIZE = 1024;
 // コンストラクタ
 ParamLoader::ParamLoader()
 {
-	std::cout << "ParamLoaderオブジェクト生成" << std::endl;
+	//std::cout << "ParamLoaderオブジェクト生成" << std::endl;
 }
 
 // デストラクタ
 ParamLoader::~ParamLoader()
 {
-	std::cout << "ParamLoaderオブジェクト破棄" << std::endl;
+	//std::cout << "ParamLoaderオブジェクト破棄" << std::endl;
 }
 
 // 設定ファイルからパラメータをロードする関数
@@ -83,66 +83,50 @@ int ParamLoader::load_param(Params &params)
 	}
 
 	dret = GetPrivateProfileString("input", "input_movie_path", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0) // 0以下は失敗（セクションからキーワードを取れてこれなかった）
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0以下（セクションからキーワードを取れてこれなかった）または、stringが空の場合は失敗
 	{
 		return -12;
-	}
-	if (std::strlen(str_buf) == 0) // stringが空の場合は失敗
-	{
-		return -13;
 	}
 	params.input_movie_path = str_buf;
 
 	dret = GetPrivateProfileString("input", "input_image_path", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0) // 0以下は失敗（セクションからキーワードを取れてこれなかった）
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0以下（セクションからキーワードを取れてこれなかった）または、stringが空の場合は失敗
 	{
-		return -14;
-	}
-	if (std::strlen(str_buf) == 0) // stringが空の場合は失敗
-	{
-		return -15;
+		return -13;
 	}
 	params.input_image_path = str_buf;
 
 	dret = GetPrivateProfileString("detector", "cascade_filepath", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0) // 0以下は失敗（セクションからキーワードを取れてこれなかった）
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0以下（セクションからキーワードを取れてこれなかった）または、stringが空の場合は失敗
 	{
-		return -16;
+		return -14;
 	}
-	if (std::strlen(str_buf) == 0) // stringが空の場合は失敗
-	{
-		return -17;
-	}
+	params.cascade_filepath = str_buf;
 
 	params.face_detect_width = GetPrivateProfileInt("detector", "face_detect_width", -1, this->CONFIG_FILEPATH.c_str());
 	if (params.face_detect_width == -1) // -1は失敗（セクションからキーワードを取れてこれなかった）
 	{
-		return -18;
+		return -15;
 	}
 	if (params.face_detect_width <= 0) // 0以下は失敗
 	{
-		return -19;
+		return -16;
 	}
 
 	params.face_detect_height = GetPrivateProfileInt("detector", "face_detect_height", -1, this->CONFIG_FILEPATH.c_str());
 	if (params.face_detect_height == -1) // -1は失敗（セクションからキーワードを取れてこれなかった）
 	{
-		return -20;
+		return -17;
 	}
 	if (params.face_detect_height <= 0) // 0以下は失敗
 	{
-		return -21;
+		return -18;
 	}
-	params.cascade_filepath = str_buf;
 
 	dret = GetPrivateProfileString("output", "output_dirpath", "", str_buf, sizeof(str_buf), this->CONFIG_FILEPATH.c_str());
-	if (dret <= 0) //0以下は失敗（セクションからキーワードを取れてこれなかった）
+	if (dret <= 0 || std::strlen(str_buf) == 0) // 0以下（セクションからキーワードを取れてこれなかった）または、stringが空の場合は失敗
 	{
-		return -22;
-	}
-	if (std::strlen(str_buf) == 0) // stringが空の場合は失敗
-	{
-		return -23;
+		return -19;
 	}
 	params.output_dirpath = str_buf;
 

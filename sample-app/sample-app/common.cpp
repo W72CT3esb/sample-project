@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <iostream>
+#include "common.h"
 
 const int DEFINE_STRING_SIZE=1024;
 

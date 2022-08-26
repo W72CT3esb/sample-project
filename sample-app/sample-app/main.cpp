@@ -27,7 +27,7 @@ int main()
 		return 0;
 	}
 
-	// データ読み込みの初期化
+	// データ読み込み機能の初期化
 	iret = dataloader.initialize(params);
 	if (iret != 0) // 異常終了
 	{
@@ -88,7 +88,7 @@ int main()
 	while (1)
 	{
 		// 1フレームずつ取り出す
-		iret = dataloader.GrabImage(img);
+		iret = dataloader.grab_image(img);
 		if (iret != 0) // 異常終了
 		{
 			std::cout << "GrabImageが失敗しました! status code:" << iret << std::endl;
@@ -96,7 +96,7 @@ int main()
 		}
 
 		// フレームから顔検出
-		facedetector.detect_face(img, faces);
+		iret = facedetector.detect_face(img, faces);
 
 		if (faces.size() == 0) // フレームから顔検出がなかった場合
 		{

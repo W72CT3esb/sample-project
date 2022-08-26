@@ -18,7 +18,7 @@ public:
 	int initialize(const Params &params);
 
 	// フレームから顔検出する関数
-	void detect_face(cv::Mat &img, std::vector<cv::Rect> &faces);
+	int detect_face(cv::Mat &img, std::vector<cv::Rect> &faces);
 
 private:
 	cv::CascadeClassifier cascade; // カスケード分類器
