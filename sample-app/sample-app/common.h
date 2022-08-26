@@ -1,33 +1,33 @@
-#ifndef _COMMON_H_
+ï»¿#ifndef _COMMON_H_
 #define _COMMON_H_
 
 #include <string>
 
-// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®‚·‚éŠÖ”
+// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•ã™ã‚‹é–¢æ•°
 bool SetWorkingDirectory();
 
 struct Params{
 
 	// [camera section]
-	int device_id; // ƒJƒƒ‰‚Ìdevice ID
-	int c_frame_width; // ƒJƒƒ‰‚Å“Ç‚İ‚Ş“®‰æ‚Ì‰¡•
-	int c_frame_height; // ƒJƒƒ‰‚Å“Ç‚İ‚Ş“®‰æ‚Ìc•
-	int c_fps; // ƒJƒƒ‰‚Å“Ç‚İ‚Ş“®‰æ‚Ìfps
+	int device_id; // ã‚«ãƒ¡ãƒ©ã®device ID
+	int c_frame_width; // ã‚«ãƒ¡ãƒ©ã§èª­ã¿è¾¼ã‚€å‹•ç”»ã®æ¨ªå¹…
+	int c_frame_height; // ã‚«ãƒ¡ãƒ©ã§èª­ã¿è¾¼ã‚€å‹•ç”»ã®ç¸¦å¹…
+	int c_fps; // ã‚«ãƒ¡ãƒ©ã§èª­ã¿è¾¼ã‚€å‹•ç”»ã®fps
 
 	// [input section]
-	int data_type; // 0:“®‰æ,1:‰æ‘œ,2:ƒJƒƒ‰
-	std::string input_movie_path; // “ü—Í“®‰æ‚Ìâ‘ÎƒpƒX
-	std::string input_image_path; // “ü—Í‰æ‘œŒQ‚ÌƒtƒHƒ‹ƒ_‚Ìâ‘ÎƒpƒX
-	std::string cascade_filepath; // ƒJƒXƒP[ƒh•ª—ŞŠí‚Ìƒtƒ@ƒCƒ‹‚Ìâ‘ÎƒpƒX
+	int data_type; // 0:å‹•ç”»,1:ç”»åƒ,2:ã‚«ãƒ¡ãƒ©
+	std::string input_movie_path; // å…¥åŠ›å‹•ç”»ã®çµ¶å¯¾ãƒ‘ã‚¹
+	std::string input_image_path; // å…¥åŠ›ç”»åƒç¾¤ã®ãƒ•ã‚©ãƒ«ãƒ€ã®çµ¶å¯¾ãƒ‘ã‚¹
+	std::string cascade_filepath; // ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®çµ¶å¯¾ãƒ‘ã‚¹
 
 	// [detector section]
-	int face_detect_width; // ŠçŒŸo‚Ì‰¡•‚Ìè‡’l
-	int face_detect_height; // ŠçŒŸo‚Ìc•‚Ìè‡’l
+	int face_detect_width; // é¡”æ¤œå‡ºã®æ¨ªå¹…ã®é–¾å€¤
+	int face_detect_height; // é¡”æ¤œå‡ºã®ç¸¦å¹…ã®é–¾å€¤
 
 	// [output section]
-	std::string output_dirpath; // o—ÍŒ‹‰Ê‚ÌƒtƒHƒ‹ƒ_‚Ìâ‘ÎƒpƒX
+	std::string output_dirpath; // å‡ºåŠ›çµæœã®ãƒ•ã‚©ãƒ«ãƒ€ã®çµ¶å¯¾ãƒ‘ã‚¹
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Params(){
 		device_id = 0;
 		c_frame_width = 1280;

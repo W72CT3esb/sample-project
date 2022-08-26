@@ -1,42 +1,42 @@
-#include <opencv2/opencv.hpp>
+ï»¿#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <shlwapi.h>
 #include "facedetector.h"
 #include "common.h"
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 FaceDetector::FaceDetector()
 {
-	//std::cout << "FaceDetectorƒIƒuƒWƒFƒNƒg¶¬" << std::endl;
+	//std::cout << "FaceDetectorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ" << std::endl;
 	this->cascade_filepath = "";
 	this->face_detect_width = 0;
 	this->face_detect_height = 0;
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 FaceDetector::~FaceDetector()
 {
-	//std::cout << "FaceDetectorƒIƒuƒWƒFƒNƒg”jŠü" << std::endl;
+	//std::cout << "FaceDetectorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„" << std::endl;
 }
 
-// ‰Šú‰»ŠÖ”
+// åˆæœŸåŒ–é–¢æ•°
 int FaceDetector::initialize(const Params &params)
 {
 	bool bret = false;
-	if (!PathFileExists(params.cascade_filepath.c_str())) // ƒpƒX‚ÌêŠ‚Éƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡‚É¸”s
+	if (!PathFileExists(params.cascade_filepath.c_str())) // ãƒ‘ã‚¹ã®å ´æ‰€ã«ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆã«å¤±æ•—
 	{
 		return -1;
 	}
-	if (PathIsDirectory(params.cascade_filepath.c_str())) // ƒtƒ@ƒCƒ‹‚Å‚Í‚È‚­ƒfƒBƒŒƒNƒgƒŠ‚Ìê‡‚É¸”s
+	if (PathIsDirectory(params.cascade_filepath.c_str())) // ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ãªããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å ´åˆã«å¤±æ•—
 	{
 		return -2;
 	}
 	this->cascade_filepath = params.cascade_filepath;
 
-	// ³–ÊŠçî•ñ‚ª“ü‚Á‚Ä‚¢‚éƒJƒXƒP[ƒh•ª—ŞŠí‚ğƒ[ƒh
+	// æ­£é¢é¡”æƒ…å ±ãŒå…¥ã£ã¦ã„ã‚‹ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã‚’ãƒ­ãƒ¼ãƒ‰
 	bret = this->cascade.load(this->cascade_filepath);
 
-	if (!bret) // ƒJƒXƒP[ƒh•ª—ŞŠí‚ğƒ[ƒh‚Å‚«‚È‚¢ê‡‚É¸”s
+	if (!bret) // ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ã‚’ãƒ­ãƒ¼ãƒ‰ã§ããªã„å ´åˆã«å¤±æ•—
 	{
 		return -3;
 	}
@@ -47,13 +47,13 @@ int FaceDetector::initialize(const Params &params)
 	return 0;
 }
 
-// ƒtƒŒ[ƒ€‚©‚çŠçŒŸo‚·‚éŠÖ”
+// ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰é¡”æ¤œå‡ºã™ã‚‹é–¢æ•°
 int FaceDetector::detect_face(cv::Mat &img, std::vector<cv::Rect> &faces)
 {
-	// ŠçŒŸo‚Ìî•ñ‚ğƒNƒŠƒA
+	// é¡”æ¤œå‡ºã®æƒ…å ±ã‚’ã‚¯ãƒªã‚¢
 	faces.clear();
 
-	// Ši”[‚³‚ê‚½ƒtƒŒ[ƒ€‚É‘Î‚µ‚ÄƒJƒXƒP[ƒhƒtƒ@ƒCƒ‹‚ÉŠî‚Ã‚¢‚ÄŠç‚ğŒŸ’m
+	// æ ¼ç´ã•ã‚ŒãŸãƒ•ãƒ¬ãƒ¼ãƒ ã«å¯¾ã—ã¦ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã«åŸºã¥ã„ã¦é¡”ã‚’æ¤œçŸ¥
 	this->cascade.detectMultiScale(img, faces, 1.1, 3, 0, cv::Size(this->face_detect_width, this->face_detect_height));
 
 	return 0;

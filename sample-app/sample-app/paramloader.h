@@ -1,4 +1,4 @@
-#ifndef _PARAMLOADER_H_
+ï»¿#ifndef _PARAMLOADER_H_
 #define _PARAMLOADER_H_
 
 #include <string>
@@ -7,10 +7,10 @@
 class ParamLoader
 {
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	ParamLoader();
 
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~ParamLoader();
 
 	int load_param(Params &params);

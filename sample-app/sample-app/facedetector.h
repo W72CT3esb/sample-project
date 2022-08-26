@@ -1,4 +1,4 @@
-#ifndef _FACEDETECTOR_H_
+ï»¿#ifndef _FACEDETECTOR_H_
 #define _FACEDETECTOR_H_
 
 #include <opencv2/opencv.hpp>
@@ -8,23 +8,23 @@
 class FaceDetector
 {
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	FaceDetector();
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~FaceDetector();
 
-	// ‰Šú‰»ŠÖ”
+	// åˆæœŸåŒ–é–¢æ•°
 	int initialize(const Params &params);
 
-	// ƒtƒŒ[ƒ€‚©‚çŠçŒŸo‚·‚éŠÖ”
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰é¡”æ¤œå‡ºã™ã‚‹é–¢æ•°
 	int detect_face(cv::Mat &img, std::vector<cv::Rect> &faces);
 
 private:
-	cv::CascadeClassifier cascade; // ƒJƒXƒP[ƒh•ª—ŞŠí
-	std::string cascade_filepath; // ƒJƒXƒP[ƒh•ª—ŞŠíƒtƒ@ƒCƒ‹‚Ìâ‘ÎƒpƒX
-	int face_detect_width; // ŠçŒŸo‚Ì‰¡•‚Ìè‡’l
-	int face_detect_height; // ŠçŒŸo‚Ìc•‚Ìè‡’l
+	cv::CascadeClassifier cascade; // ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨
+	std::string cascade_filepath; // ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰åˆ†é¡å™¨ãƒ•ã‚¡ã‚¤ãƒ«ã®çµ¶å¯¾ãƒ‘ã‚¹
+	int face_detect_width; // é¡”æ¤œå‡ºã®æ¨ªå¹…ã®é–¾å€¤
+	int face_detect_height; // é¡”æ¤œå‡ºã®ç¸¦å¹…ã®é–¾å€¤
 };
 
 #endif

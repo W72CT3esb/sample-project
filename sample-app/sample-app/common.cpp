@@ -1,11 +1,11 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <Windows.h>
 #include <iostream>
 #include "common.h"
 
 const int DEFINE_STRING_SIZE=1024;
 
-// ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®‚·‚éŠÖ”
+// ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•ã™ã‚‹é–¢æ•°
 bool SetWorkingDirectory()
 {
 	DWORD dret = 0;
@@ -18,7 +18,7 @@ bool SetWorkingDirectory()
 
 	dret = GetModuleFileName(nullptr, buff, DEFINE_STRING_SIZE);
 
-	if (!dret) // ¸”s‚µ‚½ê‡
+	if (!dret) // å¤±æ•—ã—ãŸå ´åˆ
 	{
 		return false;
 	}
@@ -27,7 +27,7 @@ bool SetWorkingDirectory()
 	sprintf_s(path, DEFINE_STRING_SIZE, "%s%s", drive, dir);
 	bret = SetCurrentDirectory(path);
 
-	if (!bret) // ¸”s‚µ‚½ê‡
+	if (!bret) // å¤±æ•—ã—ãŸå ´åˆ
 	{
 		return false;
 	}

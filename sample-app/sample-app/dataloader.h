@@ -1,4 +1,4 @@
-#ifndef _DATALOADER_H_
+ï»¿#ifndef _DATALOADER_H_
 #define _DATALOADER_H_
 
 #include <string>
@@ -9,58 +9,58 @@
 class DataLoader
 {
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	DataLoader();
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~DataLoader();
 
-	// ƒtƒŒ[ƒ€”Ô†‚ğæ“¾‚·‚éŠÖ”
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 	int get_frame_index();
 
-	// “®‰æ‚â‰æ‘œ‚ÌƒtƒŒ[ƒ€”‚ğæ“¾‚·‚éŠÖ”
+	// å‹•ç”»ã‚„ç”»åƒã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 	int get_frame_num();
 
-	// ‰Šú‰»ŠÖ”
+	// åˆæœŸåŒ–é–¢æ•°
 	int initialize(const Params &params);
 
-	// ƒtƒŒ[ƒ€î•ñ‚É‚Â‚¢‚Ä•\¦‚·‚éŠÖ”iƒfƒoƒbƒO—pj
+	// ãƒ•ãƒ¬ãƒ¼ãƒ æƒ…å ±ã«ã¤ã„ã¦è¡¨ç¤ºã™ã‚‹é–¢æ•°ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
 	void print_info();
 
-	// “ü—Íƒf[ƒ^‚ğƒI[ƒvƒ“‚·‚éŠÖ”
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹é–¢æ•°
 	int open_data();
 
-	// “ü—Íƒf[ƒ^‚ª“®‰æ‚Ìê‡‚ÉƒtƒŒ[ƒ€‚²‚Æ‚É‰æ‘œ‚Æ‚µ‚Ä•Û‘¶‚·‚éŠÖ”iƒfƒoƒbƒO—pj
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒå‹•ç”»ã®å ´åˆã«ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«ç”»åƒã¨ã—ã¦ä¿å­˜ã™ã‚‹é–¢æ•°ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
 	void save_frame(cv::Mat &img);
 
-	// “®‰æ‚ğ“Ç‚İ‚ŞŠÖ”
+	// å‹•ç”»ã‚’èª­ã¿è¾¼ã‚€é–¢æ•°
 	virtual int load_mv(cv::Mat &img);
 
-	// ‰æ‘œ‚ğ“Ç‚İ‚ŞŠÖ”
+	// ç”»åƒã‚’èª­ã¿è¾¼ã‚€é–¢æ•°
 	virtual int load_img(cv::Mat &img);
 
-	// ƒtƒŒ[ƒ€”Ô†‚âƒtƒ@ƒCƒ‹ƒpƒX‚ğ•Ô‚·ŠÖ”
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚„ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¿”ã™é–¢æ•°
 	std::string DataLoader::get_frame_info();
 
-	// 1ƒtƒŒ[ƒ€‚¸‚Âæ‚èo‚·ŠÖ”
+	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ãšã¤å–ã‚Šå‡ºã™é–¢æ•°
 	int grab_image(cv::Mat &img);
 
-	// “ü—Í‰æ‘œƒf[ƒ^‚ÌƒfƒBƒŒƒNƒgƒŠ‚©‚ç‚·‚×‚Ä‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğæ“¾‚·‚éŠÖ”
+	// å…¥åŠ›ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰ã™ã¹ã¦ã®ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 	int get_filelist();
 
 private:
-	int device_id; // ƒJƒƒ‰‚Ìdevice ID
-	int frame_num; // ƒtƒŒ[ƒ€”
-	int frame_index; //ƒtƒŒ[ƒ€”Ô†
-	int img_w; // ƒtƒŒ[ƒ€‚Ì‰¡•
-	int img_h; // ƒtƒŒ[ƒ€‚Ìc•
-	std::string input_movie_path; // “ü—Í“®‰æ‚Ìâ‘ÎƒpƒX
-	std::string input_image_path; // “ü—Í‰æ‘œŒQ‚ÌƒtƒHƒ‹ƒ_‚Ìâ‘ÎƒpƒX
-	int data_type; // 0:“®‰æ,1:‰æ‘œ,2:ƒJƒƒ‰
-	std::vector<std::string> file_names; // ‰æ‘œ‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ÌƒŠƒXƒg
+	int device_id; // ã‚«ãƒ¡ãƒ©ã®device ID
+	int frame_num; // ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+	int frame_index; //ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·
+	int img_w; // ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ¨ªå¹…
+	int img_h; // ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç¸¦å¹…
+	std::string input_movie_path; // å…¥åŠ›å‹•ç”»ã®çµ¶å¯¾ãƒ‘ã‚¹
+	std::string input_image_path; // å…¥åŠ›ç”»åƒç¾¤ã®ãƒ•ã‚©ãƒ«ãƒ€ã®çµ¶å¯¾ãƒ‘ã‚¹
+	int data_type; // 0:å‹•ç”»,1:ç”»åƒ,2:ã‚«ãƒ¡ãƒ©
+	std::vector<std::string> file_names; // ç”»åƒã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®ãƒªã‚¹ãƒˆ
 	double fps; // fps
-	cv::VideoCapture cap; // “®‰æ‚ÌƒLƒƒƒvƒ`ƒƒ
-	bool file_open_flag; // ƒtƒ@ƒCƒ‹‚ğŠJ‚¢‚½‚©”»’è‚·‚éƒtƒ‰ƒO
+	cv::VideoCapture cap; // å‹•ç”»ã®ã‚­ãƒ£ãƒ—ãƒãƒ£
+	bool file_open_flag; // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã„ãŸã‹åˆ¤å®šã™ã‚‹ãƒ•ãƒ©ã‚°
 };
 
 #endif

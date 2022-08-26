@@ -1,4 +1,4 @@
-#include <opencv2/opencv.hpp>
+ï»¿#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,10 +6,10 @@
 #include "dataloader.h"
 #include "common.h"
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 DataLoader::DataLoader()
 {
-	//std::cout << "LoadDataƒIƒuƒWƒFƒNƒg¶¬" << std::endl;
+	//std::cout << "LoadDataã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ" << std::endl;
 	this->frame_num = 0;
 	this->frame_index = 0;
 	this->img_h = 0;
@@ -22,53 +22,53 @@ DataLoader::DataLoader()
 	this->device_id = 0;
 }
 
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 DataLoader::~DataLoader()
 {
-	//std::cout << "LoadDataƒIƒuƒWƒFƒNƒg”jŠü" << std::endl;
+	//std::cout << "LoadDataã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„" << std::endl;
 }
 
-// ƒtƒŒ[ƒ€”Ô†‚ğæ“¾‚·‚éŠÖ”
+// ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 int DataLoader::get_frame_index()
 {
 	return this->frame_index;
 }
 
-// “®‰æ‚â‰æ‘œ‚ÌƒtƒŒ[ƒ€”‚ğæ“¾‚·‚éŠÖ”
+// å‹•ç”»ã‚„ç”»åƒã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 int DataLoader::get_frame_num()
 {
 	return this->frame_num;
 }
 
-// ‰Šú‰»ŠÖ”
+// åˆæœŸåŒ–é–¢æ•°
 int DataLoader::initialize(const Params &params)
 {
 	this->data_type = params.data_type;
-	if (this->data_type == 0) // “ü—Íƒf[ƒ^‚ª“®‰æ‚Ìê‡
+	if (this->data_type == 0) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒå‹•ç”»ã®å ´åˆ
 	{
-		if (!PathFileExists(params.input_movie_path.c_str())) // ƒpƒX‚ÌêŠ‚Éƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡‚É¸”s
+		if (!PathFileExists(params.input_movie_path.c_str())) // ãƒ‘ã‚¹ã®å ´æ‰€ã«ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆã«å¤±æ•—
 		{
 			return -1;
 		}
-		if (PathIsDirectory(params.input_movie_path.c_str())) // ƒtƒ@ƒCƒ‹‚Å‚Í‚È‚­ƒfƒBƒŒƒNƒgƒŠ‚Ìê‡‚É¸”s
+		if (PathIsDirectory(params.input_movie_path.c_str())) // ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ãªããƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å ´åˆã«å¤±æ•—
 		{
 			return -2;
 		}
-		this->input_movie_path = params.input_movie_path; // “ü—Í“®‰æƒf[ƒ^‚ÌƒpƒX‚ğİ’è
+		this->input_movie_path = params.input_movie_path; // å…¥åŠ›å‹•ç”»ãƒ‡ãƒ¼ã‚¿ã®ãƒ‘ã‚¹ã‚’è¨­å®š
 	}
-	else if (this->data_type == 1) // “ü—Íƒf[ƒ^‚ª‰æ‘œ‚Ìê‡
+	else if (this->data_type == 1) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒç”»åƒã®å ´åˆ
 	{
-		if (!PathFileExists(params.input_image_path.c_str())) // ƒpƒX‚ÌêŠ‚ÉƒfƒBƒŒƒNƒgƒŠ‚ª‘¶İ‚µ‚È‚¢ê‡‚É¸”s
+		if (!PathFileExists(params.input_image_path.c_str())) // ãƒ‘ã‚¹ã®å ´æ‰€ã«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒå­˜åœ¨ã—ãªã„å ´åˆã«å¤±æ•—
 		{
 			return -3;
 		}
-		if (!PathIsDirectory(params.input_image_path.c_str())) // ƒfƒBƒŒƒNƒgƒŠ‚Å‚Í‚È‚¢ê‡‚É¸”s
+		if (!PathIsDirectory(params.input_image_path.c_str())) // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã¯ãªã„å ´åˆã«å¤±æ•—
 		{
 			return -4;
 		}
-		this->input_image_path = params.input_image_path; // “ü—Í‰æ‘œŒQ‚ª‚ ‚éƒfƒBƒŒƒNƒgƒŠ‚ÌƒpƒX‚ğİ’è
+		this->input_image_path = params.input_image_path; // å…¥åŠ›ç”»åƒç¾¤ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ãƒ‘ã‚¹ã‚’è¨­å®š
 	}
-	else // “ü—Íƒf[ƒ^‚ªƒJƒƒ‰‚©‚ç‚Ì‰f‘œ‚Ìê‡
+	else // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®æ˜ åƒã®å ´åˆ
 	{
 		this->device_id = params.device_id;
 		this->img_h = params.c_frame_height;
@@ -79,29 +79,29 @@ int DataLoader::initialize(const Params &params)
 	return 0;
 }
 
-// ƒtƒŒ[ƒ€î•ñ‚É‚Â‚¢‚Ä•\¦‚·‚éŠÖ”iƒfƒoƒbƒO—pj
+// ãƒ•ãƒ¬ãƒ¼ãƒ æƒ…å ±ã«ã¤ã„ã¦è¡¨ç¤ºã™ã‚‹é–¢æ•°ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
 void DataLoader::print_info()
 {
-	std::cout << "Å‘åƒtƒŒ[ƒ€”" << this->frame_num << std::endl;
-	std::cout << "ƒtƒŒ[ƒ€‚Ì‚‚³:" << this->img_h << std::endl;
-	std::cout << "ƒtƒŒ[ƒ€‚Ì•:" << this->img_w << std::endl;
-	std::cout << "ƒtƒŒ[ƒ€‚Ìfps:" << this->fps << std::endl;
+	std::cout << "æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ æ•°" << this->frame_num << std::endl;
+	std::cout << "ãƒ•ãƒ¬ãƒ¼ãƒ ã®é«˜ã•:" << this->img_h << std::endl;
+	std::cout << "ãƒ•ãƒ¬ãƒ¼ãƒ ã®å¹…:" << this->img_w << std::endl;
+	std::cout << "ãƒ•ãƒ¬ãƒ¼ãƒ ã®fps:" << this->fps << std::endl;
 }
 
-// “ü—Íƒf[ƒ^‚ğƒI[ƒvƒ“‚·‚éŠÖ”
+// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹é–¢æ•°
 int DataLoader::open_data()
 {
 	int iret = -1;
-	if(this->file_open_flag) // ŠÖ”‚ğ“ñ‰ñˆÈã‚ÍÀs‚³‚¹‚È‚¢(false‚Ì‚ÉÀs)
+	if(this->file_open_flag) // é–¢æ•°ã‚’äºŒå›ä»¥ä¸Šã¯å®Ÿè¡Œã•ã›ãªã„(falseã®æ™‚ã«å®Ÿè¡Œ)
 	{
 		return -1;
 	}
-	if (this->data_type == 0) // “ü—Íƒf[ƒ^‚ª“®‰æ‚Ìê‡
+	if (this->data_type == 0) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒå‹•ç”»ã®å ´åˆ
 	{
 		this->cap.open(this->input_movie_path);
-		if (!this->cap.isOpened()) // ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚È‚¢ê‡‚É¸”s
+		if (!this->cap.isOpened()) // ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ãªã„å ´åˆã«å¤±æ•—
 		{
-			std::cout << "“®‰æƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ" << std::endl;
+			std::cout << "å‹•ç”»ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“" << std::endl;
 			return -2;
 		}
 
@@ -110,21 +110,21 @@ int DataLoader::open_data()
 		this->img_w = (int)this->cap.get(cv::CAP_PROP_FRAME_WIDTH);
 		this->fps = this->cap.get(cv::CAP_PROP_FPS);
 	}
-	else if (this->data_type == 1) // “ü—Íƒf[ƒ^‚ª‰æ‘œ‚Ìê‡
+	else if (this->data_type == 1) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒç”»åƒã®å ´åˆ
 	{
-		iret = get_filelist(); // “ü—Í‰æ‘œƒf[ƒ^‚ÌƒfƒBƒŒƒNƒgƒŠ‚©‚ç‚·‚×‚Ä‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğæ“¾
-		if (this->file_names.size() == 0) // ƒfƒBƒŒƒNƒgƒŠ“à‚É‰æ‘œƒtƒ@ƒCƒ‹‚ª‚È‚©‚Á‚½ê‡‚É¸”s
+		iret = get_filelist(); // å…¥åŠ›ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰ã™ã¹ã¦ã®ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’å–å¾—
+		if (this->file_names.size() == 0) // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã«ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã‹ã£ãŸå ´åˆã«å¤±æ•—
 		{
 			return -3;
 		}
 		this->frame_num = (int)this->file_names.size();
 	}
-	else // “ü—Íƒf[ƒ^‚ªƒJƒƒ‰‚©‚ç‚Ì‰f‘œ‚Ìê‡
+	else // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®æ˜ åƒã®å ´åˆ
 	{
 		this->cap.open(this->device_id);
-		if (!this->cap.isOpened()) // ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚È‚¢ê‡‚É¸”s
+		if (!this->cap.isOpened()) // ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ãªã„å ´åˆã«å¤±æ•—
 		{
-			std::cout << "camera‚ğŠJ‚¯‚Ü‚¹‚ñ" << std::endl;
+			std::cout << "cameraã‚’é–‹ã‘ã¾ã›ã‚“" << std::endl;
 			return -4;
 		}
 		cap.set(cv::CAP_PROP_FRAME_WIDTH, this->img_w);
@@ -135,74 +135,74 @@ int DataLoader::open_data()
 		this->fps = this->cap.get(cv::CAP_PROP_FPS);
 		//print_info();
 	}
-	this->file_open_flag = true; //ŠÖ”‚ğˆê“x“Ç‚ñ‚¾‚çƒtƒ‰ƒO‚ğtrue‚É‚·‚é
+	this->file_open_flag = true; //é–¢æ•°ã‚’ä¸€åº¦èª­ã‚“ã ã‚‰ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
 
 	return 0;
 }
 
-// “ü—Íƒf[ƒ^‚ª“®‰æ‚Ìê‡‚ÉƒtƒŒ[ƒ€‚²‚Æ‚É‰æ‘œ‚Æ‚µ‚Ä•Û‘¶‚·‚éŠÖ”iƒfƒoƒbƒO—pj
+// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒå‹•ç”»ã®å ´åˆã«ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«ç”»åƒã¨ã—ã¦ä¿å­˜ã™ã‚‹é–¢æ•°ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
 void DataLoader::save_frame(cv::Mat &img)
 {
-	//æ“¾‚µ‚½‰æ‘œ‚ğ˜A”Ô‰æ‘œ‚Å•Û‘¶
+	//å–å¾—ã—ãŸç”»åƒã‚’é€£ç•ªç”»åƒã§ä¿å­˜
 	std::ostringstream oss;
 	oss << std::setfill('0') << std::setw(4) << this->frame_index;
 	//cv::imwrite("C:\\Users\\1134142029087\\Desktop\\data2\\pic_" + oss.str() + ".jpg", img);
 }
 
-// “®‰æ‚ğ“Ç‚İ‚ŞŠÖ”
+// å‹•ç”»ã‚’èª­ã¿è¾¼ã‚€é–¢æ•°
 int DataLoader::load_mv(cv::Mat &img)
 {
-	if (!this->file_open_flag) // “®‰æƒtƒ@ƒCƒ‹‚ªƒI[ƒvƒ“‚µ‚Ä‚¢‚È‚¢ê‡‚Íload‚µ‚È‚¢
+	if (!this->file_open_flag) // å‹•ç”»ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ªãƒ¼ãƒ—ãƒ³ã—ã¦ã„ãªã„å ´åˆã¯loadã—ãªã„
 	{
 		return -1;
 	}
 	this->cap >> img;
-	if (img.empty()) // img‚ª‹ó‚¾‚Á‚½‚ç
+	if (img.empty()) // imgãŒç©ºã ã£ãŸã‚‰
 	{
 		return -2;
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "ƒtƒŒ[ƒ€”Ô† " << this->frame_index << std::endl;
+	std::cout << "ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå· " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
 }
 
-// ‰æ‘œ‚ğ“Ç‚İ‚ŞŠÖ”
+// ç”»åƒã‚’èª­ã¿è¾¼ã‚€é–¢æ•°
 int DataLoader::load_img(cv::Mat &img)
 {
 	std::cout << this->file_names[this->frame_index] << std::endl;
 	img = cv::imread(this->file_names[this->frame_index]);
-	if (img.empty()) // img‚ª‹ó‚¾‚Á‚½‚ç
+	if (img.empty()) // imgãŒç©ºã ã£ãŸã‚‰
 	{
 		return -1;
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "ƒtƒŒ[ƒ€”Ô† " << this->frame_index << std::endl;
+	std::cout << "ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå· " << this->frame_index << std::endl;
 	return 0;
 }
 
-// ƒtƒŒ[ƒ€”Ô†‚âƒtƒ@ƒCƒ‹ƒpƒX‚ğ•Ô‚·ŠÖ”
+// ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚„ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¿”ã™é–¢æ•°
 std::string DataLoader::get_frame_info()
 {
-	if (this->data_type == 0) // “®‰æ‚Ì‚ÍƒtƒŒ[ƒ€”Ô†‚ğ•Ô‚·
+	if (this->data_type == 0) // å‹•ç”»ã®æ™‚ã¯ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’è¿”ã™
 	{
 		return std::to_string(get_frame_index() - 1);
 	}
-	else if (this->data_type == 1) // ‰æ‘œ‚Ì‚Íƒtƒ@ƒCƒ‹ƒpƒX‚ğ•Ô‚·
+	else if (this->data_type == 1) // ç”»åƒã®æ™‚ã¯ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¿”ã™
 	{
 		return this->file_names[this->frame_index - 1];
 	}
-	else // ƒJƒƒ‰‰f‘œ‚Ì‚ÍƒtƒŒ[ƒ€”Ô†‚ğ•Ô‚·
+	else // ã‚«ãƒ¡ãƒ©æ˜ åƒã®æ™‚ã¯ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’è¿”ã™
 	{
 		return std::to_string(get_frame_index() - 1);
 	}
 }
 
-// 1ƒtƒŒ[ƒ€‚¸‚Âæ‚èo‚·ŠÖ”
+// 1ãƒ•ãƒ¬ãƒ¼ãƒ ãšã¤å–ã‚Šå‡ºã™é–¢æ•°
 int DataLoader::grab_image(cv::Mat &img)
 {
 	int iret = -1;
-	if (this->data_type == 0) // “ü—Íƒf[ƒ^‚ª“®‰æ‚Ìê‡
+	if (this->data_type == 0) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒå‹•ç”»ã®å ´åˆ
 	{
 		iret = load_mv(img);
 		if (iret != 0)
@@ -210,7 +210,7 @@ int DataLoader::grab_image(cv::Mat &img)
 			return -1;
 		}
 	}
-	else if (this->data_type == 1) // “ü—Íƒf[ƒ^‚ª‰æ‘œ‚Ìê‡
+	else if (this->data_type == 1) // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒç”»åƒã®å ´åˆ
 	{
 		iret = load_img(img);
 		if (iret != 0)
@@ -218,7 +218,7 @@ int DataLoader::grab_image(cv::Mat &img)
 			return -2;
 		}
 	}
-	else // “ü—Íƒf[ƒ^‚ªƒJƒƒ‰‚©‚ç‚Ì‰f‘œ‚Ìê‡
+	else // å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ãŒã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®æ˜ åƒã®å ´åˆ
 	{
 		iret = load_mv(img);
 		if (iret != 0)
@@ -227,12 +227,12 @@ int DataLoader::grab_image(cv::Mat &img)
 		}
 	}
 
-	this->frame_index++; // 1ƒtƒŒ[ƒ€æ‚èo‚µ‚½‚çƒJƒEƒ“ƒg
+	this->frame_index++; // 1ãƒ•ãƒ¬ãƒ¼ãƒ å–ã‚Šå‡ºã—ãŸã‚‰ã‚«ã‚¦ãƒ³ãƒˆ
 
 	return 0;
 }
 
-// “ü—Í‰æ‘œƒf[ƒ^‚ÌƒfƒBƒŒƒNƒgƒŠ‚©‚ç‚·‚×‚Ä‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğæ“¾‚·‚éŠÖ”
+// å…¥åŠ›ç”»åƒãƒ‡ãƒ¼ã‚¿ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰ã™ã¹ã¦ã®ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 int DataLoader::get_filelist()
 {
 	HANDLE hFind;
@@ -246,19 +246,19 @@ int DataLoader::get_filelist()
 
 		std::string search_name = this->input_image_path + "\\*." + extension[i];
 
-		// w’è‚µ‚½ƒtƒ@ƒCƒ‹–¼‚Éˆê’v‚·‚éƒtƒ@ƒCƒ‹‚âƒfƒBƒŒƒNƒgƒŠ‚ğŒŸõ(–ß‚è’l‚Í¬Œ÷FŒŸõƒnƒ“ƒhƒ‹,¸”sF-1(INVALID_HANDLE_VALUE))
+		// æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«åã«ä¸€è‡´ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚„ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æ¤œç´¢(æˆ»ã‚Šå€¤ã¯æˆåŠŸï¼šæ¤œç´¢ãƒãƒ³ãƒ‰ãƒ«,å¤±æ•—ï¼š-1(INVALID_HANDLE_VALUE))
 		hFind = FindFirstFile(search_name.c_str(), &win32fd);
 
-		if (hFind == INVALID_HANDLE_VALUE) // ƒtƒ@ƒCƒ‹ŒŸõ‚É¸”s‚µ‚½ê‡(return‚ğ‚·‚é‚ÆA‰æ‘œƒtƒ@ƒCƒ‹‚ªjpg‚¾‚¯‚Ì‚È‚Ç‚Épng‚Æbmp‚Í‘¶İ‚µ‚È‚¢‚½‚ßA‹­§I—¹‚µ‚Ä‚µ‚Ü‚¤)
+		if (hFind == INVALID_HANDLE_VALUE) // ãƒ•ã‚¡ã‚¤ãƒ«æ¤œç´¢ã«å¤±æ•—ã—ãŸå ´åˆ(returnã‚’ã™ã‚‹ã¨ã€ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ãŒjpgã ã‘ã®æ™‚ãªã©ã«pngã¨bmpã¯å­˜åœ¨ã—ãªã„ãŸã‚ã€å¼·åˆ¶çµ‚äº†ã—ã¦ã—ã¾ã†)
 		{
 			continue;
 		}
 		do
 		{
 			this->file_names.push_back(this->input_image_path + "\\" + win32fd.cFileName);
-		} while (FindNextFile(hFind, &win32fd)); // FindFirstFile ŠÖ”‚ÌŒÄ‚Ño‚µ‚É‚æ‚éŒŸõ‚ğ‘±s(–ß‚è’l‚Í¬Œ÷F0ˆÈŠO,¸”sF0)
+		} while (FindNextFile(hFind, &win32fd)); // FindFirstFile é–¢æ•°ã®å‘¼ã³å‡ºã—ã«ã‚ˆã‚‹æ¤œç´¢ã‚’ç¶šè¡Œ(æˆ»ã‚Šå€¤ã¯æˆåŠŸï¼š0ä»¥å¤–,å¤±æ•—ï¼š0)
 
-		// w’è‚³‚ê‚½ŒŸõƒnƒ“ƒhƒ‹‚ğƒNƒ[ƒY(–ß‚è’l‚Í¬Œ÷F0ˆÈŠO,¸”sF0)
+		// æŒ‡å®šã•ã‚ŒãŸæ¤œç´¢ãƒãƒ³ãƒ‰ãƒ«ã‚’ã‚¯ãƒ­ãƒ¼ã‚º(æˆ»ã‚Šå€¤ã¯æˆåŠŸï¼š0ä»¥å¤–,å¤±æ•—ï¼š0)
 		FindClose(hFind);
 	}
 	return 0;
