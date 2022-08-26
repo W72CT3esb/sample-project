@@ -30,6 +30,7 @@ jobs:
     - name: test
       shell: cmd
       run: |
+        chcp 65001
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         sample-app\x64\Release\unittest.exe
 
