@@ -16,7 +16,7 @@ jobs:
     - name: build
       shell: cmd
       run: |
-        chcp 65001
+        # chcp 65001
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
@@ -30,7 +30,7 @@ jobs:
     - name: test
       shell: cmd
       run: |
-        chcp 932
+        chcp 65001
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         sample-app\x64\Release\unittest.exe
 
