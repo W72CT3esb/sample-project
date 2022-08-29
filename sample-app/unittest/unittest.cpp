@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 #include <Shlwapi.h>
 #include <string.h>
+#include <iostream>
 #include "../sample-app/common.h"
 #include "../sample-app/paramloader.h"
 #include "../sample-app/facedetector.h"
@@ -17,9 +18,11 @@ std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製
 char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
 std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\movie\\sample.avi";
+std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\sample-data\\sample2.avi";
 char TMP_INPUT_MOVIE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\tmp\\sample.avi";
 
 std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\image";
+std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\sample-data\\image2";
 char TMP_INPUT_IMAGE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\tmp\\image";
 
 std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\cascade\\haarcascade_frontalface_alt.xml";
@@ -76,7 +79,45 @@ void copy_config_file()
 	CopyFile(CONFIG_FILEPATH.c_str(), COPIED_CONFIG_FILEPATH, FALSE);
 }
 
+// ###Commonのテストここから###
+TEST(CommonTest, SetWorkingDirectory_Test) {
+	bool ans = false;
+	ans = SetWorkingDirectory();
+
+	EXPECT_EQ(true, ans);
+}
+// ###Commonのテストここまで###
+
 // ###DataLoaderのテストここから###
+// コンストラクタのテスト（例外が発生しないかチェック）
+TEST(DataLoaderTest, constructor_Test) {
+
+	//EXPECT_THROW(DataLoader(), std::exception);
+	EXPECT_NO_THROW(DataLoader());
+}
+
+// デストラクタのテスト（例外が発生しないかチェック）
+TEST(DataLoaderTest, destructor_Test) {
+
+	EXPECT_NO_THROW(DataLoader().~DataLoader());
+}
+
+TEST(DataLoaderTest, get_frame_index_Test) {
+	int ans = 0;
+	DataLoader dataloader;
+
+	ans = dataloader.get_frame_index();
+	EXPECT_EQ(0, ans);
+}
+
+TEST(DataLoaderTest, get_frame_num_Test) {
+	int ans = 0;
+	DataLoader dataloader;
+
+	ans = dataloader.get_frame_num();
+	EXPECT_EQ(0, ans);
+}
+
 TEST(DataLoaderTest, initialize_data_type_0_PathFileExists_Test) {
 	int ans = 0;
 	DataLoader dataloader;
@@ -339,35 +380,33 @@ TEST(DataLoaderTest, load_mv_file_open_flag_Test) {
 	EXPECT_EQ(-1, ans);
 }
 
-// load_mvのemptyのやつができない（保留）
-//TEST(DataLoaderTest, load_mv_img_empty_Test) {
-//	int ans = 0;
-//	int iret = -1;
-//	DataLoader dataloader;
-//	Params params;
-//
-//	// 入力データのタイプを動画に設定
-//	params.data_type = 0;
-//	params.input_movie_path = INPUT_MOVIE_PATH;
-//
-//	// 動画処理で初期化
-//	iret = dataloader.initialize(params);
-//
-//	// 入力データを別のディレクトリに移動
-//	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
-//
-//	// open_data()を呼んでflagをtrueにする
-//	iret = dataloader.open_data(); //-2
-//
-//	// GrabImageの引数用
-//	cv::Mat img;
-//
-//	ans = dataloader.load_mv(img);
-//	EXPECT_EQ(-2, ans);
-//
-//	// 入力データを元のディレクトリに移動
-//	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
-//}
+TEST(DataLoaderTest, load_mv_img_empty_Test) {
+	int ans = -1;
+	int iret = -1;
+	cv::Mat img; //grab_imageの引数用
+	DataLoader dataloader;
+
+	// 入力データのタイプを動画に設定
+	Params params;
+	params.data_type = 0;
+
+	// 存在する動画のファイルパスを設定
+	params.input_movie_path = INPUT_MOVIE_PATH2;
+
+	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+
+	ans = dataloader.load_mv(img);
+
+
+	EXPECT_EQ(-2, ans);
+}
 
 TEST(DataLoaderTest, load_mv_Positive_Test) {
 	int ans = 0;
@@ -392,35 +431,26 @@ TEST(DataLoaderTest, load_mv_Positive_Test) {
 	EXPECT_EQ(0, ans);
 }
 
-// load_imgのemptyのやつができない（保留）
-//TEST(DataLoaderTest, load_mv_img_empty_Test) {
-//	int ans = 0;
-//	int iret = -1;
-//	DataLoader dataloader;
-//	Params params;
-//
-//	// 入力データのタイプを動画に設定
-//	params.data_type = 1;
-//	params.input_image_path = INPUT_IMAGE_PATH;
-//
-//	// 動画処理で初期化
-//	iret = dataloader.initialize(params);
-//
-//	// 入力データを別のディレクトリに移動
-//	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
-//
-//	// open_data()を呼んでflagをtrueにする
-//	iret = dataloader.open_data(); //-2
-//
-//	// GrabImageの引数用
-//	cv::Mat img;
-//
-//	ans = dataloader.load_mv(img);
-//	EXPECT_EQ(-2, ans);
-//
-//	// 入力データを元のディレクトリに移動
-//	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
-//}
+TEST(DataLoaderTest, load_img_img_empty_Test) {
+	int ans = 0;
+	int iret = -1;
+	DataLoader dataloader;
+	cv::Mat img; //load_imgの引数用
+
+	// 入力データのタイプを静止画に設定
+	Params params;
+	params.data_type = 1;
+
+	// 作成したディレクトリパスを設定
+	params.input_image_path = INPUT_IMAGE_PATH2;
+
+	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+
+	ans = dataloader.load_img(img);
+
+	EXPECT_EQ(-1, ans);
+}
 
 TEST(DataLoaderTest, load_img_Positive_Test) {
 	int ans = 0;
@@ -445,44 +475,75 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 	EXPECT_EQ(0, ans);
 }
 
-// stringからwchar_t*への変換がわからず保留
-//TEST(DataLoaderTest, get_file_info_data_type_0_Test) {
-//	std::string ans = 0;
-//	int iret = -1;
-//
-//	DataLoader dataloader;
-//	Params params;
-//
-//	ans = dataloader.get_frame_info();
-//
-//	EXPECT_STREQ((std::to_string(get_frame_index() - 1)).c_str(), ans.c_str());
-//}
+TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
+	std::string ans = "";
+	int iret = -1;
+	cv::Mat img; //grab_imageの引数用
+	DataLoader dataloader;
 
-// stringからwchar_t*への変換がわからず保留
-//TEST(DataLoaderTest, get_file_info_data_type_1_Test) {
-//	std::string ans = 0;
-//	int iret = -1;
-//
-//	DataLoader dataloader;
-//	Params params;
-//
-//	ans = dataloader.get_frame_info();
-//
-//	EXPECT_STREQ();
-//}
+	// 入力データのタイプを動画に設定
+	Params params;
+	params.data_type = 0;
 
-// stringからwchar_t*への変換がわからず保留
-//TEST(DataLoaderTest, get_file_info_data_type_2_Test) {
-//	std::string ans = 0;
-//	int iret = -1;
-//
-//	DataLoader dataloader;
-//	Params params;
-//
-//	ans = dataloader.get_frame_info();
-//
-//	EXPECT_STREQ();
-//}
+	// 存在する動画のファイルパスを設定
+	params.input_movie_path = INPUT_MOVIE_PATH;
+
+	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+	iret = dataloader.grab_image(img);
+
+	ans = dataloader.get_frame_info();
+
+	EXPECT_STREQ("0", ans.c_str());
+}
+
+TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
+	std::string ans = "";
+	int iret = -1;
+	cv::Mat img; //grab_imageの引数用
+	DataLoader dataloader;
+
+	// 入力データのタイプを静止画に設定
+	Params params;
+	params.data_type = 1;
+
+	// 存在する画像ディレクトリパスを設定
+	params.input_image_path = INPUT_IMAGE_PATH;
+
+	std::string image_file_name = "pic_0000.jpg";
+	std::string image_file_path = INPUT_IMAGE_PATH + "\\" + image_file_name;
+
+	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+	iret = dataloader.grab_image(img);
+
+	ans = dataloader.get_frame_info();
+
+	EXPECT_STREQ(image_file_path.c_str(), ans.c_str());
+}
+
+TEST(DataLoaderTest, get_frame_info_data_type_2_Test) {
+	std::string ans = "";
+	int iret = -1;
+	cv::Mat img; //grab_imageの引数用
+	DataLoader dataloader;
+
+	// 入力データのタイプをカメラに設定
+	Params params;
+	params.data_type = 2;
+	params.device_id = 0;
+	params.c_frame_height = 480;
+	params.c_frame_width = 640;
+	params.c_fps = 15;
+
+	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+	iret = dataloader.grab_image(img);
+
+	ans = dataloader.get_frame_info();
+
+	EXPECT_STREQ("0", ans.c_str());
+}
 
 TEST(DataLoaderTest, grab_image_data_type_0_Test) {
 	int ans = 0;
