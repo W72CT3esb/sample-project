@@ -522,6 +522,7 @@ TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
 	EXPECT_STREQ(image_file_path.c_str(), ans.c_str());
 }
 
+// ƒJƒƒ‰‰f‘œ‚ğæ“¾‚·‚é‚Ì‚ÉŠÔ‚ª‚©‚©‚é‚±‚Æ‚É’ˆÓ
 TEST(DataLoaderTest, get_frame_info_data_type_2_Test) {
 	std::string ans = "";
 	int iret = -1;
