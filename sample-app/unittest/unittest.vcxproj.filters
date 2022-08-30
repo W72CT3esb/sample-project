@@ -30,5 +30,8 @@
     <ClCompile Include="..\sample-app\paramloader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="..\sample-app\filewriter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

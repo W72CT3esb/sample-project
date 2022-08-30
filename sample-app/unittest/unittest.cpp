@@ -3,10 +3,14 @@
 #include <Shlwapi.h>
 #include <string.h>
 #include <iostream>
+#include <vector>
+#include <direct.h>
+#include <fstream>
 #include "../sample-app/common.h"
 #include "../sample-app/paramloader.h"
 #include "../sample-app/facedetector.h"
 #include "../sample-app/dataloader.h"
+#include "../sample-app/filewriter.h"
 
 using ::testing::Mock;
 using ::testing::_;
@@ -26,10 +30,12 @@ std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst
 char TMP_INPUT_IMAGE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\tmp\\image";
 
 std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\cascade\\haarcascade_frontalface_alt.xml";
+std::string OUTPUT_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output";
+std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output\\result.csv";
 
 void copy_config_file();
 
-// テストフィクスチャクラスの定義
+// テストフィクスチャクラスの定義(ParamLoader)
 class ParamLoaderTest : public Test {
 protected:
 
@@ -47,6 +53,34 @@ protected:
 	virtual void SetUp() {
 		// 事前に設定ファイルのマスターをカレントディレクトリにコピー
 		copy_config_file();
+		//std::cout << "#####Start TestCase#####\n" << std::endl;
+	}
+
+	// 各テストケース実行後に実行
+	virtual void TearDown() {
+		//std::cout << "#####Finish TestCase#####" << std::endl;
+	}
+};
+
+// テストフィクスチャクラスの定義(FileWriter)
+class FileWriterTest : public Test {
+protected:
+
+	// 試験開始時に一回だけ実行
+	static void SetUpTestCase() {
+		//std::cout << "#####Start Test#####\n" << std::endl;
+	}
+
+	// 試験終了時に一回だけ実行
+	static void TearDownTestCase() {
+		//std::cout << "#####Finish Test#####" << std::endl;
+	}
+
+	// 各テストケース実行前に実行
+	virtual void SetUp() {
+		// 出力ファイルとディレクトリの削除
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());
 		//std::cout << "#####Start TestCase#####\n" << std::endl;
 	}
 
@@ -157,7 +191,7 @@ TEST(DataLoaderTest, initialize_data_type_0_Positive_Test) {
 	params.data_type = 0;
 
 	// 存在する動画のファイルパスを設定
-	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\movie\\sample.avi";
+	params.input_movie_path = INPUT_MOVIE_PATH;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -202,7 +236,7 @@ TEST(DataLoaderTest, initialize_data_type_1_Positive_Test) {
 	params.data_type = 1;
 
 	// 存在する動画のファイルパスを設定
-	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\image";
+	params.input_image_path = INPUT_IMAGE_PATH;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -630,7 +664,7 @@ TEST(DataLoaderTest, grab_image_data_type_1_Test) {
 	// モックオブジェクトの解放
 	delete mock_d;
 
-	EXPECT_EQ(ans, -2);
+	EXPECT_EQ(-2, ans);
 }
 
 TEST(DataLoaderTest, grab_image_data_type_1_Positive_Test) {
@@ -691,7 +725,7 @@ TEST(DataLoaderTest, grab_image_data_type_2_Test) {
 	// モックオブジェクトの解放
 	delete mock_d;
 
-	EXPECT_EQ(ans, -3);
+	EXPECT_EQ(-3, ans);
 }
 
 TEST(DataLoaderTest, grab_image_data_type_2_Positive_Test) {
@@ -721,7 +755,7 @@ TEST(DataLoaderTest, grab_image_data_type_2_Positive_Test) {
 	// モックオブジェクトの解放
 	delete mock_d;
 
-	EXPECT_EQ(ans, 0);
+	EXPECT_EQ(0, ans);
 }
 
 TEST(DataLoaderTest, get_filelist_Positive_Test) {
@@ -743,6 +777,18 @@ TEST(DataLoaderTest, get_filelist_Positive_Test) {
 // ###DataLoaderのテストここまで###
 
 // ###ParamLoaderのテストここから###
+// コンストラクタのテスト（例外が発生しないかチェック）
+TEST_F(ParamLoaderTest, constructor_Test) {
+
+	EXPECT_NO_THROW(ParamLoader());
+}
+
+// デストラクタのテスト（例外が発生しないかチェック）
+TEST_F(ParamLoaderTest, destructor_Test) {
+
+	EXPECT_NO_THROW(ParamLoader().~ParamLoader());
+}
+
 TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {
 	int ans = 0;
 	Params params;
@@ -970,6 +1016,18 @@ TEST_F(ParamLoaderTest, load_param_Positive_Test) {
 // ###ParamLoaderのテストここまで###
 
 // ###FaceDetectorのテストここから###
+// コンストラクタのテスト（例外が発生しないかチェック）
+TEST(FaceDetectorTest, constructor_Test) {
+
+	EXPECT_NO_THROW(FaceDetector());
+}
+
+// デストラクタのテスト（例外が発生しないかチェック）
+TEST(FaceDetectorTest, destructor_Test) {
+
+	EXPECT_NO_THROW(FaceDetector().~FaceDetector());
+}
+
 TEST(FaceDetectorTest, initialize_PathFileExists_Test) {
 	int ans = 0;
 	FaceDetector facedetector;
@@ -1063,3 +1121,171 @@ TEST(FaceDetectorTest, detect_face_Positive_Test) {
 	EXPECT_EQ(0, ans);
 }
 // ###FaceDetectorのテストここまで###
+
+// ###FileWriterのテストここから###
+// コンストラクタのテスト（例外が発生しないかチェック）
+TEST_F(FileWriterTest, constructor_Test) {
+
+	EXPECT_NO_THROW(FileWriter());
+}
+
+// デストラクタのテスト（例外が発生しないかチェック）
+//TEST_F(FileWriterTest, destructor_Test) {
+//
+//	EXPECT_NO_THROW(FileWriter().~FileWriter());
+//	//FileWriter().~FileWriter();
+//	//EXPECT_EQ(0, 0);
+//}
+
+TEST_F(FileWriterTest, initialize_mkdir_Test)
+{
+	int ans = 0;
+	FileWriter filewriter;
+
+	// 存在しないディレクトリパスを設定
+	Params params;
+	params.output_dirpath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output\\test";
+
+	ans = filewriter.initialize(params);
+	EXPECT_EQ(-1, ans);
+}
+
+TEST_F(FileWriterTest, initialize_Positive_Test)
+{
+	int ans = 0;
+	FileWriter filewriter;
+
+	// 出力ディレクトリのパスを設定
+	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	ans = filewriter.initialize(params);
+	EXPECT_EQ(0, ans);
+}
+
+TEST_F(FileWriterTest, open_file_file_open_flag_Test)
+{
+	int ans = 0;
+	int iret = -1;
+	FileWriter filewriter;
+
+	// 出力ディレクトリのパスを設定
+	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	// 初期化
+	iret = filewriter.initialize(params);
+
+	// 2回呼んでフラグをtrueにする
+	ans = filewriter.open_file();
+	ans = filewriter.open_file();
+
+	EXPECT_EQ(-1, ans);
+}
+
+TEST_F(FileWriterTest, open_file_writing_file_is_open_Test)
+{
+	int ans = 0;
+	int iret = -1;
+	FileWriter filewriter;
+
+	// 出力ディレクトリのパスを設定
+	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	// 初期化
+	iret = filewriter.initialize(params);
+
+	// 作成したディレクトリを削除
+	RemoveDirectory(params.output_dirpath.c_str());
+
+	ans = filewriter.open_file();
+
+	EXPECT_EQ(-2, ans);
+}
+
+TEST_F(FileWriterTest, open_file_Positive_Test)
+{
+	int ans = 0;
+	int iret = -1;
+	FileWriter filewriter;
+
+	// 出力ディレクトリのパスを設定
+	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	// 初期化
+	iret = filewriter.initialize(params);
+
+	ans = filewriter.open_file();
+
+	EXPECT_EQ(0, ans);
+}
+
+TEST_F(FileWriterTest, output_file_file_open_flag_Test)
+{
+	int ans = 0;
+	int iret = -1;
+	FileWriter filewriter;
+	DataLoader dataloader;
+	cv::Mat img;
+	std::vector<cv::Rect> faces;
+
+	// 出力ディレクトリのパスを設定
+	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	// 初期化
+	iret = filewriter.initialize(params);
+
+	ans = filewriter.output_file(dataloader, img, faces);
+
+	EXPECT_EQ(-1, ans);
+}
+
+TEST_F(FileWriterTest, output_file_Positive_Test)
+{
+	int ans = -1;
+	int iret = -1;
+	DataLoader dataloader;
+	FaceDetector facedetector;
+	FileWriter filewriter;
+	cv::Mat img;
+	std::vector<cv::Rect> faces;
+
+	// パラメータを設定
+	Params params;
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.cascade_filepath = CASCADE_FILEPATH;
+	params.face_detect_width = 20;
+	params.face_detect_height = 20;
+	params.output_dirpath = OUTPUT_DIRPATH;
+
+	// データ読み込み機能の初期化
+	iret = dataloader.initialize(params);
+
+	// 入力データをオープン
+	iret = dataloader.open_data();
+
+	// 顔検出器の初期化
+	iret = facedetector.initialize(params);
+
+	// ファイル出力器の初期化
+	iret = filewriter.initialize(params);
+
+	// 出力ファイルをオープン
+	iret = filewriter.open_file();
+
+	// 1フレーム取り出す
+	iret = dataloader.grab_image(img);
+
+	// フレームから顔検出
+	iret = facedetector.detect_face(img, faces);
+
+	// 出力ファイルに書き込み
+	ans = filewriter.output_file(dataloader, img, faces);
+
+	EXPECT_EQ(0, ans);
+}
+// ###FileWriterのテストここまで###

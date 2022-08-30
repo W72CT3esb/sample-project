@@ -9,6 +9,7 @@
 #include "facedetector.h"
 #include "paramloader.h"
 #include "common.h"
+#include "filewriter.h"
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
 	FaceDetector facedetector;
 	Params params;
 	ParamLoader paramloader;
+	FileWriter filewriter;
 
 	int iret = -1;
 
@@ -57,33 +59,21 @@ int main()
 	// 1フレームの輪郭情報格納場所
 	std::vector<cv::Rect> faces;
 
-	// 結果を出力するファイルを開く
-	std::ofstream writing_file;
-	const std::string OUTPUT_FILE_NAME = "result.csv";
-
-	if (!PathFileExists(params.output_dirpath.c_str())) // パスの場所に出力ディレクトリが存在するかどうか
+	// ファイル出力器の初期化
+	iret = filewriter.initialize(params);
+	if (iret != 0) // 異常終了
 	{
-		if (_mkdir(params.output_dirpath.c_str()) == 0) // ディレクトリの作成できたかどうか
-		{
-			std::cout << "出力ディレクトリを作成しました" << std::endl;
-		}
-		else
-		{
-			std::cout << "出力ディレクトリを作成できませんでした" << std::endl;
-			return 0;
-		}
-	}
-
-	writing_file.open(params.output_dirpath + "\\" + OUTPUT_FILE_NAME);
-
-	if (!writing_file.is_open()) // 異常終了
-	{
-		std::cout << "ファイルを開けませんでした" << std::endl;
+		std::cout << "initializeが失敗しました! status code:" << iret << std::endl;
 		return 0;
 	}
 
-	// 出力ファイルにフィールドを記入
-	writing_file << "frame番号" << "," << "x座標" << "," << "y座標" << "," << "横幅" << "," << "縦幅" << std::endl;
+	// 出力ファイルをオープン
+	iret = filewriter.open_file();
+	if (iret != 0) // 異常終了
+	{
+		std::cout << "open_fileが失敗しました! status code:" << iret << std::endl;
+		return 0;
+	}
 
 	while (1)
 	{
@@ -98,22 +88,12 @@ int main()
 		// フレームから顔検出
 		iret = facedetector.detect_face(img, faces);
 
-		if (faces.size() == 0) // フレームから顔検出がなかった場合
+		// 出力ファイルに書き込み
+		iret = filewriter.output_file(dataloader, img, faces);
+		if (iret != 0) // 異常終了
 		{
-			// ファイル書き込み
-			writing_file << dataloader.get_frame_info() << "," << "-1" << "," << "-1" << "," << "-1" << "," << "-1" << std::endl;
-		}
-		else
-		{
-			// 検出した顔の個数"faces.size()"分ループを行う
-			for (int i = 0; i < faces.size(); i++)
-			{
-				// 検出した顔を赤色矩形で囲む
-				cv::rectangle(img, cv::Point(faces[i].x, faces[i].y), cv::Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), cv::Scalar(0, 0, 255), 2);
-
-				// ファイル書き込み
-				writing_file << dataloader.get_frame_info() << "," << faces[i].x << "," << faces[i].y << "," << faces[i].width << "," << faces[i].height << std::endl;
-			}
+			std::cout << "output_fileが失敗しました! status code:" << iret << std::endl;
+			return 0;
 		}
 
 		// 画面表示

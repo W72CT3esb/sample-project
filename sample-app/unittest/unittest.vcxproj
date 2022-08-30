@@ -153,6 +153,7 @@
     <ClCompile Include="..\sample-app\common.cpp" />
     <ClCompile Include="..\sample-app\dataloader.cpp" />
     <ClCompile Include="..\sample-app\facedetector.cpp" />
+    <ClCompile Include="..\sample-app\filewriter.cpp" />
     <ClCompile Include="..\sample-app\paramloader.cpp" />
     <ClCompile Include="unittest.cpp" />
   </ItemGroup>
