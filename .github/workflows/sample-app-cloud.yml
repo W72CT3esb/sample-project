@@ -20,4 +20,6 @@ jobs:
         echo "hello world"
         dir
         chdir
-        MSBuild
+        rmdir /s /q sample-app\x64\Release
+        MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
+        xcopy sample-app\sample-app\config.ini sample-app\x64\Release
