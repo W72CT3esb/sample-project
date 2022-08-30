@@ -1,0 +1,22 @@
+name: Test CI/CD
+on: 
+  push:
+   branches:
+    - main
+jobs:
+  build:
+    name: build-job
+    runs-on: windows-2019
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: test shell
+      shell: cmd
+      run: |
+        echo "hello world"
+        dir
+        chdir
