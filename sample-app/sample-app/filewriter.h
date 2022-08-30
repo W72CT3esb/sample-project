@@ -27,7 +27,6 @@ public:
 	int output_file(DataLoader &dataloader, cv::Mat &img, std::vector<cv::Rect> &faces);
 
 private:
-	std::ofstream writing_file;
 	const std::string OUTPUT_FILE_NAME = "result.csv";
 	std::string output_dirpath;
 	bool file_open_flag; // ファイルを開いたか判定するフラグ

@@ -11,6 +11,7 @@
 #include "common.h"
 #include "filewriter.h"
 
+
 int main()
 {
 	DataLoader dataloader;
@@ -25,7 +26,7 @@ int main()
 	iret = paramloader.load_param(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "load_param‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "load_param‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -33,7 +34,7 @@ int main()
 	iret = dataloader.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -41,7 +42,7 @@ int main()
 	iret = dataloader.open_data();
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "open_data‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "open_data‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -49,7 +50,7 @@ int main()
 	iret = facedetector.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -63,7 +64,7 @@ int main()
 	iret = filewriter.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -71,7 +72,7 @@ int main()
 	iret = filewriter.open_file();
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "open_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		//std::cout << "open_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 		return 0;
 	}
 
@@ -81,7 +82,7 @@ int main()
 		iret = dataloader.grab_image(img);
 		if (iret != 0) // ˆÙíI—¹
 		{
-			std::cout << "GrabImage‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+			//std::cout << "GrabImage‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 			return 0;
 		}
 
@@ -92,7 +93,7 @@ int main()
 		iret = filewriter.output_file(dataloader, img, faces);
 		if (iret != 0) // ˆÙíI—¹
 		{
-			std::cout << "output_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+			//std::cout << "output_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
 			return 0;
 		}
 

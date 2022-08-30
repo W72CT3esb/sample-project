@@ -471,7 +471,7 @@ TEST(DataLoaderTest, load_img_img_empty_Test) {
 	DataLoader dataloader;
 	cv::Mat img; //load_imgの引数用
 
-	// 入力データのタイプを静止画に設定
+				 // 入力データのタイプを静止画に設定
 	Params params;
 	params.data_type = 1;
 
@@ -796,7 +796,7 @@ TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {
 
 	// 設定ファイルを削除
 	DeleteFile(COPIED_CONFIG_FILEPATH);
-	
+
 	ans = paramloader.load_param(params);
 	EXPECT_EQ(-2, ans);
 }
@@ -1130,12 +1130,9 @@ TEST_F(FileWriterTest, constructor_Test) {
 }
 
 // デストラクタのテスト（例外が発生しないかチェック）
-//TEST_F(FileWriterTest, destructor_Test) {
-//
-//	EXPECT_NO_THROW(FileWriter().~FileWriter());
-//	//FileWriter().~FileWriter();
-//	//EXPECT_EQ(0, 0);
-//}
+TEST_F(FileWriterTest, destructor_Test) {
+	EXPECT_NO_THROW(FileWriter().~FileWriter());
+}
 
 TEST_F(FileWriterTest, initialize_mkdir_Test)
 {

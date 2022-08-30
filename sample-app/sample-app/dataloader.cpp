@@ -101,7 +101,7 @@ int DataLoader::open_data()
 		this->cap.open(this->input_movie_path);
 		if (!this->cap.isOpened()) // ファイルが開けない場合に失敗
 		{
-			std::cout << "動画ファイルが開けません" << std::endl;
+			//std::cout << "動画ファイルが開けません" << std::endl;
 			return -2;
 		}
 
@@ -124,7 +124,7 @@ int DataLoader::open_data()
 		this->cap.open(this->device_id);
 		if (!this->cap.isOpened()) // ファイルが開けない場合に失敗
 		{
-			std::cout << "cameraを開けません" << std::endl;
+			//std::cout << "cameraを開けません" << std::endl;
 			return -4;
 		}
 		cap.set(cv::CAP_PROP_FRAME_WIDTH, this->img_w);
@@ -162,7 +162,7 @@ int DataLoader::load_mv(cv::Mat &img)
 		return -2;
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "フレーム番号 " << this->frame_index << std::endl;
+	//std::cout << "フレーム番号 " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
 }
@@ -170,14 +170,14 @@ int DataLoader::load_mv(cv::Mat &img)
 // 画像を読み込む関数
 int DataLoader::load_img(cv::Mat &img)
 {
-	std::cout << this->file_names[this->frame_index] << std::endl;
+	//std::cout << this->file_names[this->frame_index] << std::endl;
 	img = cv::imread(this->file_names[this->frame_index]);
 	if (img.empty()) // imgが空だったら
 	{
 		return -1;
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "フレーム番号 " << this->frame_index << std::endl;
+	//std::cout << "フレーム番号 " << this->frame_index << std::endl;
 	return 0;
 }
 

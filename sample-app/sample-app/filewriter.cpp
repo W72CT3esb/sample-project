@@ -9,18 +9,23 @@
 #include "dataloader.h"
 #include "filewriter.h"
 
+std::ofstream writing_file;
+
 // コンストラクタ
 FileWriter::FileWriter()
 {
 	//std::cout << "FileWriterオブジェクト生成" << std::endl;
 	this->output_dirpath = "";
 	this->file_open_flag = false;
+	//throw std::exception();
 }
 
 // デストラクタ
 FileWriter::~FileWriter()
 {
 	//std::cout << "FileWriterオブジェクト破棄" << std::endl;
+	writing_file.close();
+	//throw std::exception();
 }
 
 // 初期化関数
@@ -30,7 +35,7 @@ int FileWriter::initialize(const Params &params)
 	{
 		if (_mkdir(params.output_dirpath.c_str()) != 0) // ディレクトリの作成できたかどうか
 		{
-			std::cout << "出力ディレクトリを作成できませんでした" << std::endl;
+			//std::cout << "出力ディレクトリを作成できませんでした" << std::endl;
 			return -1;
 		}
 	}
@@ -47,17 +52,17 @@ int FileWriter::open_file()
 		return -1;
 	}
 
-	this->writing_file.open(this->output_dirpath + "\\" + this->OUTPUT_FILE_NAME);
+	writing_file.open(this->output_dirpath + "\\" + this->OUTPUT_FILE_NAME);
 
-	if (!this->writing_file.is_open()) // 異常終了
+	if (!writing_file.is_open()) // 異常終了
 	{
-		std::cout << "ファイルを開けませんでした" << std::endl;
+		//std::cout << "ファイルを開けませんでした" << std::endl;
 		return -2;
 	}
 	this->file_open_flag = true;
 
 	// 出力ファイルにフィールドを記入
-	this->writing_file << "frame番号" << "," << "x座標" << "," << "y座標" << "," << "横幅" << "," << "縦幅" << std::endl;
+	writing_file << "frame番号" << "," << "x座標" << "," << "y座標" << "," << "横幅" << "," << "縦幅" << std::endl;
 
 	return 0;
 }
@@ -73,7 +78,7 @@ int FileWriter::output_file(DataLoader &dataloader, cv::Mat &img, std::vector<cv
 	if (faces.size() == 0) // フレーム顔検出がされなかった場合
 	{
 		// ファイル書き込み
-		this->writing_file << dataloader.get_frame_info() << "," << "-1" << "," << "-1" << "," << "-1" << "," << "-1" << std::endl;
+		writing_file << dataloader.get_frame_info() << "," << "-1" << "," << "-1" << "," << "-1" << "," << "-1" << std::endl;
 	}
 	else
 	{
@@ -84,7 +89,7 @@ int FileWriter::output_file(DataLoader &dataloader, cv::Mat &img, std::vector<cv
 			cv::rectangle(img, cv::Point(faces[i].x, faces[i].y), cv::Point(faces[i].x + faces[i].width, faces[i].y + faces[i].height), cv::Scalar(0, 0, 255), 2);
 
 			// ファイル書き込み
-			this->writing_file << dataloader.get_frame_info() << "," << faces[i].x << "," << faces[i].y << "," << faces[i].width << "," << faces[i].height << std::endl;
+			writing_file << dataloader.get_frame_info() << "," << faces[i].x << "," << faces[i].y << "," << faces[i].width << "," << faces[i].height << std::endl;
 		}
 	}
 
