@@ -9,7 +9,7 @@
 // コンストラクタ
 DataLoader::DataLoader()
 {
-	//std::cout << "LoadDataオブジェクト生成" << std::endl;
+	//std::cout << "DataLoaderオブジェクト生成" << std::endl;
 	this->frame_num = 0;
 	this->frame_index = 0;
 	this->img_h = 0;
@@ -25,7 +25,7 @@ DataLoader::DataLoader()
 // デストラクタ
 DataLoader::~DataLoader()
 {
-	//std::cout << "LoadDataオブジェクト破棄" << std::endl;
+	//std::cout << "DataLoaderオブジェクト破棄" << std::endl;
 }
 
 // フレーム番号を取得する関数
@@ -89,7 +89,7 @@ void DataLoader::print_info()
 }
 
 // 入力データをオープンする関数
-int DataLoader::open_data()
+int DataLoader::open_data()	
 {
 	int iret = -1;
 	if(this->file_open_flag) // 関数を二回以上は実行させない(falseの時に実行)
@@ -161,7 +161,7 @@ int DataLoader::load_mv(cv::Mat &img)
 	{
 		return -2;
 	}
-	cv::resize(img, img, cv::Size(), 0.5, 0.5);
+	//cv::resize(img, img, cv::Size(), 0.5, 0.5);
 	//std::cout << "フレーム番号 " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
@@ -176,7 +176,7 @@ int DataLoader::load_img(cv::Mat &img)
 	{
 		return -1;
 	}
-	cv::resize(img, img, cv::Size(), 0.5, 0.5);
+	//cv::resize(img, img, cv::Size(), 0.5, 0.5);
 	//std::cout << "フレーム番号 " << this->frame_index << std::endl;
 	return 0;
 }
@@ -226,7 +226,6 @@ int DataLoader::grab_image(cv::Mat &img)
 			return -3;
 		}
 	}
-
 	this->frame_index++; // 1フレーム取り出したらカウント
 
 	return 0;

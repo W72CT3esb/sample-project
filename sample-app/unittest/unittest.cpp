@@ -6,6 +6,7 @@
 #include <vector>
 #include <direct.h>
 #include <fstream>
+#include <chrono>
 #include "../sample-app/common.h"
 #include "../sample-app/paramloader.h"
 #include "../sample-app/facedetector.h"
@@ -121,6 +122,245 @@ TEST(CommonTest, SetWorkingDirectory_Test) {
 	EXPECT_EQ(true, ans);
 }
 // ###Commonのテストここまで###
+
+// ###ParamLoaderのテストここから###
+// コンストラクタのテスト（例外が発生しないかチェック）
+TEST_F(ParamLoaderTest, constructor_Test) {
+
+	EXPECT_NO_THROW(ParamLoader());
+}
+
+// デストラクタのテスト（例外が発生しないかチェック）
+TEST_F(ParamLoaderTest, destructor_Test) {
+
+	EXPECT_NO_THROW(ParamLoader().~ParamLoader());
+}
+
+TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイルを削除
+	DeleteFile(COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-2, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_device_id_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "device_id", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-3, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_frame_width", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-4, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_frame_width", "-2", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-5, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_frame_height", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-6, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_frame_height", "-2", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-7, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_fps_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_fps", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-8, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_c_fps_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("camera", "c_fps", "-2", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-9, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_data_type_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("input", "data_type", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-10, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_data_type_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("input", "data_type", "3", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-11, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_input_movie_path_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("input", "input_movie_path", "", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-12, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_input_image_path_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("input", "input_image_path", "", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-13, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_cascade_filepath_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("detector", "cascade_filepath", "", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-14, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("detector", "face_detect_width", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-15, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("detector", "face_detect_width", "-2", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-16, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test1) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("detector", "face_detect_height", "-1", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-17, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test2) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("detector", "face_detect_height", "-2", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-18, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_params_output_dirpath_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	// 設定ファイル内のパラメータ変更
+	WritePrivateProfileString("output", "output_dirpath", "", COPIED_CONFIG_FILEPATH);
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(-19, ans);
+}
+
+TEST_F(ParamLoaderTest, load_param_Positive_Test) {
+	int ans = 0;
+	Params params;
+	ParamLoader paramloader;
+
+	ans = paramloader.load_param(params);
+	EXPECT_EQ(0, ans);
+}
+// ###ParamLoaderのテストここまで###
 
 // ###DataLoaderのテストここから###
 // コンストラクタのテスト（例外が発生しないかチェック）
@@ -359,7 +599,7 @@ TEST(DataLoaderTest, open_data_file_data_type_1_Positive_Test) {
 	EXPECT_EQ(0, ans);
 }
 
-TEST(DataLoaderTest, open_data_file_data_type_2_file_namessize_Test) {
+TEST(DataLoaderTest, open_data_file_data_type_2_capisOpened_Test) {
 	int ans = 0;
 	int iret = -1;
 	DataLoader dataloader;
@@ -776,245 +1016,6 @@ TEST(DataLoaderTest, get_filelist_Positive_Test) {
 }
 // ###DataLoaderのテストここまで###
 
-// ###ParamLoaderのテストここから###
-// コンストラクタのテスト（例外が発生しないかチェック）
-TEST_F(ParamLoaderTest, constructor_Test) {
-
-	EXPECT_NO_THROW(ParamLoader());
-}
-
-// デストラクタのテスト（例外が発生しないかチェック）
-TEST_F(ParamLoaderTest, destructor_Test) {
-
-	EXPECT_NO_THROW(ParamLoader().~ParamLoader());
-}
-
-TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイルを削除
-	DeleteFile(COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-2, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_device_id_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "device_id", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-3, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_frame_width", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-4, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_frame_width", "-2", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-5, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_frame_height", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-6, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_frame_height", "-2", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-7, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_fps_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_fps", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-8, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_c_fps_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("camera", "c_fps", "-2", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-9, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_data_type_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("input", "data_type", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-10, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_data_type_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("input", "data_type", "3", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-11, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_input_movie_path_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("input", "input_movie_path", "", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-12, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_input_image_path_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("input", "input_image_path", "", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-13, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_cascade_filepath_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("detector", "cascade_filepath", "", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-14, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("detector", "face_detect_width", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-15, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("detector", "face_detect_width", "-2", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-16, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test1) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("detector", "face_detect_height", "-1", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-17, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test2) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("detector", "face_detect_height", "-2", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-18, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_params_output_dirpath_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	// 設定ファイル内のパラメータ変更
-	WritePrivateProfileString("output", "output_dirpath", "", COPIED_CONFIG_FILEPATH);
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(-19, ans);
-}
-
-TEST_F(ParamLoaderTest, load_param_Positive_Test) {
-	int ans = 0;
-	Params params;
-	ParamLoader paramloader;
-
-	ans = paramloader.load_param(params);
-	EXPECT_EQ(0, ans);
-}
-// ###ParamLoaderのテストここまで###
-
 // ###FaceDetectorのテストここから###
 // コンストラクタのテスト（例外が発生しないかチェック）
 TEST(FaceDetectorTest, constructor_Test) {
@@ -1286,3 +1287,85 @@ TEST_F(FileWriterTest, output_file_Positive_Test)
 	EXPECT_EQ(0, ans);
 }
 // ###FileWriterのテストここまで###
+
+
+// ###処理時間のテストここから###
+TEST(FaceDetectorTest, detect_face_elapsed_time_Test) {
+	int ans = 0;
+	int iret = -1;
+	DataLoader dataloader;
+	FaceDetector facedetector;
+	Params params;
+	ParamLoader paramloader;
+
+	cv::Mat img;
+	std::vector<cv::Rect> faces;
+
+	std::chrono::system_clock::time_point  start, end;
+	double elapsed_time;
+
+	// 入力データのタイプを動画に設定
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.cascade_filepath = CASCADE_FILEPATH;
+
+	// 動画処理で初期化
+	iret = dataloader.initialize(params);
+
+	// 動画データをオープン
+	iret = dataloader.open_data();
+
+	// 顔検出器の初期化
+	iret = facedetector.initialize(params);
+
+	// 1フレームずつ取り出し、顔検出する
+	iret = dataloader.grab_image(img);
+	start = std::chrono::system_clock::now(); // 計測開始時間
+	ans = facedetector.detect_face(img, faces);
+	end = std::chrono::system_clock::now();  // 計測終了時間
+
+	// 処理に要した時間をミリ秒に変換
+	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << elapsed_time << " msec" << std::endl;
+
+	// 1フレームずつ取り出し、顔検出する
+	iret = dataloader.grab_image(img);
+	start = std::chrono::system_clock::now(); // 計測開始時間
+	ans = facedetector.detect_face(img, faces);
+	end = std::chrono::system_clock::now();  // 計測終了時間
+
+	// 処理に要した時間をミリ秒に変換
+	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << elapsed_time << " msec" << std::endl;
+
+	// 1フレームずつ取り出し、顔検出する
+	iret = dataloader.grab_image(img);
+	start = std::chrono::system_clock::now(); // 計測開始時間
+	ans = facedetector.detect_face(img, faces);
+	end = std::chrono::system_clock::now();  // 計測終了時間
+
+	// 処理に要した時間をミリ秒に変換
+	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << elapsed_time << " msec" << std::endl;
+
+	// 1フレームずつ取り出し、顔検出する
+	iret = dataloader.grab_image(img);
+	start = std::chrono::system_clock::now(); // 計測開始時間
+	ans = facedetector.detect_face(img, faces);
+	end = std::chrono::system_clock::now();  // 計測終了時間
+
+	// 処理に要した時間をミリ秒に変換
+	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << elapsed_time << " msec" << std::endl;
+
+	// 1フレームずつ取り出し、顔検出する
+	iret = dataloader.grab_image(img);
+	start = std::chrono::system_clock::now(); // 計測開始時間
+	ans = facedetector.detect_face(img, faces);
+	end = std::chrono::system_clock::now();  // 計測終了時間
+
+	// 処理に要した時間をミリ秒に変換
+	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << elapsed_time << " msec" << std::endl;
+}
+// ###処理時間のテストここまで###
