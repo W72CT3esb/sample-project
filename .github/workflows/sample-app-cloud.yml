@@ -37,10 +37,13 @@ jobs:
       name: download-build-artifact
       with:
         name: build-artifacts
-        path: AAAAAAAA
+        path: artifacts
     - name: test shell
       shell: cmd
       run: |
         echo "hello world"
+        dir
+        chdir
+        cd artifacts
         dir
         chdir
