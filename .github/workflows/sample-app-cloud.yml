@@ -42,8 +42,5 @@ jobs:
       shell: cmd
       run: |
         echo "hello world"
-        dir
-        chdir
         cd artifacts
-        dir
-        chdir
+        sample-app.exe

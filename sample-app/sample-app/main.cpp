@@ -26,32 +26,36 @@ int main()
 	iret = paramloader.load_param(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "load_param‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -1;
+		std::cout << "paramloader.load_param‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -1;
 	}
 
 	// ƒf[ƒ^“Ç‚İ‚İ‹@”\‚Ì‰Šú‰»
 	iret = dataloader.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -2;
+		std::cout << "dataloader.initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -2;
 	}
 
 	// “ü—Íƒf[ƒ^‚ğƒI[ƒvƒ“
 	iret = dataloader.open_data();
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "open_data‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -3;
+		std::cout << "dataloader.open_data‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -3;
 	}
 
 	// ŠçŒŸoŠí‚Ì‰Šú‰»
 	iret = facedetector.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -4;
+		std::cout << "facedetector.initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -4;
 	}
 
 	// 1ƒtƒŒ[ƒ€‚ÌŠi”[êŠ
@@ -64,16 +68,18 @@ int main()
 	iret = filewriter.initialize(params);
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -5;
+		std::cout << "filewriter.initialize‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -5;
 	}
 
 	// o—Íƒtƒ@ƒCƒ‹‚ğƒI[ƒvƒ“
 	iret = filewriter.open_file();
 	if (iret != 0) // ˆÙíI—¹
 	{
-		std::cout << "open_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-		return -6;
+		std::cout << "filewriter.open_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -6;
 	}
 
 	while (1)
@@ -82,8 +88,9 @@ int main()
 		iret = dataloader.grab_image(img);
 		if (iret != 0) // ˆÙíI—¹
 		{
-			std::cout << "GrabImage‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-			return -7;
+			std::cout << "dataloader.GrabImage‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+			throw std::exception();
+			//return -7;
 		}
 
 		// ƒtƒŒ[ƒ€‚©‚çŠçŒŸo
@@ -93,8 +100,9 @@ int main()
 		iret = filewriter.output_file(dataloader, img, faces);
 		if (iret != 0) // ˆÙíI—¹
 		{
-			std::cout << "output_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
-			return -8;
+			std::cout << "facedetector.output_file‚ª¸”s‚µ‚Ü‚µ‚½! status code:" << iret << std::endl;
+			throw std::exception();
+			//return -8;
 		}
 
 		// ‰æ–Ê•\¦
