@@ -27,8 +27,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "paramloader.load_paramが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -1;
+		//throw std::exception();
+		return -1;
 	}
 
 	// データ読み込み機能の初期化
@@ -36,8 +36,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "dataloader.initializeが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -2;
+		//throw std::exception();
+		return -2;
 	}
 
 	// 入力データをオープン
@@ -45,8 +45,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "dataloader.open_dataが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -3;
+		//throw std::exception();
+		return -3;
 	}
 
 	// 顔検出器の初期化
@@ -54,8 +54,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "facedetector.initializeが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -4;
+		//throw std::exception();
+		return -4;
 	}
 
 	// 1フレームの格納場所
@@ -69,8 +69,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "filewriter.initializeが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -5;
+		//throw std::exception();
+		return -5;
 	}
 
 	// 出力ファイルをオープン
@@ -78,8 +78,8 @@ int main()
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "filewriter.open_fileが失敗しました! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -6;
+		//throw std::exception();
+		return -6;
 	}
 
 	while (1)
@@ -89,8 +89,8 @@ int main()
 		if (iret != 0) // 異常終了
 		{
 			std::cout << "dataloader.GrabImageが失敗しました! status code:" << iret << std::endl;
-			throw std::exception();
-			//return -7;
+			//throw std::exception();
+			return -7;
 		}
 
 		// フレームから顔検出
@@ -101,8 +101,8 @@ int main()
 		if (iret != 0) // 異常終了
 		{
 			std::cout << "facedetector.output_fileが失敗しました! status code:" << iret << std::endl;
-			throw std::exception();
-			//return -8;
+			//throw std::exception();
+			return -8;
 		}
 
 		// 画面表示
