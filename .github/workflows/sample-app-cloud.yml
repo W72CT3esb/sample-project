@@ -44,5 +44,7 @@ jobs:
         echo "hello world"
         cd artifacts
         chdir
+        dir
+        simple.exe
         sample-app.exe
         echo "AAAAAAA world"
