@@ -48,4 +48,5 @@ jobs:
         simple.exe
         sample-app.exe > result.txt
         type result.txt
+        dir
         echo "AAAAAAA world"
