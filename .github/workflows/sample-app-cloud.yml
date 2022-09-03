@@ -30,6 +30,7 @@ jobs:
 
   test:
     name: test-job
+    needs: build
     runs-on: windows-2019
     steps:
     - uses: actions/download-artifact@v3
