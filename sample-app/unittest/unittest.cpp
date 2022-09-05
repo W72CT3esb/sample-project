@@ -22,6 +22,23 @@ const int DEFINE_STRING_SIZE = 1024;
 std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
 char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
+// 絶対パスの場合
+std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1\\sample1.avi";
+std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample2\\sample2.avi";
+std::string TMP_INPUT_MOVIE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\tmp";
+
+std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample2";
+std::string TMP_INPUT_IMAGE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\tmp";
+
+std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\haarcascade_frontalface_alt.xml";
+char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp";
+char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp\\test.xml";
+
+std::string OUTPUT_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output";
+std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv";
+
+/* 相対パスの場合
 std::string INPUT_MOVIE_PATH = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
 std::string INPUT_MOVIE_PATH2 = "..\\..\\..\\..\\..\\data\\movie\\sample2\\sample2.avi";
 std::string TMP_INPUT_MOVIE_DIRPATH = "..\\..\\..\\..\\..\\data\\movie\\tmp";
@@ -34,8 +51,9 @@ std::string CASCADE_FILEPATH = "..\\..\\..\\..\\..\\data\\cascade\\haarcascade_f
 char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp";
 char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp\\test.xml";
 
-std::string OUTPUT_DIRPATH = "..\\..\\..\\..\\..\\data\\Output";
-std::string OUTPUT_FILEPATH = "..\\..\\..\\..\\..\\data\\Output\\result.csv";
+std::string OUTPUT_DIRPATH = "..\\..\\..\\..\\..\\Output";
+std::string OUTPUT_FILEPATH = "..\\..\\..\\..\\..\\Output\\result.csv";
+*/
 
 void copy_config_file();
 
