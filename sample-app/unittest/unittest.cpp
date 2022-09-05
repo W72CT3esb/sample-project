@@ -19,10 +19,11 @@ using ::testing::Return;
 using ::testing::Test;
 
 const int DEFINE_STRING_SIZE = 1024;
-std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
-char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
 // 絶対パスの場合
+std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\src\\sample-app\\sample-app\\sample-app\\config.ini";
+char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
+
 std::string INPUT_MOVIE_PATH1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1\\sample1.avi";
 std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample2\\sample2.avi";
 std::string TMP_INPUT_MOVIE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\tmp";
@@ -47,6 +48,9 @@ std::string OUTPUT_DIRPATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\da
 
 /*
 // 相対パスの場合
+std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
+char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
+
 std::string INPUT_MOVIE_PATH1 = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
 std::string INPUT_MOVIE_PATH2 = "..\\..\\..\\..\\..\\data\\movie\\sample2\\sample2.avi";
 std::string TMP_INPUT_MOVIE_DIRPATH = "..\\..\\..\\..\\..\\data\\movie\\tmp";
