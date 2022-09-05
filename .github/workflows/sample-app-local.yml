@@ -30,25 +30,27 @@ jobs:
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         sample-app\x64\Release\unittest.exe
+        echo "###################"
+        sample-app\x64\Release\sample-app.exe
 
-    - name: copy
-      shell: cmd
-      run: |
-        rmdir /s /q path\to\artifacts
-        mkdir path\to\artifacts
-        xcopy sample-app\x64\Release path\to\artifacts
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: my-artifact
-        path: path/to/artifacts
+  #   - name: copy
+  #     shell: cmd
+  #     run: |
+  #       rmdir /s /q path\to\artifacts
+  #       mkdir path\to\artifacts
+  #       xcopy sample-app\x64\Release path\to\artifacts
+  #   - uses: actions/upload-artifact@v3
+  #     with: 
+  #       name: my-artifact
+  #       path: path/to/artifacts
 
-  deploy:
-    name: deploy-job
-    needs: test
-    runs-on: self-hosted
-    steps:
-    - uses: actions/download-artifact@v3
-      name: deploy
-      with:
-        name: my-artifact
-        path: C:\Users\NES\Desktop\deploy
+  # deploy:
+  #   name: deploy-job
+  #   needs: test
+  #   runs-on: self-hosted
+  #   steps:
+  #   - uses: actions/download-artifact@v3
+  #     name: deploy
+  #     with:
+  #       name: my-artifact
+  #       path: C:\Users\NES\Desktop\deploy
