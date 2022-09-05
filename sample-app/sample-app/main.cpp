@@ -98,7 +98,6 @@ int main()
 
 		// 出力ファイルに書き込み
 		iret = filewriter.output_file(dataloader, img, faces);
-		iret = -1;
 		if (iret != 0) // 異常終了
 		{
 			std::cout << "facedetector.output_file failed! status code:" << iret << std::endl;
