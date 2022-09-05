@@ -29,8 +29,6 @@ jobs:
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        sample-app\x64\Release\unittest.exe
-        echo "###################"
         sample-app\x64\Release\sample-app.exe
 
   #   - name: copy

@@ -24,9 +24,10 @@ int main()
 
 	// 設定ファイルからパラメータを読み込み
 	iret = paramloader.load_param(params);
+	//iret = -1;
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "paramloader.load_paramが失敗しました! status code:" << iret << std::endl;
+		std::cout << "paramloader.load_param failed! status code:" << iret << std::endl;
 		//throw std::exception();
 		return -1;
 	}
@@ -35,27 +36,27 @@ int main()
 	iret = dataloader.initialize(params);
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "dataloader.initializeが失敗しました! status code:" << iret << std::endl;
-		//throw std::exception();
-		return -2;
+		std::cout << "dataloader.initialize failed! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -2;
 	}
 
 	// 入力データをオープン
 	iret = dataloader.open_data();
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "dataloader.open_dataが失敗しました! status code:" << iret << std::endl;
-		//throw std::exception();
-		return -3;
+		std::cout << "dataloader.open_data failed! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -3;
 	}
 
 	// 顔検出器の初期化
 	iret = facedetector.initialize(params);
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "facedetector.initializeが失敗しました! status code:" << iret << std::endl;
-		//throw std::exception();
-		return -4;
+		std::cout << "facedetector.initialize failed! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -4;
 	}
 
 	// 1フレームの格納場所
@@ -68,18 +69,18 @@ int main()
 	iret = filewriter.initialize(params);
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "filewriter.initializeが失敗しました! status code:" << iret << std::endl;
-		//throw std::exception();
-		return -5;
+		std::cout << "filewriter.initialize failed! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -5;
 	}
 
 	// 出力ファイルをオープン
 	iret = filewriter.open_file();
 	if (iret != 0) // 異常終了
 	{
-		std::cout << "filewriter.open_fileが失敗しました! status code:" << iret << std::endl;
-		//throw std::exception();
-		return -6;
+		std::cout << "filewriter.open_file failed! status code:" << iret << std::endl;
+		throw std::exception();
+		//return -6;
 	}
 
 	while (1)
@@ -88,9 +89,9 @@ int main()
 		iret = dataloader.grab_image(img);
 		if (iret != 0) // 異常終了
 		{
-			std::cout << "dataloader.GrabImageが失敗しました! status code:" << iret << std::endl;
-			//throw std::exception();
-			return -7;
+			std::cout << "dataloader.GrabImage failed! status code:" << iret << std::endl;
+			throw std::exception();
+			//return -7;
 		}
 
 		// フレームから顔検出
@@ -100,13 +101,13 @@ int main()
 		iret = filewriter.output_file(dataloader, img, faces);
 		if (iret != 0) // 異常終了
 		{
-			std::cout << "facedetector.output_fileが失敗しました! status code:" << iret << std::endl;
-			//throw std::exception();
-			return -8;
+			std::cout << "facedetector.output_file failed! status code:" << iret << std::endl;
+			throw std::exception();
+			//return -8;
 		}
 
 		// 画面表示
-		cv::imshow("Window", img);
+		//cv::imshow("Window", img);
 		
 		if (cv::waitKey(10) == 'q') // "q"が押されたら終了
 		{

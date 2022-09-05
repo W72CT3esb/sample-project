@@ -161,8 +161,8 @@ int DataLoader::load_mv(cv::Mat &img)
 	{
 		return -2;
 	}
-	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "frame: " << this->frame_index << std::endl;
+	//cv::resize(img, img, cv::Size(), 0.5, 0.5);
+	//std::cout << "frame: " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
 }
