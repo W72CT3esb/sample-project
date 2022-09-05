@@ -23,36 +23,51 @@ std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
 char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
 // 絶対パスの場合
-std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1\\sample1.avi";
+std::string INPUT_MOVIE_PATH1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1\\sample1.avi";
 std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample2\\sample2.avi";
 std::string TMP_INPUT_MOVIE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\tmp";
+std::string INPUT_MOVIE_PATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\movie\\sample1\\sample.avi";
+std::string INPUT_MOVIE_PATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1";
 
-std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1";
 std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample2";
 std::string TMP_INPUT_IMAGE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\tmp";
+std::string INPUT_IMAGE_PATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\image\\sample1";
+std::string INPUT_IMAGE_PATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1\\pic_0000.jpg";
 
 std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\haarcascade_frontalface_alt.xml";
 char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp";
 char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp\\test.xml";
+std::string CASCADE_FILEPATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\cascade\\haarcascade_frontalface_alt.xml";
+std::string CASCADE_FILEPATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade";
 
 std::string OUTPUT_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output";
 std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv";
+std::string OUTPUT_DIRPATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\Output";
 
-/* 相対パスの場合
-std::string INPUT_MOVIE_PATH = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
+/*
+// 相対パスの場合
+std::string INPUT_MOVIE_PATH1 = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
 std::string INPUT_MOVIE_PATH2 = "..\\..\\..\\..\\..\\data\\movie\\sample2\\sample2.avi";
 std::string TMP_INPUT_MOVIE_DIRPATH = "..\\..\\..\\..\\..\\data\\movie\\tmp";
+std::string INPUT_MOVIE_PATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\movie\\sample1\\sample.avi";
+std::string INPUT_MOVIE_PATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\movie\\sample1";
 
-std::string INPUT_IMAGE_PATH = "..\\..\\..\\..\\..\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH1 = "..\\..\\..\\..\\..\\data\\image\\sample1";
 std::string INPUT_IMAGE_PATH2 = "..\\..\\..\\..\\..\\data\\image\\sample2";
 std::string TMP_INPUT_IMAGE_DIRPATH = "..\\..\\..\\..\\..\\data\\image\\tmp";
+std::string INPUT_IMAGE_PATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\image\\sample1";
+std::string INPUT_IMAGE_PATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\image\\sample1\\pic_0000.jpg";
 
 std::string CASCADE_FILEPATH = "..\\..\\..\\..\\..\\data\\cascade\\haarcascade_frontalface_alt.xml";
 char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp";
 char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp\\test.xml";
+std::string CASCADE_FILEPATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\cascade\\haarcascade_frontalface_alt.xml";
+std::string CASCADE_FILEPATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\cascade";
 
 std::string OUTPUT_DIRPATH = "..\\..\\..\\..\\..\\Output";
 std::string OUTPUT_FILEPATH = "..\\..\\..\\..\\..\\Output\\result.csv";
+std::string OUTPUT_DIRPATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\Output";
 */
 
 void copy_config_file();
@@ -422,7 +437,7 @@ TEST(DataLoaderTest, initialize_data_type_0_PathFileExists_Test) {
 	params.data_type = 0;
 
 	// ファイルが存在しないパスを設定
-	params.input_movie_path = "..\\..\\..\\..\\..\\data_\\movie\\sample1\\sample.avi";
+	params.input_movie_path = INPUT_MOVIE_PATH_DUMMY1;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -437,7 +452,7 @@ TEST(DataLoaderTest, initialize_data_type_0_PathIsDirectory_Test) {
 	params.data_type = 0;
 
 	// ディレクトリのパスを設定
-	params.input_movie_path = "..\\..\\..\\..\\..\\data\\movie\\sample1";
+	params.input_movie_path = INPUT_MOVIE_PATH_DUMMY2;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -452,7 +467,7 @@ TEST(DataLoaderTest, initialize_data_type_0_Positive_Test) {
 	params.data_type = 0;
 
 	// 存在する動画のファイルパスを設定
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -467,7 +482,7 @@ TEST(DataLoaderTest, initialize_data_type_1_PathFileExists_Test) {
 	params.data_type = 1;
 
 	// ディレクトリが存在しないパスを設定
-	params.input_image_path = "..\\..\\..\\..\\..\\data_\\image\\sample1";
+	params.input_image_path = INPUT_IMAGE_PATH_DUMMY1;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-3, ans);
@@ -482,7 +497,7 @@ TEST(DataLoaderTest, initialize_data_type_1_PathIsDirectory_Test) {
 	params.data_type = 1;
 
 	// ファイルのパスを設定
-	params.input_image_path = "..\\..\\..\\..\\..\\data\\image\\sample1\\pic_0000.jpg";
+	params.input_image_path = INPUT_IMAGE_PATH_DUMMY2;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-4, ans);
@@ -497,7 +512,7 @@ TEST(DataLoaderTest, initialize_data_type_1_Positive_Test) {
 	params.data_type = 1;
 
 	// 存在する動画のファイルパスを設定
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(0, ans);
@@ -529,7 +544,7 @@ TEST(DataLoaderTest, open_data_file_open_flag_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -548,20 +563,20 @@ TEST(DataLoaderTest, open_data_file_data_type_0_capisOpened_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
 
 	// 入力データを別のディレクトリに移動
 	_mkdir(TMP_INPUT_MOVIE_DIRPATH.c_str());
-	MoveFile(INPUT_MOVIE_PATH.c_str(), (TMP_INPUT_MOVIE_DIRPATH+"\\sample.avi").c_str());
+	MoveFile(INPUT_MOVIE_PATH1.c_str(), (TMP_INPUT_MOVIE_DIRPATH+"\\sample.avi").c_str());
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-2, ans);
 
 	// 入力データを元のディレクトリに移動
-	MoveFile((TMP_INPUT_MOVIE_DIRPATH + "\\sample.avi").c_str(), INPUT_MOVIE_PATH.c_str());
+	MoveFile((TMP_INPUT_MOVIE_DIRPATH + "\\sample.avi").c_str(), INPUT_MOVIE_PATH1.c_str());
 	RemoveDirectory(TMP_INPUT_MOVIE_DIRPATH.c_str());
 }
 
@@ -573,7 +588,7 @@ TEST(DataLoaderTest, open_data_file_data_type_0_Positive_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -590,20 +605,20 @@ TEST(DataLoaderTest, open_data_file_data_type_1_file_namessize_Test) {
 
 	// 入力データのタイプを画像に設定
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 画像処理で初期化
 	iret = dataloader.initialize(params);
 
 	// 入力データを別のディレクトリに移動
 	_mkdir(TMP_INPUT_IMAGE_DIRPATH.c_str());
-	MoveFile(INPUT_IMAGE_PATH.c_str(), (TMP_INPUT_IMAGE_DIRPATH +"\\sample1").c_str());
+	MoveFile(INPUT_IMAGE_PATH1.c_str(), (TMP_INPUT_IMAGE_DIRPATH +"\\sample1").c_str());
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-3, ans);
 
 	// 入力データを元のディレクトリに移動
-	MoveFile((TMP_INPUT_IMAGE_DIRPATH + "\\sample1").c_str(), INPUT_IMAGE_PATH.c_str());
+	MoveFile((TMP_INPUT_IMAGE_DIRPATH + "\\sample1").c_str(), INPUT_IMAGE_PATH1.c_str());
 	RemoveDirectory(TMP_INPUT_IMAGE_DIRPATH.c_str());
 }
 
@@ -615,7 +630,7 @@ TEST(DataLoaderTest, open_data_file_data_type_1_Positive_Test) {
 
 	// 入力データのタイプを画像に設定
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 画像処理で初期化
 	iret = dataloader.initialize(params);
@@ -667,7 +682,7 @@ TEST(DataLoaderTest, load_mv_file_open_flag_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -715,7 +730,7 @@ TEST(DataLoaderTest, load_mv_Positive_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -759,7 +774,7 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -785,7 +800,7 @@ TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
 	params.data_type = 0;
 
 	// 存在する動画のファイルパスを設定
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	iret = dataloader.initialize(params);
 	iret = dataloader.open_data();
@@ -807,10 +822,10 @@ TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
 	params.data_type = 1;
 
 	// 存在する画像ディレクトリパスを設定
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	std::string image_file_name = "pic_0000.jpg";
-	std::string image_file_path = INPUT_IMAGE_PATH + "\\" + image_file_name;
+	std::string image_file_path = INPUT_IMAGE_PATH1 + "\\" + image_file_name;
 
 	iret = dataloader.initialize(params);
 	iret = dataloader.open_data();
@@ -855,7 +870,7 @@ TEST(DataLoaderTest, grab_image_data_type_0_Test) {
 	//動画処理のパラメータに設定
 	Params params;
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// GrabImageの引数用
 	cv::Mat img;
@@ -883,7 +898,7 @@ TEST(DataLoaderTest, grab_image_data_type_0_Positive_Test) {
 	//動画処理のパラメータに設定
 	Params params;
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 
 	// GrabImageの引数用
 	cv::Mat img;
@@ -911,7 +926,7 @@ TEST(DataLoaderTest, grab_image_data_type_1_Test) {
 	// 画像処理のパラメータに設定
 	Params params;
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 画像処理で初期化
 	iret = mock_d->initialize(params);
@@ -942,7 +957,7 @@ TEST(DataLoaderTest, grab_image_data_type_1_Positive_Test) {
 	// 画像処理のパラメータに設定
 	Params params;
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 画像処理で初期化
 	iret = mock_d->initialize(params);
@@ -1031,7 +1046,7 @@ TEST(DataLoaderTest, get_filelist_Positive_Test) {
 
 	// 入力データのタイプを画像に設定
 	params.data_type = 1;
-	params.input_image_path = INPUT_IMAGE_PATH;
+	params.input_image_path = INPUT_IMAGE_PATH1;
 
 	// 動画処理で初期化
 	iret = dataloader.initialize(params);
@@ -1062,7 +1077,7 @@ TEST(FaceDetectorTest, initialize_PathFileExists_Test) {
 	Params params;
 
 	// ファイルが存在しないパスを設定
-	params.cascade_filepath = "..\\..\\..\\..\\..\\data_\\cascade\\haarcascade_frontalface_alt.xml";
+	params.cascade_filepath = CASCADE_FILEPATH_DUMMY1;
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -1076,7 +1091,7 @@ TEST(FaceDetectorTest, initialize_PathIsDirectory_Test) {
 	Params params;
 
 	// ディレクトリのパスを設定
-	params.cascade_filepath = "..\\..\\..\\..\\..\\data\\cascade";
+	params.cascade_filepath = CASCADE_FILEPATH_DUMMY2;
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -1131,7 +1146,7 @@ TEST(FaceDetectorTest, detect_face_Positive_Test) {
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 	params.cascade_filepath = CASCADE_FILEPATH;
 
 	// 動画処理で初期化
@@ -1167,7 +1182,7 @@ TEST_F(FileWriterTest, initialize_mkdir_Test)
 
 	// 存在しないディレクトリパスを設定
 	Params params;
-	params.output_dirpath = "..\\..\\..\\..\\..\\data_\\Output";
+	params.output_dirpath = OUTPUT_DIRPATH_DUMMY1;
 
 	ans = filewriter.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -1279,7 +1294,7 @@ TEST_F(FileWriterTest, output_file_Positive_Test)
 	// パラメータを設定
 	Params params;
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
 	params.cascade_filepath = CASCADE_FILEPATH;
 	params.face_detect_width = 20;
 	params.face_detect_height = 20;
