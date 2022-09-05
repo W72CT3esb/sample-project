@@ -38,7 +38,7 @@ int main()
 	{
 		std::cout << "dataloader.initialize failed! status code:" << iret << std::endl;
 		//throw std::exception();
-		return -2;
+		return 0;
 	}
 
 	// 入力データをオープン
