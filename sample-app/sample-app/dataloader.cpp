@@ -162,7 +162,7 @@ int DataLoader::load_mv(cv::Mat &img)
 		return -2;
 	}
 	cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	std::cout << "フレーム番号 " << this->frame_index << std::endl;
+	std::cout << "frame: " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
 }
@@ -177,7 +177,7 @@ int DataLoader::load_img(cv::Mat &img)
 		return -1;
 	}
 	//cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	//std::cout << "フレーム番号 " << this->frame_index << std::endl;
+	//std::cout << "frame: " << this->frame_index << std::endl;
 	return 0;
 }
 
