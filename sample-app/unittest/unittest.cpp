@@ -89,7 +89,7 @@ protected:
 	// 各テストケース実行前に実行
 	virtual void SetUp() {
 		// 事前に設定ファイルのマスターをカレントディレクトリにコピー
-		copy_config_file();
+		//copy_config_file();
 		//std::cout << "#####Start TestCase#####\n" << std::endl;
 	}
 
@@ -1380,5 +1380,9 @@ TEST(PerformanceTest, detect_face_elapsed_time_Test) {
 	mean_elapsed_time = sum_time / dataloader.get_frame_num();
 	//std::cout << "mean: " << mean_elapsed_time << " msec" << std::endl;
 	ASSERT_TRUE(mean_elapsed_time <= 500); //500ms以下だったら、とりあえずOK
+
+	// 結果ファイルを消す
+	DeleteFile(OUTPUT_FILEPATH.c_str());
+	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 // ###処理時間のテストここまで###
