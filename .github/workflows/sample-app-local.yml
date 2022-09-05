@@ -19,7 +19,7 @@ jobs:
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
-        xcopy sample-app\sample-app\config.ini sample-app\x64\Release
+        # xcopy sample-app\sample-app\config.ini sample-app\x64\Release
 
   test:
     name: test-job

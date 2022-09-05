@@ -89,7 +89,7 @@ protected:
 	// 各テストケース実行前に実行
 	virtual void SetUp() {
 		// 事前に設定ファイルのマスターをカレントディレクトリにコピー
-		//copy_config_file();
+		copy_config_file();
 		//std::cout << "#####Start TestCase#####\n" << std::endl;
 	}
 
