@@ -19,20 +19,23 @@ using ::testing::Return;
 using ::testing::Test;
 
 const int DEFINE_STRING_SIZE = 1024;
-std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\GitHub\\sample-project\\sample-app\\sample-app\\config.ini";
+std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
 char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
 
-std::string INPUT_MOVIE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\movie\\sample.avi";
-std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\sample-data\\sample2.avi";
-char TMP_INPUT_MOVIE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\tmp\\sample.avi";
+std::string INPUT_MOVIE_PATH = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
+std::string INPUT_MOVIE_PATH2 = "..\\..\\..\\..\\..\\data\\movie\\sample2\\sample2.avi";
+std::string TMP_INPUT_MOVIE_DIRPATH = "..\\..\\..\\..\\..\\data\\movie\\tmp";
 
-std::string INPUT_IMAGE_PATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\image";
-std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\sample-data\\image2";
-char TMP_INPUT_IMAGE_PATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\tmp\\image";
+std::string INPUT_IMAGE_PATH = "..\\..\\..\\..\\..\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH2 = "..\\..\\..\\..\\..\\data\\image\\sample2";
+std::string TMP_INPUT_IMAGE_DIRPATH = "..\\..\\..\\..\\..\\data\\image\\tmp";
 
-std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\cascade\\haarcascade_frontalface_alt.xml";
-std::string OUTPUT_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output";
-std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output\\result.csv";
+std::string CASCADE_FILEPATH = "..\\..\\..\\..\\..\\data\\cascade\\haarcascade_frontalface_alt.xml";
+char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp";
+char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp\\test.xml";
+
+std::string OUTPUT_DIRPATH = "..\\..\\..\\..\\..\\data\\Output";
+std::string OUTPUT_FILEPATH = "..\\..\\..\\..\\..\\data\\Output\\result.csv";
 
 void copy_config_file();
 
@@ -401,7 +404,7 @@ TEST(DataLoaderTest, initialize_data_type_0_PathFileExists_Test) {
 	params.data_type = 0;
 
 	// ファイルが存在しないパスを設定
-	params.input_movie_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\movie\\sample.avi";
+	params.input_movie_path = "..\\..\\..\\..\\..\\data_\\movie\\sample1\\sample.avi";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -416,7 +419,7 @@ TEST(DataLoaderTest, initialize_data_type_0_PathIsDirectory_Test) {
 	params.data_type = 0;
 
 	// ディレクトリのパスを設定
-	params.input_movie_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\movie";
+	params.input_movie_path = "..\\..\\..\\..\\..\\data\\movie\\sample1";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -446,7 +449,7 @@ TEST(DataLoaderTest, initialize_data_type_1_PathFileExists_Test) {
 	params.data_type = 1;
 
 	// ディレクトリが存在しないパスを設定
-	params.input_image_path = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\image";
+	params.input_image_path = "..\\..\\..\\..\\..\\data_\\image\\sample1";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-3, ans);
@@ -461,7 +464,7 @@ TEST(DataLoaderTest, initialize_data_type_1_PathIsDirectory_Test) {
 	params.data_type = 1;
 
 	// ファイルのパスを設定
-	params.input_image_path = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\image\\pic_0000.jpg";
+	params.input_image_path = "..\\..\\..\\..\\..\\data\\image\\sample1\\pic_0000.jpg";
 
 	ans = dataloader.initialize(params);
 	EXPECT_EQ(-4, ans);
@@ -533,13 +536,15 @@ TEST(DataLoaderTest, open_data_file_data_type_0_capisOpened_Test) {
 	iret = dataloader.initialize(params);
 
 	// 入力データを別のディレクトリに移動
-	MoveFile(INPUT_MOVIE_PATH.c_str(), TMP_INPUT_MOVIE_PATH);
+	_mkdir(TMP_INPUT_MOVIE_DIRPATH.c_str());
+	MoveFile(INPUT_MOVIE_PATH.c_str(), (TMP_INPUT_MOVIE_DIRPATH+"\\sample.avi").c_str());
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-2, ans);
 
 	// 入力データを元のディレクトリに移動
-	MoveFile(TMP_INPUT_MOVIE_PATH, INPUT_MOVIE_PATH.c_str());
+	MoveFile((TMP_INPUT_MOVIE_DIRPATH + "\\sample.avi").c_str(), INPUT_MOVIE_PATH.c_str());
+	RemoveDirectory(TMP_INPUT_MOVIE_DIRPATH.c_str());
 }
 
 TEST(DataLoaderTest, open_data_file_data_type_0_Positive_Test) {
@@ -573,13 +578,15 @@ TEST(DataLoaderTest, open_data_file_data_type_1_file_namessize_Test) {
 	iret = dataloader.initialize(params);
 
 	// 入力データを別のディレクトリに移動
-	MoveFile(INPUT_IMAGE_PATH.c_str(), TMP_INPUT_IMAGE_PATH);
+	_mkdir(TMP_INPUT_IMAGE_DIRPATH.c_str());
+	MoveFile(INPUT_IMAGE_PATH.c_str(), (TMP_INPUT_IMAGE_DIRPATH +"\\sample1").c_str());
 
 	ans = dataloader.open_data();
 	EXPECT_EQ(-3, ans);
 
 	// 入力データを元のディレクトリに移動
-	MoveFile(TMP_INPUT_IMAGE_PATH, INPUT_IMAGE_PATH.c_str());
+	MoveFile((TMP_INPUT_IMAGE_DIRPATH + "\\sample1").c_str(), INPUT_IMAGE_PATH.c_str());
+	RemoveDirectory(TMP_INPUT_IMAGE_DIRPATH.c_str());
 }
 
 TEST(DataLoaderTest, open_data_file_data_type_1_Positive_Test) {
@@ -1037,7 +1044,7 @@ TEST(FaceDetectorTest, initialize_PathFileExists_Test) {
 	Params params;
 
 	// ファイルが存在しないパスを設定
-	params.cascade_filepath = "C:\\Users\\NES\\Documents\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\cascade\\haarcascade_frontalface_alt.xml";
+	params.cascade_filepath = "..\\..\\..\\..\\..\\data_\\cascade\\haarcascade_frontalface_alt.xml";
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -1051,7 +1058,7 @@ TEST(FaceDetectorTest, initialize_PathIsDirectory_Test) {
 	Params params;
 
 	// ディレクトリのパスを設定
-	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\cascade";
+	params.cascade_filepath = "..\\..\\..\\..\\..\\data\\cascade";
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-2, ans);
@@ -1065,18 +1072,18 @@ TEST(FaceDetectorTest, initialize_cascadeload_Test) {
 	Params params;
 
 	// カスケード分類器のダミーデータを作成
-	_mkdir("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\dummy");
-	CreateFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\dummy\\test.xml", GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+	_mkdir(TMP_CASCADE_DIRPATH);
+	CreateFile(TMP_CASCADE_FILEPATH, GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	// カスケード分類器のダミーデータのファイルパスを設定
-	params.cascade_filepath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\dummy\\test.xml";
+	params.cascade_filepath = TMP_CASCADE_FILEPATH;
 
 	ans = facedetector.initialize(params);
 	EXPECT_EQ(-3, ans);
 
 	// カスケード分類器のダミーデータのファイルとディレクトリを削除
-	DeleteFile("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\dummy\\test.xml");
-	RemoveDirectory("C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\data\\dummy");
+	DeleteFile(TMP_CASCADE_FILEPATH);
+	RemoveDirectory(TMP_CASCADE_DIRPATH);
 }
 
 TEST(FaceDetectorTest, initialize_Positive_Test) {
@@ -1142,7 +1149,7 @@ TEST_F(FileWriterTest, initialize_mkdir_Test)
 
 	// 存在しないディレクトリパスを設定
 	Params params;
-	params.output_dirpath = "C:\\Users\\NES\\Desktop\\hayakawa\\FieldAnalyst製品開発作業効率化に向けたCI／CDの導入検証\\Output\\test";
+	params.output_dirpath = "..\\..\\..\\..\\..\\data_\\Output";
 
 	ans = filewriter.initialize(params);
 	EXPECT_EQ(-1, ans);
@@ -1288,9 +1295,9 @@ TEST_F(FileWriterTest, output_file_Positive_Test)
 }
 // ###FileWriterのテストここまで###
 
-
 // ###処理時間のテストここから###
-TEST(FaceDetectorTest, detect_face_elapsed_time_Test) {
+// 1フレームの検出時間をテスト
+TEST(PerformanceTest, detect_face_elapsed_time_Test) {
 	int ans = 0;
 	int iret = -1;
 	DataLoader dataloader;
@@ -1302,11 +1309,11 @@ TEST(FaceDetectorTest, detect_face_elapsed_time_Test) {
 	std::vector<cv::Rect> faces;
 
 	std::chrono::system_clock::time_point  start, end;
-	double elapsed_time;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
 
 	// 入力データのタイプを動画に設定
 	params.data_type = 0;
-	params.input_movie_path = INPUT_MOVIE_PATH;
+	params.input_movie_path = INPUT_MOVIE_PATH2;
 	params.cascade_filepath = CASCADE_FILEPATH;
 
 	// 動画処理で初期化
@@ -1318,54 +1325,27 @@ TEST(FaceDetectorTest, detect_face_elapsed_time_Test) {
 	// 顔検出器の初期化
 	iret = facedetector.initialize(params);
 
-	// 1フレームずつ取り出し、顔検出する
-	iret = dataloader.grab_image(img);
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	ans = facedetector.detect_face(img, faces);
-	end = std::chrono::system_clock::now();  // 計測終了時間
+	while (1)
+	{
+		// 1フレームずつ取り出し、顔検出する
+		iret = dataloader.grab_image(img);
+		start = std::chrono::system_clock::now(); // 計測開始時間
+		ans = facedetector.detect_face(img, faces);
+		end = std::chrono::system_clock::now();  // 計測終了時間
 
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
+		// 処理に要した時間をミリ秒に変換
+		elapsed_time = (double)std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+		sum_time += elapsed_time;
+		//std::cout << elapsed_time << " msec" << std::endl;
 
-	// 1フレームずつ取り出し、顔検出する
-	iret = dataloader.grab_image(img);
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	ans = facedetector.detect_face(img, faces);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
-
-	// 1フレームずつ取り出し、顔検出する
-	iret = dataloader.grab_image(img);
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	ans = facedetector.detect_face(img, faces);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
-
-	// 1フレームずつ取り出し、顔検出する
-	iret = dataloader.grab_image(img);
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	ans = facedetector.detect_face(img, faces);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
-
-	// 1フレームずつ取り出し、顔検出する
-	iret = dataloader.grab_image(img);
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	ans = facedetector.detect_face(img, faces);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
+		// 最終フレームになったらループを抜ける
+		if (dataloader.get_frame_index() == dataloader.get_frame_num())
+		{
+			break;
+		}
+	}
+	mean_elapsed_time = sum_time / dataloader.get_frame_num();
+	//std::cout << "mean: " << mean_elapsed_time << " msec" << std::endl;
+	ASSERT_TRUE(mean_elapsed_time <= 500); //500ms以下だったら、とりあえずOK
 }
 // ###処理時間のテストここまで###
