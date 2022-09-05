@@ -24,7 +24,6 @@ int main()
 
 	// 設定ファイルからパラメータを読み込み
 	iret = paramloader.load_param(params);
-	//iret = -1;
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "paramloader.load_param failed! status code:" << iret << std::endl;
@@ -34,11 +33,12 @@ int main()
 
 	// データ読み込み機能の初期化
 	iret = dataloader.initialize(params);
+	iret = -1;
 	if (iret != 0) // 異常終了
 	{
 		std::cout << "dataloader.initialize failed! status code:" << iret << std::endl;
-		throw std::exception();
-		//return -2;
+		//throw std::exception();
+		return -2;
 	}
 
 	// 入力データをオープン
