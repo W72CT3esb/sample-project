@@ -11,7 +11,7 @@ TEST(IntegrationTest, sample_app_elapsed_time_Test) {
 	double elapsed_time;
 
 	start = std::chrono::system_clock::now(); // 計測開始時間
-	system(".\\sample-app.exe");
+	system("sample-app.exe");
 	end = std::chrono::system_clock::now();  // 計測終了時間
 
 	// 処理に要した時間をミリ秒に変換
