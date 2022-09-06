@@ -34,7 +34,7 @@ jobs:
         echo "############################"
         sample-app\x64\Release\unittest.exe
         echo "############################"
-        sample-app\x64\Release\integration.exe
+        sample-app\x64\Release\integrationtest.exe
 
   #   - name: copy
   #     shell: cmd
