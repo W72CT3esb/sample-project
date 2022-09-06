@@ -1333,9 +1333,58 @@ TEST_F(FileWriterTest, output_file_Positive_Test)
 // ###FileWriterのテストここまで###
 
 // ###処理時間のテストここから###
+// 1フレームの取得時間をテスト
+TEST(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
+	int iret = -1;
+	DataLoader dataloader;
+	Params params;
+	ParamLoader paramloader;
+
+	cv::Mat img;
+	std::vector<cv::Rect> faces;
+
+	std::chrono::system_clock::time_point  start, end;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
+
+	// 入力データのタイプを動画に設定
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH2;
+
+	// 動画処理で初期化
+	iret = dataloader.initialize(params);
+
+	// 動画データをオープン
+	iret = dataloader.open_data();
+
+	while (1)
+	{
+		// 1フレームずつ取り出し、顔検出する
+		start = std::chrono::system_clock::now(); // 計測開始時間
+		iret = dataloader.grab_image(img);
+		end = std::chrono::system_clock::now();  // 計測終了時間
+
+		// 処理に要した時間をミリ秒に変換
+		elapsed_time = (double)std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+		sum_time += elapsed_time;
+		//std::cout << elapsed_time << " msec" << std::endl;
+
+		// 最終フレームになったらループを抜ける
+		if (dataloader.get_frame_index() == dataloader.get_frame_num())
+		{
+			break;
+		}
+	}
+	mean_elapsed_time = sum_time / dataloader.get_frame_num();
+	//std::cout << "mean: " << mean_elapsed_time << " msec" << std::endl;
+	ASSERT_TRUE(mean_elapsed_time <= 50); //50ms以下だったら、とりあえずOK
+
+	// 結果ファイルを消す
+	DeleteFile(OUTPUT_FILEPATH.c_str());
+	RemoveDirectory(OUTPUT_DIRPATH.c_str());
+}
+
 // 1フレームの検出時間をテスト
-TEST(PerformanceTest, detect_face_elapsed_time_Test) {
-	int ans = 0;
+TEST(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {
 	int iret = -1;
 	DataLoader dataloader;
 	FaceDetector facedetector;
@@ -1364,10 +1413,12 @@ TEST(PerformanceTest, detect_face_elapsed_time_Test) {
 
 	while (1)
 	{
-		// 1フレームずつ取り出し、顔検出する
+		// 1フレームずつ取り出す
 		iret = dataloader.grab_image(img);
+
+		// フレームから顔検出
 		start = std::chrono::system_clock::now(); // 計測開始時間
-		ans = facedetector.detect_face(img, faces);
+		iret = facedetector.detect_face(img, faces);
 		end = std::chrono::system_clock::now();  // 計測終了時間
 
 		// 処理に要した時間をミリ秒に変換
@@ -1390,18 +1441,75 @@ TEST(PerformanceTest, detect_face_elapsed_time_Test) {
 	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 
-// サンプルアプリ(sample-app.exe)の実行時間
-TEST(PerformanceTest, sample_app_elapsed_time_Test) {
+// 1フレームのファイル出力時間をテスト
+TEST(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {
+	int ans = 0;
+	int iret = -1;
+	DataLoader dataloader;
+	FaceDetector facedetector;
+	Params params;
+	ParamLoader paramloader;
+	FileWriter filewriter;
+
+	cv::Mat img;
+	std::vector<cv::Rect> faces;
+
 	std::chrono::system_clock::time_point  start, end;
-	double elapsed_time;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
 
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	system("sample-app.exe");
-	end = std::chrono::system_clock::now();  // 計測終了時間
+	// 入力データのタイプを動画に設定
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH2;
+	params.cascade_filepath = CASCADE_FILEPATH;
+	params.output_dirpath = OUTPUT_DIRPATH;
 
-	// 処理に要した時間をミリ秒に変換
-	elapsed_time = (double)std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << elapsed_time << " msec" << std::endl;
-	//ASSERT_TRUE(mean_elapsed_time <= 500); //500ms以下だったら、とりあえずOK
+	// 動画処理で初期化
+	iret = dataloader.initialize(params);
+
+	// 動画データをオープン
+	iret = dataloader.open_data();
+
+	// 顔検出器の初期化
+	iret = facedetector.initialize(params);
+
+	// ファイル出力器の初期化
+	iret = filewriter.initialize(params);
+
+	// 出力ファイルをオープン
+	iret = filewriter.open_file();
+
+	while (1)
+	{
+		// 1フレームずつ取り出す
+		iret = dataloader.grab_image(img);
+
+		// フレームから顔検出
+		iret = facedetector.detect_face(img, faces);
+
+		// 出力ファイルに書き込み
+		start = std::chrono::system_clock::now(); // 計測開始時間
+		iret = filewriter.output_file(dataloader, img, faces);
+		end = std::chrono::system_clock::now();  // 計測終了時間
+
+		// 処理に要した時間をミリ秒に変換
+		//elapsed_time = (double)std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+		elapsed_time = (double)std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+		sum_time += elapsed_time;
+		//std::cout << elapsed_time << " microsec" << std::endl;
+
+
+		// 最終フレームになったらループを抜ける
+		if (dataloader.get_frame_index() == dataloader.get_frame_num())
+		{
+			break;
+		}
+	}
+	mean_elapsed_time = sum_time / dataloader.get_frame_num();
+	//std::cout << "mean: " << mean_elapsed_time << " microsec" << std::endl;
+	ASSERT_TRUE(mean_elapsed_time <= 200); //200microsec以下だったら、とりあえずOK
+
+	// 結果ファイルを消す
+	DeleteFile(OUTPUT_FILEPATH.c_str());
+	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 // ###処理時間のテストここまで###

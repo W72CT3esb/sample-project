@@ -106,7 +106,7 @@ int main()
 		}
 
 		// ‰æ–Ê•\¦
-		cv::imshow("Window", img);
+		//cv::imshow("Window", img);
 		
 		if (cv::waitKey(10) == 'q') // "q"‚ª‰Ÿ‚³‚ê‚½‚çI—¹
 		{

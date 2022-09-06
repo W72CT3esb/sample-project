@@ -33,6 +33,8 @@ jobs:
         sample-app\x64\Release\sample-app.exe
         echo "############################"
         sample-app\x64\Release\unittest.exe
+        echo "############################"
+        sample-app\x64\Release\integration.exe
 
   #   - name: copy
   #     shell: cmd
