@@ -24,13 +24,18 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-    - name: test
+    - name: unit-test
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        cd sample-app\x64\Release\sample
         sample-app\x64\Release\unittest.exe
         echo "SUCCESS!!"
+    # - name: integration-test
+    #   shell: cmd
+    #   run: | 
+    #     set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+    #     sample-app\x64\Release\unittest.exe
+    #     "C:\Program Files\WinMerge\WinMergeU.exe\" /minimize /noninteractive /u /or .\out.html 
 
   #   - name: copy
   #     shell: cmd

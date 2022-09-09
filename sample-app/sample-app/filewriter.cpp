@@ -92,6 +92,5 @@ int FileWriter::output_file(DataLoader &dataloader, cv::Mat &img, std::vector<cv
 			writing_file << dataloader.get_frame_info() << "," << faces[i].x << "," << faces[i].y << "," << faces[i].width << "," << faces[i].height << std::endl;
 		}
 	}
-
 	return 0;
 }

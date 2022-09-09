@@ -127,6 +127,38 @@ protected:
 
 	// 各テストケース実行後に実行
 	virtual void TearDown() {
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());
+		//std::cout << "#####Finish TestCase#####" << std::endl;
+	}
+};
+
+// テストフィクスチャクラスの定義()
+class ProcessingTimeTest : public Test {
+protected:
+
+	// 試験開始時に一回だけ実行
+	static void SetUpTestCase() {
+		//std::cout << "#####Start Test#####\n" << std::endl;
+	}
+
+	// 試験終了時に一回だけ実行
+	static void TearDownTestCase() {
+		//std::cout << "#####Finish Test#####" << std::endl;
+	}
+
+	// 各テストケース実行前に実行
+	virtual void SetUp() {
+		// 出力ファイルとディレクトリの削除
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());
+		//std::cout << "#####Start TestCase#####\n" << std::endl;
+	}
+
+	// 各テストケース実行後に実行
+	virtual void TearDown() {
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());
 		//std::cout << "#####Finish TestCase#####" << std::endl;
 	}
 };
@@ -1351,12 +1383,13 @@ TEST_F(FileWriterTest, output_file_Positive_Test)
 	ans = filewriter.output_file(dataloader, img, faces);
 
 	EXPECT_EQ(0, ans);
+
 }
 // ###FileWriterのテストここまで###
 
 // ###処理時間のテストここから###
 // 1フレームの取得時間をテスト
-TEST(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
+TEST_F(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
 	int iret = -1;
 	DataLoader dataloader;
 	Params params;
@@ -1399,14 +1432,10 @@ TEST(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
 	mean_elapsed_time = sum_time / dataloader.get_frame_num();
 	//std::cout << "mean: " << mean_elapsed_time << " msec" << std::endl;
 	ASSERT_TRUE(mean_elapsed_time <= 50); //50ms以下だったら、とりあえずOK
-
-	// 結果ファイルを消す
-	DeleteFile(OUTPUT_FILEPATH.c_str());
-	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 
 // 1フレームの顔検出時間をテスト
-TEST(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {
+TEST_F(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {
 	int iret = -1;
 	DataLoader dataloader;
 	FaceDetector facedetector;
@@ -1457,14 +1486,10 @@ TEST(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {
 	mean_elapsed_time = sum_time / dataloader.get_frame_num();
 	//std::cout << "mean: " << mean_elapsed_time << " msec" << std::endl;
 	ASSERT_TRUE(mean_elapsed_time <= 500); //500ms以下だったら、とりあえずOK
-
-	// 結果ファイルを消す
-	DeleteFile(OUTPUT_FILEPATH.c_str());
-	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 
 // 1フレームのファイル出力時間をテスト
-TEST(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {
+TEST_F(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {
 	int ans = 0;
 	int iret = -1;
 	DataLoader dataloader;
@@ -1529,9 +1554,5 @@ TEST(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {
 	mean_elapsed_time = sum_time / dataloader.get_frame_num();
 	//std::cout << "mean: " << mean_elapsed_time << " microsec" << std::endl;
 	ASSERT_TRUE(mean_elapsed_time <= 200); //200microsec以下だったら、とりあえずOK
-
-	// 結果ファイルを消す
-	DeleteFile(OUTPUT_FILEPATH.c_str());
-	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 // ###処理時間のテストここまで###
