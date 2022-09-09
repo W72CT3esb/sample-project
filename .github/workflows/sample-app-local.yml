@@ -30,7 +30,7 @@ jobs:
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release\sample
         sample-app\x64\Release\unittest.exe
-        echo "SUCCESS"
+        echo "SUCCESS!!"
 
   #   - name: copy
   #     shell: cmd
