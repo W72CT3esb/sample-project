@@ -43,7 +43,7 @@ jobs:
         cd sample-app\x64\Release
         .\integrationtest.exe
         "C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html
-        cd ..\..\ 
+        cd ..\..\..\
         rmdir /s /q path\to\artifacts
         mkdir path\to\artifacts
         xcopy sample-app\x64\Release path\to\artifacts
