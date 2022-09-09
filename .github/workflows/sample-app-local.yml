@@ -19,17 +19,22 @@ jobs:
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
 
-  test:
-    name: test-job
+  unittest:
+    name: unittest-job
     needs: build
     runs-on: self-hosted
     steps:
-    - name: unit-test
+    - name: unittest
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         sample-app\x64\Release\unittest.exe
 
+  integrationtest:
+    name: integrationtest-job
+    needs: unittest
+    runs-on: self-hosted
+    steps:
     - name: integration-test
       shell: cmd
       run: | 
@@ -37,6 +42,7 @@ jobs:
         cd sample-app\x64\Release
         integrationtest.exe
         "C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html 
+        echo "###"
 
   #   - name: copy
   #     shell: cmd
