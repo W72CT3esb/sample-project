@@ -18,6 +18,7 @@ jobs:
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
+        echo "HOGE_FUGA=Piyo" >> $GITHUB_ENV
 
   unittest:
     name: unittest-job
@@ -30,29 +31,30 @@ jobs:
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
         .\unittest.exe
+        echo "The HOGE is ${{ env.HOGE_FUGA }}"
 
-  integrationtest:
-    name: integrationtest-job
-    needs: unittest
-    runs-on: self-hosted
-    steps:
-    - name: integration-test
-      shell: cmd
-      run: | 
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        cd sample-app\x64\Release
-        .\integrationtest.exe
-        fc /n C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv
-        echo %ERRORLEVEL%
-        cd ..\..\..\
-        rmdir /s /q path\to\artifacts
-        mkdir path\to\artifacts
-        xcopy sample-app\x64\Release path\to\artifacts
+  # integrationtest:
+  #   name: integrationtest-job
+  #   needs: unittest
+  #   runs-on: self-hosted
+  #   steps:
+  #   - name: integration-test
+  #     shell: cmd
+  #     run: | 
+  #       set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+  #       cd sample-app\x64\Release
+  #       .\integrationtest.exe
+  #       fc /n C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv
+  #       echo %ERRORLEVEL%
+  #       cd ..\..\..\
+  #       rmdir /s /q path\to\artifacts
+  #       mkdir path\to\artifacts
+  #       xcopy sample-app\x64\Release path\to\artifacts
 
-    - uses: actions/upload-artifact@v3
-      with: 
-        name: my-artifact
-        path: path/to/artifacts
+  #   - uses: actions/upload-artifact@v3
+  #     with: 
+  #       name: my-artifact
+  #       path: path/to/artifacts
 
 #"C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html
     # - name: copy
