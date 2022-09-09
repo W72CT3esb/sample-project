@@ -50,8 +50,8 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with: 
-        name: my-artifact
-        path: path/to/artifacts
+        name: my-artifact.html
+        path: path/to/artifacts/out.html
 
     # - name: copy
     #   shell: cmd
