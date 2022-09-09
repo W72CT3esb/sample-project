@@ -46,7 +46,7 @@ jobs:
         cd ..\..\..\
         rmdir /s /q path\to\artifacts
         mkdir path\to\artifacts
-        xcopy sample-app\x64\Release path\to\artifacts
+        xcopy sample-app\x64\Release\out.html path\to\artifacts
 
     - uses: actions/upload-artifact@v3
       with: 
