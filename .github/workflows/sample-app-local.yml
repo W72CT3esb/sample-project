@@ -43,6 +43,7 @@ jobs:
         cd sample-app\x64\Release
         .\integrationtest.exe
         fc /n C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv
+        echo %ERRORLEVEL%
         cd ..\..\..\
         rmdir /s /q path\to\artifacts
         mkdir path\to\artifacts
