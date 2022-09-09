@@ -48,21 +48,21 @@ jobs:
         mkdir path\to\artifacts
         xcopy sample-app\x64\Release path\to\artifacts
 
-    - uses: actions/upload-artifacts
-      with:
+    - uses: actions/upload-artifact@v3
+      with: 
         name: my-artifact
         path: path/to/artifacts
-        
-  #   - name: copy
-  #     shell: cmd
-  #     run: |
-  #       rmdir /s /q path\to\artifacts
-  #       mkdir path\to\artifacts
-  #       xcopy sample-app\x64\Release path\to\artifacts
-  #   - uses: actions/upload-artifact@v3
-  #     with: 
-  #       name: my-artifact
-  #       path: path/to/artifacts
+
+    # - name: copy
+    #   shell: cmd
+    #   run: |
+    #     rmdir /s /q path\to\artifacts
+    #     mkdir path\to\artifacts
+    #     xcopy sample-app\x64\Release path\to\artifacts
+    # - uses: actions/upload-artifact@v3
+    #   with: 
+    #     name: my-artifact
+    #     path: path/to/artifacts
 
   # deploy:
   #   name: deploy-job
