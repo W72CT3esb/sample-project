@@ -28,7 +28,8 @@ jobs:
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        sample-app\x64\Release\unittest.exe
+        cd sample-app\x64\Release
+        .\unittest.exe
 
   integrationtest:
     name: integrationtest-job
@@ -40,10 +41,17 @@ jobs:
       run: | 
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
-        integrationtest.exe
-        "C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html 
-        echo "###"
+        .\integrationtest.exe
+        "C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html
+        cd ..\..\ 
+        rmdir /s /q path\to\artifacts
+        mkdir path\to\artifacts
+        xcopy sample-app\x64\Release path\to\artifacts
 
+    - uses: actions/upload-artifacts
+      with:
+        name: my-artifact
+        path: path/to/artifacts
   #   - name: copy
   #     shell: cmd
   #     run: |
