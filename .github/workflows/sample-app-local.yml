@@ -3,6 +3,10 @@ on:
   push:
    branches:
     - main
+
+env:
+  env_1 : hayakawa
+
 jobs:
   build:
     name: build-job
@@ -18,7 +22,7 @@ jobs:
         rmdir /s /q sample-app\x64\Release
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
-        echo "HOGE_FUGA=Piyo" >> $GITHUB_ENV
+        echo "ths is env=${{ env.env_1 }}"
 
   unittest:
     name: unittest-job
@@ -31,7 +35,6 @@ jobs:
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
         .\unittest.exe
-        echo "The HOGE is ${{ env.HOGE_FUGA }}"
 
   # integrationtest:
   #   name: integrationtest-job
