@@ -181,22 +181,29 @@ int DataLoader::load_img(cv::Mat &img)
 	return 0;
 }
 
-// フレーム番号やファイルパスを返す関数
+// フレーム番号やファイルパスを返す関数(過去)
+//std::string DataLoader::get_frame_info()
+//{
+//	if (this->data_type == 0) // 動画の時はフレーム番号を返す
+//	{
+//		return std::to_string(get_frame_index() - 1);
+//	}
+//	else if (this->data_type == 1) // 画像の時はファイルパスを返す
+//	{
+//		return this->file_names[this->frame_index - 1];
+//	}
+//	else // カメラ映像の時はフレーム番号を返す
+//	{
+//		return std::to_string(get_frame_index() - 1);
+//	}
+//}
+
+// フレーム番号やファイルパスを返す関数(最新)
 std::string DataLoader::get_frame_info()
 {
-	if (this->data_type == 0) // 動画の時はフレーム番号を返す
-	{
-		return std::to_string(get_frame_index() - 1);
-	}
-	else if (this->data_type == 1) // 画像の時はファイルパスを返す
-	{
-		return this->file_names[this->frame_index - 1];
-	}
-	else // カメラ映像の時はフレーム番号を返す
-	{
-		return std::to_string(get_frame_index() - 1);
-	}
+	return std::to_string(get_frame_index() - 1);
 }
+
 
 // 1フレームずつ取り出す関数
 int DataLoader::grab_image(cv::Mat &img)

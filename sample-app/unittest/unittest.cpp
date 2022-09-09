@@ -793,7 +793,7 @@ TEST(DataLoaderTest, load_img_Positive_Test) {
 	EXPECT_EQ(0, ans);
 }
 
-TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
+TEST(DataLoaderTest, get_frame_info_Test) {
 	std::string ans = "";
 	int iret = -1;
 	cv::Mat img; //grab_imageの引数用
@@ -815,54 +815,76 @@ TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
 	EXPECT_STREQ("0", ans.c_str());
 }
 
-TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
-	std::string ans = "";
-	int iret = -1;
-	cv::Mat img; //grab_imageの引数用
-	DataLoader dataloader;
+//TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageの引数用
+//	DataLoader dataloader;
+//
+//	// 入力データのタイプを動画に設定
+//	Params params;
+//	params.data_type = 0;
+//
+//	// 存在する動画のファイルパスを設定
+//	params.input_movie_path = INPUT_MOVIE_PATH1;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ("0", ans.c_str());
+//}
 
-	// 入力データのタイプを静止画に設定
-	Params params;
-	params.data_type = 1;
-
-	// 存在する画像ディレクトリパスを設定
-	params.input_image_path = INPUT_IMAGE_PATH1;
-
-	std::string image_file_name = "pic_0000.jpg";
-	std::string image_file_path = INPUT_IMAGE_PATH1 + "\\" + image_file_name;
-
-	iret = dataloader.initialize(params);
-	iret = dataloader.open_data();
-	iret = dataloader.grab_image(img);
-
-	ans = dataloader.get_frame_info();
-
-	EXPECT_STREQ(image_file_path.c_str(), ans.c_str());
-}
+//TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageの引数用
+//	DataLoader dataloader;
+//
+//	// 入力データのタイプを静止画に設定
+//	Params params;
+//	params.data_type = 1;
+//
+//	// 存在する画像ディレクトリパスを設定
+//	params.input_image_path = INPUT_IMAGE_PATH1;
+//
+//	std::string image_file_name = "pic_0000.jpg";
+//	std::string image_file_path = INPUT_IMAGE_PATH1 + "\\" + image_file_name;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ(image_file_path.c_str(), ans.c_str());
+//}
 
 // カメラ映像を取得するのに時間がかかることに注意
-TEST(DataLoaderTest, get_frame_info_data_type_2_Test) {
-	std::string ans = "";
-	int iret = -1;
-	cv::Mat img; //grab_imageの引数用
-	DataLoader dataloader;
-
-	// 入力データのタイプをカメラに設定
-	Params params;
-	params.data_type = 2;
-	params.device_id = 0;
-	params.c_frame_height = 480;
-	params.c_frame_width = 640;
-	params.c_fps = 15;
-
-	iret = dataloader.initialize(params);
-	iret = dataloader.open_data();
-	iret = dataloader.grab_image(img);
-
-	ans = dataloader.get_frame_info();
-
-	EXPECT_STREQ("0", ans.c_str());
-}
+//TEST(DataLoaderTest, get_frame_info_data_type_2_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageの引数用
+//	DataLoader dataloader;
+//
+//	// 入力データのタイプをカメラに設定
+//	Params params;
+//	params.data_type = 2;
+//	params.device_id = 0;
+//	params.c_frame_height = 480;
+//	params.c_frame_width = 640;
+//	params.c_fps = 15;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ("0", ans.c_str());
+//}
 
 TEST(DataLoaderTest, grab_image_data_type_0_Test) {
 	int ans = 0;
@@ -1358,7 +1380,7 @@ TEST(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
 
 	while (1)
 	{
-		// 1フレームずつ取り出し、顔検出する
+		// 1フレームずつ取り出す
 		start = std::chrono::system_clock::now(); // 計測開始時間
 		iret = dataloader.grab_image(img);
 		end = std::chrono::system_clock::now();  // 計測終了時間
@@ -1383,7 +1405,7 @@ TEST(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {
 	RemoveDirectory(OUTPUT_DIRPATH.c_str());
 }
 
-// 1フレームの検出時間をテスト
+// 1フレームの顔検出時間をテスト
 TEST(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {
 	int iret = -1;
 	DataLoader dataloader;
