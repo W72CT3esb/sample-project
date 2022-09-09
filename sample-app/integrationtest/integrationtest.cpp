@@ -6,11 +6,11 @@
 #include <vector>
 
 std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv";
-std::string ORIGINAL_OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result_tmp.csv";
+std::string ORIGINAL_OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv";
 
 // 総合テスト
-int calc_elapsed_time(double &elapsed_time, int &fps);
-int compare_outputfile();
+int calc_elapsed_time_Test(double &elapsed_time, int &fps);
+int compare_outputfile_Test();
 
 int main(void)
 {
@@ -19,41 +19,49 @@ int main(void)
 	int iret = -1;
 
 	// 処理時間を計測
-	iret = calc_elapsed_time(elapsed_time, fps);
+	std::cout << "[ RUN      ] IntegrationTest.elapsed_time_Test" << std::endl;
+	iret = calc_elapsed_time_Test(elapsed_time, fps);
 	if (iret != 0)
 	{
-		std::cout << "calc_elapsed_time failed! status code:" << iret << std::endl;
+		std::cout << "calc_elapsed_time_Test failed! status code:" << iret << std::endl;
+		std::cout << "[  FAILED  ] IntegrationTest.elapsed_time_Test" << std::endl;
 		return -1;
 	}
-	std::cout << "Elapsed_time: " << elapsed_time << " msec" << std::endl;
-	std::cout << "Fps: " << fps << std::endl;
+	std::cout << "[       OK ] IntegrationTest.elapsed_time_Test" << std::endl;
 
 	// 出力ファイルを比較
-	iret = compare_outputfile();
+	std::cout << "[ RUN      ] IntegrationTest.compare_outputfile_Test" << std::endl;
+	iret = compare_outputfile_Test();
 	if (iret != 0)
 	{
-		std::cout << "compare_outputfile failed! status code:" << iret << std::endl;
+		std::cout << "compare_outputfile_Test failed! status code:" << iret << std::endl;
+		std::cout << "[  FAILED  ] IntegrationTest.compare_outputfile_Test" << std::endl;
 		return -2;
 	}
+	std::cout << "[       OK ] IntegrationTest.compare_outputfile_Test" << std::endl;
 }
 
 // 出力ファイルを比較する関数
-int compare_outputfile()
+int compare_outputfile_Test()
 {
 	int iret = -1;
 	// std::string cmd = "fc /n " + ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH;
-	std::string cmd = "\"C:\\Program Files\\WinMerge\\WinMergeU.exe\" "+ ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH + " /minimize /noninteractive /u /or .\out.html";
+	std::string cmd = "\"C:\\Program Files\\WinMerge\\WinMergeU.exe\" "+ ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH + " /minimize /noninteractive /u /or .\\out.html";
 	iret = system(cmd.c_str());
 	if (iret != 0) // コマンドを実行できない場合
 	{
 		return -1;
+	}
+	if (!PathFileExists(".\\out.html")) // パスの場所にファイルが存在しない場合に失敗
+	{
+		return -2;
 	}
 	return 0;
 }
 
 
 // 処理時間を計測する関数
-int calc_elapsed_time(double &elapsed_time, int &fps)
+int calc_elapsed_time_Test(double &elapsed_time, int &fps)
 {
 	std::chrono::system_clock::time_point  start, end;
 	std::string str_buf;
@@ -100,6 +108,10 @@ int calc_elapsed_time(double &elapsed_time, int &fps)
 
 	// ファイルを閉じる
 	ifs_csv_file.close();
+
+	// 計算結果を出力
+	std::cout << "Elapsed_time: " << elapsed_time << " msec" << std::endl;
+	std::cout << "Fps: " << fps << std::endl;
 
 	return 0;
 }
