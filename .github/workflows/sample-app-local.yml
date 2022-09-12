@@ -36,7 +36,7 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Google Tests            # Name of the check run which will be created
-        path: test_result.xml    # Path to test results
+        path: sample-app/x64/Release/test_result.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
   # integrationtest:
