@@ -29,22 +29,15 @@ jobs:
       shell: cmd
       run: | 
         set PATH=C:\3rdparty\Cppcheck;%PATH%
-        set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\Scripts\;%PATH%
-        set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\;%PATH%
-#        del /Q cppcheck-result.xml
-#        del /Q cppcheck-junit.xml
-#        cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
-#        yes | python -m pip install cppcheck-junit
-#        cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
-#        python -m pip uninstall --yes cppcheck-junit
+        cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
+        rmdir /s /q path\to\Cppcheck
+        mkdir path\to\Cppcheck
+        xcopy cppcheck-result.xml path\to\Cppcheck
 
-    - name: Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
-      with:
-        name: Cppcheck-Result           # Name of the check run which will be created
-        path: cppcheck-junit.xml    # Path to test results
-        reporter: jest-junit        # Format of test results
+    - uses: actions/upload-artifact@v3
+      with: 
+        name: Cppcheck
+        path: path/to/Cppcheck
 
   # Test:
   #   name: Test
