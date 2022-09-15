@@ -5,14 +5,14 @@ on:
     - main
 
 jobs:
-  build:
-    name: build-job
+  Build:
+    name: Build
     runs-on: self-hosted
     steps:
-    - name: checkout
+    - name: Checkout
       uses: actions/checkout@v3
 
-    - name: build
+    - name: Codebuild
       shell: cmd
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
@@ -20,12 +20,23 @@ jobs:
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
 
-  unittest:
-    name: unittest-job
-    needs: build
+  Codecheck:
+    name: Codecheck
+    need: Build
     runs-on: self-hosted
     steps:
-    - name: unittest
+    - name: Cppcheck
+    - shell: cmd
+      run: | 
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j 2 --template=vs --project=sample-app\sample-app\sample-app.vcxproj
+
+  Test:
+    name: Test
+    needs: Codecheck
+    runs-on: self-hosted
+    steps:
+    - name: Unittest
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
