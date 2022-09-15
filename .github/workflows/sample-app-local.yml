@@ -54,6 +54,7 @@ jobs:
         MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
+        cd ..\..\..\..\
         rmdir /s /q coverage
         OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
         xcopy LastCoverageResults.log coverage\
