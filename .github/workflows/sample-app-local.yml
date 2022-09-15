@@ -115,9 +115,9 @@ jobs:
         cd sample-app\integrationtest\x64\Release
         .\integrationtest.exe
         cd ..\..\..\..\
-        rmdir /s /q winMerge
-        mkdir winMerge
-        WinMerge output_original\result.csv sample-app\integrationtest\x64\Release\Output\result.csv /minimize /noninteractive /u /or .\out.html
+        rmdir /s /q winmerge
+        mkdir winmerge
+        WinMergeU output_original\result.csv sample-app\integrationtest\x64\Release\Output\result.csv /minimize /noninteractive /u /or .\out.html
         xcopy out.html winmerge
         xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2
         xcopy sample-app\integrationtest\x64\Release\sample-app.pdb artifacts2
