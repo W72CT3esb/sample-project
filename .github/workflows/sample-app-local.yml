@@ -30,14 +30,14 @@ jobs:
       run: | 
         set PATH=C:\3rdparty\Cppcheck;%PATH%
         cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
-        rmdir /s /q path\to\Cppcheck
-        mkdir path\to\Cppcheck
-        xcopy cppcheck-result.xml path\to\Cppcheck
+        rmdir /s /q Cppcheck
+        mkdir Cppcheck
+        xcopy cppcheck-result.xml Cppcheck
 
     - uses: actions/upload-artifact@v3
       with: 
         name: Cppcheck
-        path: path/to/Cppcheck
+        path: Cppcheck
 
   Test:
     name: Test
@@ -50,13 +50,28 @@ jobs:
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
-    - name: Test-Report
+    - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
-        name: Google-Test-Result           # Name of the check run which will be created
+        name: Unit-Test-Result           # Name of the check run which will be created
         path: sample-app/x64/Release/test_result.xml    # Path to test results
         reporter: jest-junit        # Format of test results
+
+    - name: Function-Test
+      shell: cmd
+      run: |
+        echo "#######"
+        echo "Function Test"
+        echo "#######"
+        rmdir /s /q artifacts
+        mkdir artifacts
+        xcopy sample-app\x64\Release artifacts
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: artifacts
+        path: artifacts
 
   # integrationtest:
   #   name: integrationtest-job
