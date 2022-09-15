@@ -32,11 +32,11 @@ jobs:
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\Scripts\;%PATH%
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\;%PATH%
         cppcheck --quiet --xml  --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj 2>cppcheck-result.xml
-        yes | pip install cppcheck-junit
+        yes | python -m pip install cppcheck-junit
         cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
-        pip uninstall --yes cppcheck-junit
+        python -m pip uninstall --yes cppcheck-junit
 
-    - name: Code-Check-Report
+    - name: Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
@@ -44,24 +44,24 @@ jobs:
         path: cppcheck-junit.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
-  Test:
-    name: Test
-    needs: Code-Check
-    runs-on: self-hosted
-    steps:
-    - name: Unit-Test
-      shell: cmd
-      run: |
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        cd sample-app\x64\Release
-        .\unittest.exe --gtest_output=xml:test_result.xml
-    - name: Test-Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
-      with:
-        name: Google-Test-Result           # Name of the check run which will be created
-        path: sample-app/x64/Release/test_result.xml    # Path to test results
-        reporter: jest-junit        # Format of test results
+  # Test:
+  #   name: Test
+  #   needs: Code-Check
+  #   runs-on: self-hosted
+  #   steps:
+  #   - name: Unit-Test
+  #     shell: cmd
+  #     run: |
+  #       set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+  #       cd sample-app\x64\Release
+  #       .\unittest.exe --gtest_output=xml:test_result.xml
+  #   - name: Test-Report
+  #     uses: dorny/test-reporter@v1
+  #     if: success() || failure()    # run this step even if previous step failed
+  #     with:
+  #       name: Google-Test-Result           # Name of the check run which will be created
+  #       path: sample-app/x64/Release/test_result.xml    # Path to test results
+  #       reporter: jest-junit        # Format of test results
 
   # integrationtest:
   #   name: integrationtest-job
