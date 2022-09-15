@@ -65,7 +65,7 @@ jobs:
         echo "Function Test"
         echo "#######"
         rmdir /s /q artifacts1
-        mkdir artifacts
+        mkdir artifacts1
         xcopy sample-app\x64\Release\sample-app.exe artifacts1
         xcopy sample-app\x64\Release\sample-app.pdb artifacts1
 
