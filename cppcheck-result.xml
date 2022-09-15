@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.8"/>
+    <errors>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;input_movie_path&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;input_movie_path&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="sample-app/sample-app/common.cpp">
+            <location file="sample-app\sample-app\common.h" line="38" column="3"/>
+            <symbol>input_movie_path</symbol>
+        </error>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;input_image_path&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;input_image_path&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="sample-app/sample-app/common.cpp">
+            <location file="sample-app\sample-app\common.h" line="39" column="3"/>
+            <symbol>input_image_path</symbol>
+        </error>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;cascade_filepath&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;cascade_filepath&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="sample-app/sample-app/common.cpp">
+            <location file="sample-app\sample-app\common.h" line="40" column="3"/>
+            <symbol>cascade_filepath</symbol>
+        </error>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;output_dirpath&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;output_dirpath&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="sample-app/sample-app/common.cpp">
+            <location file="sample-app\sample-app\common.h" line="45" column="3"/>
+            <symbol>output_dirpath</symbol>
+        </error>
+        <error id="variableScope" severity="style" msg="The scope of the variable &apos;hFind&apos; can be reduced." verbose="The scope of the variable &apos;hFind&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:\012void f(int x)\012{\012    int i = 0;\012    if (x) {\012        // it&apos;s safe to move &apos;int i = 0;&apos; here\012        for (int n = 0; n &lt; 10; ++n) {\012            // it is possible but not safe to move &apos;int i = 0;&apos; here\012            do_something(&amp;i);\012        }\012    }\012}\012When you see this message it is always safe to reduce the variable scope 1 level." cwe="398" file0="sample-app/sample-app/dataloader.cpp">
+            <location file="sample-app\sample-app\dataloader.cpp" line="244" column="9"/>
+            <symbol>hFind</symbol>
+        </error>
+        <error id="shadowVariable" severity="style" msg="Local variable &apos;file_names&apos; shadows outer variable" verbose="Local variable &apos;file_names&apos; shadows outer variable" cwe="398" file0="sample-app/sample-app/dataloader.cpp">
+            <location file="sample-app\sample-app\dataloader.cpp" line="246" column="27" info="Shadow variable"/>
+            <location file="sample-app\sample-app\dataloader.h" line="60" column="27" info="Shadowed declaration"/>
+            <symbol>file_names</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;iret&apos; is assigned a value that is never used." verbose="Variable &apos;iret&apos; is assigned a value that is never used." cwe="563" file0="sample-app/sample-app/dataloader.cpp">
+            <location file="sample-app\sample-app\dataloader.cpp" line="94" column="11"/>
+            <symbol>iret</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;iret&apos; is assigned a value that is never used." verbose="Variable &apos;iret&apos; is assigned a value that is never used." cwe="563" file0="sample-app/sample-app/dataloader.cpp">
+            <location file="sample-app\sample-app\dataloader.cpp" line="115" column="8"/>
+            <symbol>iret</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: file_names" verbose="Unused variable: file_names" cwe="563" file0="sample-app/sample-app/dataloader.cpp">
+            <location file="sample-app\sample-app\dataloader.cpp" line="246" column="27"/>
+            <symbol>file_names</symbol>
+        </error>
+        <error id="redundantAssignment" severity="style" msg="Variable &apos;iret&apos; is reassigned a value before the old one has been used." verbose="Variable &apos;iret&apos; is reassigned a value before the old one has been used." cwe="563" file0="sample-app/sample-app/main.cpp">
+            <location file="sample-app\sample-app\main.cpp" line="100" column="8" info="iret is overwritten"/>
+            <location file="sample-app\sample-app\main.cpp" line="97" column="8" info="iret is assigned"/>
+            <symbol>iret</symbol>
+        </error>
+        <error id="unsignedLessThanZero" severity="style" msg="Checking if unsigned expression &apos;dret&apos; is less than zero." verbose="The unsigned expression &apos;dret&apos; will never be negative so it is either pointless or an error to check if it is." cwe="570" file0="sample-app/sample-app/paramloader.cpp">
+            <location file="sample-app\sample-app\paramloader.cpp" line="86" column="11" info="Unsigned less than zero"/>
+            <symbol>dret</symbol>
+        </error>
+        <error id="unsignedLessThanZero" severity="style" msg="Checking if unsigned expression &apos;dret&apos; is less than zero." verbose="The unsigned expression &apos;dret&apos; will never be negative so it is either pointless or an error to check if it is." cwe="570" file0="sample-app/sample-app/paramloader.cpp">
+            <location file="sample-app\sample-app\paramloader.cpp" line="93" column="11" info="Unsigned less than zero"/>
+            <symbol>dret</symbol>
+        </error>
+        <error id="unsignedLessThanZero" severity="style" msg="Checking if unsigned expression &apos;dret&apos; is less than zero." verbose="The unsigned expression &apos;dret&apos; will never be negative so it is either pointless or an error to check if it is." cwe="570" file0="sample-app/sample-app/paramloader.cpp">
+            <location file="sample-app\sample-app\paramloader.cpp" line="100" column="11" info="Unsigned less than zero"/>
+            <symbol>dret</symbol>
+        </error>
+        <error id="unsignedLessThanZero" severity="style" msg="Checking if unsigned expression &apos;dret&apos; is less than zero." verbose="The unsigned expression &apos;dret&apos; will never be negative so it is either pointless or an error to check if it is." cwe="570" file0="sample-app/sample-app/paramloader.cpp">
+            <location file="sample-app\sample-app\paramloader.cpp" line="127" column="11" info="Unsigned less than zero"/>
+            <symbol>dret</symbol>
+        </error>
+^C

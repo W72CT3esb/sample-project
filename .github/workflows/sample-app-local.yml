@@ -29,24 +29,27 @@ jobs:
       shell: cmd
       run: | 
         set PATH=C:\3rdparty\Cppcheck;%PATH%
-        cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j 2 --template=vs --project=sample-app\sample-app\sample-app.vcxproj
+        cppcheck --quiet --xml  --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj 2>cppcheck-result.xml
+        python --version
+        pip list
+        cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
 
   Test:
     name: Test
     needs: Code-Check
     runs-on: self-hosted
     steps:
-    - name: Unit Test
+    - name: Unit-Test
       shell: cmd
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
-    - name: Test Report
+    - name: Test-Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
-        name: Google Tests            # Name of the check run which will be created
+        name: Google-Test-results           # Name of the check run which will be created
         path: sample-app/x64/Release/test_result.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
