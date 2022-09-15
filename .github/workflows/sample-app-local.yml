@@ -79,11 +79,16 @@ jobs:
     needs: Test
     runs-on: self-hosted
     steps:
+    - name: Delete-old-artifacts1
+      shell: cmd
+      run: | 
+        rmdir /s /q artifacts1
+
     - uses: actions/download-artifact@v3
       name: download-artifacts1
       with:
-        name: new-artifacts1
-        path: ./
+        name: artifacts1
+        path: ./new-artifacts1
 
     # - name: Integration-Test
     #   shell: cmd
