@@ -58,7 +58,7 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Unit-Test-Result           # Name of the check run which will be created
-        path: sample-app/x64/Release/test_result.xml    # Path to test results
+        path: sample-app/unittest/x64/Release/test_result.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
     - name: Function-Test
@@ -102,6 +102,7 @@ jobs:
         rmdir /s /q artifacts2
         mkdir artifacts2
         xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
+        xcopy artifacts1\sample-app.pdb sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
         .\integrationtest.exe
         cd ..\..\..\..\
