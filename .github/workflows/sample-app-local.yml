@@ -78,8 +78,8 @@ jobs:
         name: artifacts1
         path: artifacts1
 
-  Integration-Test:
-    name: Integration-Test
+  Deploy-Test-Env-and-Integration-Test:
+    name: Deploy-Test-Env-and-Integration-Test
     needs: Test
     runs-on: self-hosted
     steps:
@@ -89,7 +89,7 @@ jobs:
         rmdir /s /q artifacts1
 
     - uses: actions/download-artifact@v3
-      name: deploy-artifacts1
+      name: Deploy-artifacts1
       with:
         name: artifacts1
         path: artifacts1
@@ -129,13 +129,13 @@ jobs:
     #     name: my-artifact
     #     path: path/to/artifacts
 
-  Deploy:
-    name: Deploy
+  Deploy-Production-env:
+    name: Deploy-Production-env
     needs: Integration-Test
     runs-on: self-hosted
     steps:
     - uses: actions/download-artifact@v3
-      name: deploy-artifact2
+      name: Deploy-artifact2
       with:
-        name: artifact2
+        name: artifacts2
         path: C:\Users\NES\Desktop\deploy
