@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>paramloader.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;Shlwapi.h&gt;
+#include "paramloader.h"
+#include "common.h"
+
+const int DEFINE_CHAR_SIZE = 1024;
+
+// RXgN^
+ParamLoader::ParamLoader()
+{
+	//std::cout &lt;&lt; "ParamLoaderIuWFNg¶¬" &lt;&lt; std::endl;
+}
+
+// fXgN^
+ParamLoader::~ParamLoader()
+<span style = "background-color:#fdd">{</span>
+	//std::cout &lt;&lt; "ParamLoaderIuWFNgjü" &lt;&lt; std::endl;
+<span style = "background-color:#fdd">}</span>
+
+// Ýèt@C©çp[^ð[h·éÖ
+int ParamLoader::load_param(Params &amp;params)
+<span style = "background-color:#dfd">{</span>
+	char str_buf[DEFINE_CHAR_SIZE]; // char^Ìobt@
+	DWORD dret = 0;
+	bool iret = false;
+
+<span style = "background-color:#dfd">	iret = SetWorkingDirectory(); // JgfBNgÉÚ®
+	if (!iret) // JgfBNgÉÚ®¸s</span>
+	{
+<span style = "background-color:#fdd">		return -1;</span>
+	}
+
+<span style = "background-color:#dfd">	if (!PathFileExists(this-&gt;CONFIG_FILEPATH.c_str())) // Ýèt@CªÈ­Ä¸s</span>
+	{
+<span style = "background-color:#dfd">		return -2;</span>
+	}
+	
+<span style = "background-color:#dfd">	params.device_id = GetPrivateProfileInt("camera", "device_id", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.device_id != 0) // 0ÈOÍ¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -3;</span>
+	}
+
+<span style = "background-color:#dfd">	params.c_frame_width = GetPrivateProfileInt("camera", "c_frame_width", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.c_frame_width == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -4;</span>
+	}
+<span style = "background-color:#dfd">	if (params.c_frame_width &lt;= 0) // 0ÈºÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -5;</span>
+	}
+
+<span style = "background-color:#dfd">	params.c_frame_height = GetPrivateProfileInt("camera", "c_frame_height", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.c_frame_height == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -6;</span>
+	}
+<span style = "background-color:#dfd">	if (params.c_frame_height &lt;= 0) // 0ÈºÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -7;</span>
+	}
+
+<span style = "background-color:#dfd">	params.c_fps = GetPrivateProfileInt("camera", "c_fps", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.c_fps == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -8;</span>
+	}
+<span style = "background-color:#dfd">	if (params.c_fps &lt;= 0) // 0ÈºÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -9;</span>
+	}
+
+<span style = "background-color:#dfd">	params.data_type = GetPrivateProfileInt("input", "data_type", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.data_type == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -10;</span>
+	}
+	if (params.data_type != 0 &amp;&amp; params.data_type != 1 &amp;&amp; params.data_type != 2) // 0,1,2ÈOÍ¸s
+	{
+<span style = "background-color:#dfd">		return -11;</span>
+	}
+
+<span style = "background-color:#dfd">	dret = GetPrivateProfileString("input", "input_movie_path", "", str_buf, sizeof(str_buf), this-&gt;CONFIG_FILEPATH.c_str());
+	if (dret &lt;= 0 || std::strlen(str_buf) == 0) // 0ÈºiZNV©çL[[hðæêÄ±êÈ©Á½jÜ½ÍAstringªóÌêÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -12;</span>
+	}
+<span style = "background-color:#dfd">	params.input_movie_path = str_buf;</span>
+
+<span style = "background-color:#dfd">	dret = GetPrivateProfileString("input", "input_image_path", "", str_buf, sizeof(str_buf), this-&gt;CONFIG_FILEPATH.c_str());
+	if (dret &lt;= 0 || std::strlen(str_buf) == 0) // 0ÈºiZNV©çL[[hðæêÄ±êÈ©Á½jÜ½ÍAstringªóÌêÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -13;</span>
+	}
+<span style = "background-color:#dfd">	params.input_image_path = str_buf;</span>
+
+<span style = "background-color:#dfd">	dret = GetPrivateProfileString("detector", "cascade_filepath", "", str_buf, sizeof(str_buf), this-&gt;CONFIG_FILEPATH.c_str());
+	if (dret &lt;= 0 || std::strlen(str_buf) == 0) // 0ÈºiZNV©çL[[hðæêÄ±êÈ©Á½jÜ½ÍAstringªóÌêÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -14;</span>
+	}
+<span style = "background-color:#dfd">	params.cascade_filepath = str_buf;</span>
+
+<span style = "background-color:#dfd">	params.face_detect_width = GetPrivateProfileInt("detector", "face_detect_width", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.face_detect_width == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -15;</span>
+	}
+<span style = "background-color:#dfd">	if (params.face_detect_width &lt;= 0) // 0ÈºÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -16;</span>
+	}
+
+<span style = "background-color:#dfd">	params.face_detect_height = GetPrivateProfileInt("detector", "face_detect_height", -1, this-&gt;CONFIG_FILEPATH.c_str());
+	if (params.face_detect_height == -1) // -1Í¸siZNV©çL[[hðæêÄ±êÈ©Á½j</span>
+	{
+<span style = "background-color:#dfd">		return -17;</span>
+	}
+<span style = "background-color:#dfd">	if (params.face_detect_height &lt;= 0) // 0ÈºÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -18;</span>
+	}
+
+<span style = "background-color:#dfd">	dret = GetPrivateProfileString("output", "output_dirpath", "", str_buf, sizeof(str_buf), this-&gt;CONFIG_FILEPATH.c_str());
+	if (dret &lt;= 0 || std::strlen(str_buf) == 0) // 0ÈºiZNV©çL[[hðæêÄ±êÈ©Á½jÜ½ÍAstringªóÌêÍ¸s</span>
+	{
+<span style = "background-color:#dfd">		return -19;</span>
+	}
+<span style = "background-color:#dfd">	params.output_dirpath = str_buf;</span>
+
+<span style = "background-color:#dfd">	return 0;
+}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>

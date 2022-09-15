@@ -1,0 +1,1584 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>unittest.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include &lt;gtest/gtest.h&gt;
+#include &lt;gmock/gmock.h&gt;
+#include &lt;Shlwapi.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;direct.h&gt;
+#include &lt;fstream&gt;
+#include &lt;chrono&gt;
+#include "../sample-app/common.h"
+#include "../sample-app/paramloader.h"
+#include "../sample-app/facedetector.h"
+#include "../sample-app/dataloader.h"
+#include "../sample-app/filewriter.h"
+
+using ::testing::Mock;
+using ::testing::_;
+using ::testing::Return;
+using ::testing::Test;
+
+const int DEFINE_STRING_SIZE = 1024;
+
+// âÎpXÌê
+<span style = "background-color:#dfd">std::string CONFIG_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\src\\sample-app\\sample-app\\sample-app\\config.ini";</span>
+char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
+
+<span style = "background-color:#dfd">std::string INPUT_MOVIE_PATH1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1\\sample1.avi";
+std::string INPUT_MOVIE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample2\\sample2.avi";
+std::string TMP_INPUT_MOVIE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\tmp";
+std::string INPUT_MOVIE_PATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\movie\\sample1\\sample.avi";
+std::string INPUT_MOVIE_PATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\movie\\sample1";</span>
+
+<span style = "background-color:#dfd">std::string INPUT_IMAGE_PATH1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample2";
+std::string TMP_INPUT_IMAGE_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\tmp";
+std::string INPUT_IMAGE_PATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\image\\sample1";
+std::string INPUT_IMAGE_PATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\image\\sample1\\pic_0000.jpg";</span>
+
+<span style = "background-color:#dfd">std::string CASCADE_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\haarcascade_frontalface_alt.xml";</span>
+char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp";
+char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade\\tmp\\test.xml";
+<span style = "background-color:#dfd">std::string CASCADE_FILEPATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\cascade\\haarcascade_frontalface_alt.xml";
+std::string CASCADE_FILEPATH_DUMMY2 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data\\cascade";</span>
+
+<span style = "background-color:#dfd">std::string OUTPUT_DIRPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output";
+std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv";
+std::string OUTPUT_DIRPATH_DUMMY1 = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\data_\\Output";</span>
+
+/*
+// ÎpXÌê
+std::string CONFIG_FILEPATH = "..\\..\\sample-app\\config.ini";
+char COPIED_CONFIG_FILEPATH[DEFINE_STRING_SIZE];
+
+std::string INPUT_MOVIE_PATH1 = "..\\..\\..\\..\\..\\data\\movie\\sample1\\sample1.avi";
+std::string INPUT_MOVIE_PATH2 = "..\\..\\..\\..\\..\\data\\movie\\sample2\\sample2.avi";
+std::string TMP_INPUT_MOVIE_DIRPATH = "..\\..\\..\\..\\..\\data\\movie\\tmp";
+std::string INPUT_MOVIE_PATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\movie\\sample1\\sample.avi";
+std::string INPUT_MOVIE_PATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\movie\\sample1";
+
+std::string INPUT_IMAGE_PATH1 = "..\\..\\..\\..\\..\\data\\image\\sample1";
+std::string INPUT_IMAGE_PATH2 = "..\\..\\..\\..\\..\\data\\image\\sample2";
+std::string TMP_INPUT_IMAGE_DIRPATH = "..\\..\\..\\..\\..\\data\\image\\tmp";
+std::string INPUT_IMAGE_PATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\image\\sample1";
+std::string INPUT_IMAGE_PATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\image\\sample1\\pic_0000.jpg";
+
+std::string CASCADE_FILEPATH = "..\\..\\..\\..\\..\\data\\cascade\\haarcascade_frontalface_alt.xml";
+char TMP_CASCADE_DIRPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp";
+char TMP_CASCADE_FILEPATH[DEFINE_STRING_SIZE] = "..\\..\\..\\..\\..\\data\\cascade\\tmp\\test.xml";
+std::string CASCADE_FILEPATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\cascade\\haarcascade_frontalface_alt.xml";
+std::string CASCADE_FILEPATH_DUMMY2 = "..\\..\\..\\..\\..\\data\\cascade";
+
+std::string OUTPUT_DIRPATH = "..\\..\\..\\..\\..\\Output";
+std::string OUTPUT_FILEPATH = "..\\..\\..\\..\\..\\Output\\result.csv";
+std::string OUTPUT_DIRPATH_DUMMY1 = "..\\..\\..\\..\\..\\data_\\Output";
+*/
+
+void copy_config_file();
+
+// eXgtBNX`NXÌè`(ParamLoader)
+class ParamLoaderTest : public Test {
+protected:
+
+	// ±JnÉêñ¾¯Às
+<span style = "background-color:#dfd">	static void SetUpTestCase() {</span>
+		//std::cout &lt;&lt; "#####Start Test#####\n" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// ±I¹Éêñ¾¯Às
+<span style = "background-color:#dfd">	static void TearDownTestCase() {</span>
+		//std::cout &lt;&lt; "#####Finish Test#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// eeXgP[XÀsOÉÀs
+<span style = "background-color:#dfd">	virtual void SetUp() {</span>
+		// OÉÝèt@CÌ}X^[ðJgfBNgÉRs[
+<span style = "background-color:#dfd">		copy_config_file();</span>
+		//std::cout &lt;&lt; "#####Start TestCase#####\n" &lt;&lt; std::endl;
+	}
+
+	// eeXgP[XÀsãÉÀs
+<span style = "background-color:#dfd">	virtual void TearDown() {</span>
+		//std::cout &lt;&lt; "#####Finish TestCase#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+};
+
+// eXgtBNX`NXÌè`(FileWriter)
+class FileWriterTest : public Test {
+protected:
+
+	// ±JnÉêñ¾¯Às
+<span style = "background-color:#dfd">	static void SetUpTestCase() {</span>
+		//std::cout &lt;&lt; "#####Start Test#####\n" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// ±I¹Éêñ¾¯Às
+<span style = "background-color:#dfd">	static void TearDownTestCase() {</span>
+		//std::cout &lt;&lt; "#####Finish Test#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// eeXgP[XÀsOÉÀs
+<span style = "background-color:#dfd">	virtual void SetUp() {</span>
+		// oÍt@CÆfBNgÌí
+<span style = "background-color:#dfd">		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());</span>
+		//std::cout &lt;&lt; "#####Start TestCase#####\n" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// eeXgP[XÀsãÉÀs
+<span style = "background-color:#dfd">	virtual void TearDown() {
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());</span>
+		//std::cout &lt;&lt; "#####Finish TestCase#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+};
+
+// eXgtBNX`NXÌè`()
+class ProcessingTimeTest : public Test {
+protected:
+
+	// ±JnÉêñ¾¯Às
+<span style = "background-color:#dfd">	static void SetUpTestCase() {</span>
+		//std::cout &lt;&lt; "#####Start Test#####\n" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// ±I¹Éêñ¾¯Às
+<span style = "background-color:#dfd">	static void TearDownTestCase() {</span>
+		//std::cout &lt;&lt; "#####Finish Test#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// eeXgP[XÀsOÉÀs
+<span style = "background-color:#dfd">	virtual void SetUp() {</span>
+		// oÍt@CÆfBNgÌí
+<span style = "background-color:#dfd">		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());</span>
+		//std::cout &lt;&lt; "#####Start TestCase#####\n" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+
+	// eeXgP[XÀsãÉÀs
+<span style = "background-color:#dfd">	virtual void TearDown() {
+		DeleteFile(OUTPUT_FILEPATH.c_str());
+		RemoveDirectory(OUTPUT_DIRPATH.c_str());</span>
+		//std::cout &lt;&lt; "#####Finish TestCase#####" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	}</span>
+};
+
+// DataLoaderÌbNNX
+class mock_DataLoader : public DataLoader {
+public:
+<span style = "background-color:#dfd">	MOCK_METHOD(int, load_mv, (cv::Mat&amp;), (override));
+	MOCK_METHOD(int, load_img, (cv::Mat&amp;), (override));</span>
+};
+
+void copy_config_file()
+<span style = "background-color:#dfd">{
+	char buff[DEFINE_STRING_SIZE] = {};
+	char drive[DEFINE_STRING_SIZE] = {};
+	char dir[DEFINE_STRING_SIZE] = {};</span>
+
+	// Ýèt@CÌ}X^[ðRs[·é½ßÌõ
+<span style = "background-color:#dfd">	GetModuleFileName(nullptr, buff, DEFINE_STRING_SIZE);
+	_splitpath_s(buff, drive, DEFINE_STRING_SIZE, dir, DEFINE_STRING_SIZE, nullptr, 0, nullptr, 0);
+	sprintf_s(COPIED_CONFIG_FILEPATH, DEFINE_STRING_SIZE, "%s%s", drive, dir);
+	strcat_s(COPIED_CONFIG_FILEPATH, DEFINE_STRING_SIZE, "config.ini");</span>
+
+	// Ýèt@CÌ}X^[ðRs[
+<span style = "background-color:#dfd">	CopyFile(CONFIG_FILEPATH.c_str(), COPIED_CONFIG_FILEPATH, FALSE);
+}</span>
+
+// ###CommonÌeXg±±©ç###
+<span style = "background-color:#dfd">TEST(CommonTest, SetWorkingDirectory_Test) {</span>
+	bool ans = false;
+<span style = "background-color:#dfd">	ans = SetWorkingDirectory();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(true, ans);
+}</span>
+// ###CommonÌeXg±±ÜÅ###
+
+// ###ParamLoaderÌeXg±±©ç###
+// RXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, constructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(ParamLoader());
+}</span>
+
+// fXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, destructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(ParamLoader().~ParamLoader());
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_PathFileExists_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@Cðí
+<span style = "background-color:#dfd">	DeleteFile(COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_device_id_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "device_id", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-3, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_frame_width", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-4, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_frame_width_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_frame_width", "-2", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-5, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_frame_height", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-6, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_frame_height_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_frame_height", "-2", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-7, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_fps_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_fps", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-8, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_c_fps_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("camera", "c_fps", "-2", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-9, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_data_type_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("input", "data_type", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-10, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_data_type_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("input", "data_type", "3", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-11, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_input_movie_path_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("input", "input_movie_path", "", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-12, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_input_image_path_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("input", "input_image_path", "", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-13, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_cascade_filepath_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("detector", "cascade_filepath", "", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-14, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("detector", "face_detect_width", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-15, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_face_detect_width_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("detector", "face_detect_width", "-2", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-16, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test1) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("detector", "face_detect_height", "-1", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-17, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_face_detect_height_Test2) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("detector", "face_detect_height", "-2", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-18, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_params_output_dirpath_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+	// Ýèt@CàÌp[^ÏX
+<span style = "background-color:#dfd">	WritePrivateProfileString("output", "output_dirpath", "", COPIED_CONFIG_FILEPATH);</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(-19, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(ParamLoaderTest, load_param_Positive_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	Params params;
+	ParamLoader paramloader;</span>
+
+<span style = "background-color:#dfd">	ans = paramloader.load_param(params);
+	EXPECT_EQ(0, ans);
+}</span>
+// ###ParamLoaderÌeXg±±ÜÅ###
+
+// ###DataLoaderÌeXg±±©ç###
+// RXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST(DataLoaderTest, constructor_Test) {</span>
+
+	//EXPECT_THROW(DataLoader(), std::exception);
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(DataLoader());
+}</span>
+
+// fXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST(DataLoaderTest, destructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(DataLoader().~DataLoader());
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, get_frame_index_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.get_frame_index();
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, get_frame_num_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.get_frame_num();
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_0_PathFileExists_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;</span>
+
+	// t@Cª¶ÝµÈ¢pXðÝè
+<span style = "background-color:#dfd">	params.input_movie_path = INPUT_MOVIE_PATH_DUMMY1;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_0_PathIsDirectory_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;</span>
+
+	// fBNgÌpXðÝè
+<span style = "background-color:#dfd">	params.input_movie_path = INPUT_MOVIE_PATH_DUMMY2;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_0_Positive_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;</span>
+
+	// ¶Ý·é®æÌt@CpXðÝè
+<span style = "background-color:#dfd">	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_1_PathFileExists_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^CvðæÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;</span>
+
+	// fBNgª¶ÝµÈ¢pXðÝè
+<span style = "background-color:#dfd">	params.input_image_path = INPUT_IMAGE_PATH_DUMMY1;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(-3, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_1_PathIsDirectory_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^CvðæÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;</span>
+
+	// t@CÌpXðÝè
+<span style = "background-color:#dfd">	params.input_image_path = INPUT_IMAGE_PATH_DUMMY2;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(-4, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_1_Positive_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;</span>
+
+	// ¶Ý·é®æÌt@CpXðÝè
+<span style = "background-color:#dfd">	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, initialize_data_type_2_Positive_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^CvðJfÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 2;</span>
+
+	// JfÌp[^ðÝè
+<span style = "background-color:#dfd">	params.device_id = 0;</span>
+	params.c_frame_width = 0;
+	params.c_frame_height = 0;
+	params.c_fps = 0;
+
+<span style = "background-color:#dfd">	ans = dataloader.initialize(params);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_open_flag_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// ññopen_data()ðÄñÅflagðtrueÉ·é
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	ans = dataloader.open_data();
+	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_0_capisOpened_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// üÍf[^ðÊÌfBNgÉÚ®
+<span style = "background-color:#dfd">	_mkdir(TMP_INPUT_MOVIE_DIRPATH.c_str());
+	MoveFile(INPUT_MOVIE_PATH1.c_str(), (TMP_INPUT_MOVIE_DIRPATH+"\\sample.avi").c_str());</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(-2, ans);</span>
+
+	// üÍf[^ð³ÌfBNgÉÚ®
+<span style = "background-color:#dfd">	MoveFile((TMP_INPUT_MOVIE_DIRPATH + "\\sample.avi").c_str(), INPUT_MOVIE_PATH1.c_str());
+	RemoveDirectory(TMP_INPUT_MOVIE_DIRPATH.c_str());
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_0_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_1_file_namessize_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^CvðæÉÝè
+<span style = "background-color:#dfd">	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// üÍf[^ðÊÌfBNgÉÚ®
+<span style = "background-color:#dfd">	_mkdir(TMP_INPUT_IMAGE_DIRPATH.c_str());
+	MoveFile(INPUT_IMAGE_PATH1.c_str(), (TMP_INPUT_IMAGE_DIRPATH +"\\sample1").c_str());</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(-3, ans);</span>
+
+	// üÍf[^ð³ÌfBNgÉÚ®
+<span style = "background-color:#dfd">	MoveFile((TMP_INPUT_IMAGE_DIRPATH + "\\sample1").c_str(), INPUT_IMAGE_PATH1.c_str());
+	RemoveDirectory(TMP_INPUT_IMAGE_DIRPATH.c_str());
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_1_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^CvðæÉÝè
+<span style = "background-color:#dfd">	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_2_capisOpened_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^CvðJfÉÝè
+<span style = "background-color:#dfd">	params.data_type = 2;
+	params.device_id = -1;</span>
+
+	// JfÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(-4, ans);
+}</span>
+
+// Jfðæ¾·éÌÉÔª©©é±ÆÉÓ
+<span style = "background-color:#dfd">TEST(DataLoaderTest, open_data_file_data_type_2_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^CvðJfÉÝè
+<span style = "background-color:#dfd">	params.data_type = 2;
+	params.device_id = 0;</span>
+
+	// JfÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.open_data();
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, load_mv_file_open_flag_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.load_mv(img);
+	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, load_mv_img_empty_Test) {</span>
+	int ans = -1;
+	int iret = -1;
+<span style = "background-color:#dfd">	cv::Mat img; //grab_imageÌøp
+	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;</span>
+
+	// ¶Ý·é®æÌt@CpXðÝè
+<span style = "background-color:#dfd">	params.input_movie_path = INPUT_MOVIE_PATH2;</span>
+
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();</span>
+
+<span style = "background-color:#dfd">	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);
+	iret = dataloader.load_mv(img);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.load_mv(img);</span>
+
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, load_mv_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// open_data()ðÄñÅflagðtrueÉ·é
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.load_mv(img);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, load_img_img_empty_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	cv::Mat img; //load_imgÌøp</span>
+
+				 // üÍf[^Ì^CvðÃ~æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;</span>
+
+	// ì¬µ½fBNgpXðÝè
+<span style = "background-color:#dfd">	params.input_image_path = INPUT_IMAGE_PATH2;</span>
+
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.load_img(img);</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, load_img_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// open_data()ðÄñÅflagðtrueÉ·é
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.load_img(img);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, get_frame_info_Test) {
+	std::string ans = "";</span>
+	int iret = -1;
+<span style = "background-color:#dfd">	cv::Mat img; //grab_imageÌøp
+	DataLoader dataloader;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;</span>
+
+	// ¶Ý·é®æÌt@CpXðÝè
+<span style = "background-color:#dfd">	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);
+	iret = dataloader.open_data();
+	iret = dataloader.grab_image(img);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.get_frame_info();</span>
+
+<span style = "background-color:#dfd">	EXPECT_STREQ("0", ans.c_str());
+}</span>
+
+//TEST(DataLoaderTest, get_frame_info_data_type_0_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageÌøp
+//	DataLoader dataloader;
+//
+//	// üÍf[^Ì^Cvð®æÉÝè
+//	Params params;
+//	params.data_type = 0;
+//
+//	// ¶Ý·é®æÌt@CpXðÝè
+//	params.input_movie_path = INPUT_MOVIE_PATH1;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ("0", ans.c_str());
+//}
+
+//TEST(DataLoaderTest, get_frame_info_data_type_1_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageÌøp
+//	DataLoader dataloader;
+//
+//	// üÍf[^Ì^CvðÃ~æÉÝè
+//	Params params;
+//	params.data_type = 1;
+//
+//	// ¶Ý·éæfBNgpXðÝè
+//	params.input_image_path = INPUT_IMAGE_PATH1;
+//
+//	std::string image_file_name = "pic_0000.jpg";
+//	std::string image_file_path = INPUT_IMAGE_PATH1 + "\\" + image_file_name;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ(image_file_path.c_str(), ans.c_str());
+//}
+
+// Jfðæ¾·éÌÉÔª©©é±ÆÉÓ
+//TEST(DataLoaderTest, get_frame_info_data_type_2_Test) {
+//	std::string ans = "";
+//	int iret = -1;
+//	cv::Mat img; //grab_imageÌøp
+//	DataLoader dataloader;
+//
+//	// üÍf[^Ì^CvðJÉÝè
+//	Params params;
+//	params.data_type = 2;
+//	params.device_id = 0;
+//	params.c_frame_height = 480;
+//	params.c_frame_width = 640;
+//	params.c_fps = 15;
+//
+//	iret = dataloader.initialize(params);
+//	iret = dataloader.open_data();
+//	iret = dataloader.grab_image(img);
+//
+//	ans = dataloader.get_frame_info();
+//
+//	EXPECT_STREQ("0", ans.c_str());
+//}
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_0_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader *mock_d = new mock_DataLoader();</span>
+
+	//®æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_mvÌßèlÆµÄ-1ªÔp³êéæ¤ÝèAøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(-1));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = dataloader-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_0_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader *mock_d = new mock_DataLoader();</span>
+
+	//®æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_mvÌßèlÆµÄ0ªÔp³êéæ¤ÝèAøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(0));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = dataloader-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_1_Test) {</span>
+	int ans = -1;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader* mock_d = new mock_DataLoader();</span>
+
+	// æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = mock_d-&gt;initialize(params);</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_imgÌßèlÆµÄ-1ªÔp³êéæ¤ÝèBøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_img(testing::_)).WillRepeatedly(Return(-1));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = mock_d-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_1_Positive_Test) {</span>
+	int ans = -1;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader* mock_d = new mock_DataLoader();</span>
+
+	// æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = mock_d-&gt;initialize(params);</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_imgÌßèlÆµÄ-1ªÔp³êéæ¤ÝèBøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_img(testing::_)).WillRepeatedly(Return(0));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = mock_d-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_2_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader *mock_d = new mock_DataLoader();</span>
+
+	//®æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 2;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = mock_d-&gt;initialize(params);</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_mvÌßèlÆµÄ-1ªÔp³êéæ¤ÝèAøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(-1));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = dataloader-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-3, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, grab_image_data_type_2_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+
+	// bNIuWFNgðì¬
+<span style = "background-color:#dfd">	mock_DataLoader *mock_d = new mock_DataLoader();</span>
+
+	//®æÌp[^ÉÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 2;</span>
+
+	// æÅú»
+<span style = "background-color:#dfd">	iret = mock_d-&gt;initialize(params);</span>
+
+	// GrabImageÌøp
+<span style = "background-color:#dfd">	cv::Mat img;</span>
+
+	// load_mvÌßèlÆµÄ-1ªÔp³êéæ¤ÝèAøÍCÓÆ·é
+<span style = "background-color:#dfd">	EXPECT_CALL(*mock_d, load_mv(testing::_)).WillRepeatedly(Return(0));</span>
+
+	DataLoader* dataloader = mock_d;
+
+<span style = "background-color:#dfd">	ans = dataloader-&gt;grab_image(img);</span>
+
+	// bNIuWFNgÌðú
+	delete mock_d;
+
+<span style = "background-color:#dfd">	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(DataLoaderTest, get_filelist_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;</span>
+
+	// üÍf[^Ì^CvðæÉÝè
+<span style = "background-color:#dfd">	params.data_type = 1;
+	params.input_image_path = INPUT_IMAGE_PATH1;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = dataloader.get_filelist();
+	EXPECT_EQ(0, ans);
+}</span>
+// ###DataLoaderÌeXg±±ÜÅ###
+
+// ###FaceDetectorÌeXg±±©ç###
+// RXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, constructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(FaceDetector());
+}</span>
+
+// fXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, destructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(FaceDetector().~FaceDetector());
+}</span>
+
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, initialize_PathFileExists_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FaceDetector facedetector;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;</span>
+
+	// t@Cª¶ÝµÈ¢pXðÝè
+<span style = "background-color:#dfd">	params.cascade_filepath = CASCADE_FILEPATH_DUMMY1;</span>
+
+<span style = "background-color:#dfd">	ans = facedetector.initialize(params);
+	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, initialize_PathIsDirectory_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FaceDetector facedetector;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;</span>
+
+	// fBNgÌpXðÝè
+<span style = "background-color:#dfd">	params.cascade_filepath = CASCADE_FILEPATH_DUMMY2;</span>
+
+<span style = "background-color:#dfd">	ans = facedetector.initialize(params);
+	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, initialize_cascadeload_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FaceDetector facedetector;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;</span>
+
+	// JXP[hªÞíÌ_~[f[^ðì¬
+<span style = "background-color:#dfd">	_mkdir(TMP_CASCADE_DIRPATH);
+	CreateFile(TMP_CASCADE_FILEPATH, GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);</span>
+
+	// JXP[hªÞíÌ_~[f[^Ìt@CpXðÝè
+<span style = "background-color:#dfd">	params.cascade_filepath = TMP_CASCADE_FILEPATH;</span>
+
+<span style = "background-color:#dfd">	ans = facedetector.initialize(params);
+	EXPECT_EQ(-3, ans);</span>
+
+	// JXP[hªÞíÌ_~[f[^Ìt@CÆfBNgðí
+<span style = "background-color:#dfd">	DeleteFile(TMP_CASCADE_FILEPATH);
+	RemoveDirectory(TMP_CASCADE_DIRPATH);
+}</span>
+
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, initialize_Positive_Test) {</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FaceDetector facedetector;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	Params params;</span>
+
+	// JXP[hªÞíÌt@CpXðÝè
+<span style = "background-color:#dfd">	params.cascade_filepath = CASCADE_FILEPATH;</span>
+
+<span style = "background-color:#dfd">	ans = facedetector.initialize(params);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST(FaceDetectorTest, detect_face_Positive_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	FaceDetector facedetector;
+	Params params;
+	ParamLoader paramloader;</span>
+
+<span style = "background-color:#dfd">	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
+	params.cascade_filepath = CASCADE_FILEPATH;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// ®æf[^ðI[v
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// çoíÌú»
+<span style = "background-color:#dfd">	iret = facedetector.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = facedetector.detect_face(img, faces);
+	EXPECT_EQ(0, ans);
+}</span>
+// ###FaceDetectorÌeXg±±ÜÅ###
+
+// ###FileWriterÌeXg±±©ç###
+// RXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, constructor_Test) {</span>
+
+<span style = "background-color:#dfd">	EXPECT_NO_THROW(FileWriter());
+}</span>
+
+// fXgN^ÌeXgiáOª­¶µÈ¢©`FbNj
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, destructor_Test) {
+	EXPECT_NO_THROW(FileWriter().~FileWriter());
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, initialize_mkdir_Test)
+{</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FileWriter filewriter;</span>
+
+	// ¶ÝµÈ¢fBNgpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH_DUMMY1;</span>
+
+<span style = "background-color:#dfd">	ans = filewriter.initialize(params);
+	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, initialize_Positive_Test)
+{</span>
+	int ans = 0;
+<span style = "background-color:#dfd">	FileWriter filewriter;</span>
+
+	// oÍfBNgÌpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+<span style = "background-color:#dfd">	ans = filewriter.initialize(params);
+	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, open_file_file_open_flag_Test)
+{</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	FileWriter filewriter;</span>
+
+	// oÍfBNgÌpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// ú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+	// 2ñÄñÅtOðtrueÉ·é
+<span style = "background-color:#dfd">	ans = filewriter.open_file();
+	ans = filewriter.open_file();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, open_file_writing_file_is_open_Test)
+{</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	FileWriter filewriter;</span>
+
+	// oÍfBNgÌpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// ú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+	// ì¬µ½fBNgðí
+<span style = "background-color:#dfd">	RemoveDirectory(params.output_dirpath.c_str());</span>
+
+<span style = "background-color:#dfd">	ans = filewriter.open_file();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-2, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, open_file_Positive_Test)
+{</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	FileWriter filewriter;</span>
+
+	// oÍfBNgÌpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// ú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = filewriter.open_file();</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(0, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, output_file_file_open_flag_Test)
+{</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	FileWriter filewriter;
+	DataLoader dataloader;
+	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	// oÍfBNgÌpXðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// ú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+<span style = "background-color:#dfd">	ans = filewriter.output_file(dataloader, img, faces);</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(-1, ans);
+}</span>
+
+<span style = "background-color:#dfd">TEST_F(FileWriterTest, output_file_Positive_Test)
+{</span>
+	int ans = -1;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	FaceDetector facedetector;
+	FileWriter filewriter;
+	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	// p[^ðÝè
+<span style = "background-color:#dfd">	Params params;
+	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH1;
+	params.cascade_filepath = CASCADE_FILEPATH;
+	params.face_detect_width = 20;
+	params.face_detect_height = 20;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// f[^ÇÝÝ@\Ìú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// üÍf[^ðI[v
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// çoíÌú»
+<span style = "background-color:#dfd">	iret = facedetector.initialize(params);</span>
+
+	// t@CoÍíÌú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+	// oÍt@CðI[v
+<span style = "background-color:#dfd">	iret = filewriter.open_file();</span>
+
+	// 1t[æèo·
+<span style = "background-color:#dfd">	iret = dataloader.grab_image(img);</span>
+
+	// t[©çço
+<span style = "background-color:#dfd">	iret = facedetector.detect_face(img, faces);</span>
+
+	// oÍt@CÉ«Ý
+<span style = "background-color:#dfd">	ans = filewriter.output_file(dataloader, img, faces);</span>
+
+<span style = "background-color:#dfd">	EXPECT_EQ(0, ans);</span>
+
+<span style = "background-color:#dfd">}</span>
+// ###FileWriterÌeXg±±ÜÅ###
+
+// ###ÔÌeXg±±©ç###
+// 1t[Ìæ¾ÔðeXg
+<span style = "background-color:#dfd">TEST_F(ProcessingTimeTest, DataLoader_grab_image_elapsed_time_Test) {</span>
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	Params params;
+	ParamLoader paramloader;</span>
+
+<span style = "background-color:#dfd">	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	std::chrono::system_clock::time_point  start, end;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH2;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// ®æf[^ðI[v
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	while (1)
+	{
+		// 1t[¸Âæèo·
+<span style = "background-color:#dfd">		start = std::chrono::system_clock::now(); // vªJnÔ
+		iret = dataloader.grab_image(img);
+		end = std::chrono::system_clock::now();  // vªI¹Ô</span>
+
+		// Évµ½Ôð~bÉÏ·
+<span style = "background-color:#dfd">		elapsed_time = (double)std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(end - start).count();
+		sum_time += elapsed_time;</span>
+		//std::cout &lt;&lt; elapsed_time &lt;&lt; " msec" &lt;&lt; std::endl;
+
+		// ÅIt[ÉÈÁ½ç[vð²¯é
+<span style = "background-color:#dfd">		if (dataloader.get_frame_index() == dataloader.get_frame_num())</span>
+		{
+			break;
+		}
+	}
+<span style = "background-color:#dfd">	mean_elapsed_time = sum_time / dataloader.get_frame_num();</span>
+	//std::cout &lt;&lt; "mean: " &lt;&lt; mean_elapsed_time &lt;&lt; " msec" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	//ASSERT_TRUE(mean_elapsed_time &lt;= 50); //50msÈº¾Á½çAÆè ¦¸OK
+}</span>
+
+// 1t[ÌçoÔðeXg
+<span style = "background-color:#dfd">TEST_F(ProcessingTimeTest, FaceDetector_detect_face_elapsed_time_Test) {</span>
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	FaceDetector facedetector;
+	Params params;
+	ParamLoader paramloader;</span>
+
+<span style = "background-color:#dfd">	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	std::chrono::system_clock::time_point  start, end;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH2;
+	params.cascade_filepath = CASCADE_FILEPATH;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// ®æf[^ðI[v
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// çoíÌú»
+<span style = "background-color:#dfd">	iret = facedetector.initialize(params);</span>
+
+	while (1)
+	{
+		// 1t[¸Âæèo·
+<span style = "background-color:#dfd">		iret = dataloader.grab_image(img);</span>
+
+		// t[©çço
+<span style = "background-color:#dfd">		start = std::chrono::system_clock::now(); // vªJnÔ
+		iret = facedetector.detect_face(img, faces);
+		end = std::chrono::system_clock::now();  // vªI¹Ô</span>
+
+		// Évµ½Ôð~bÉÏ·
+<span style = "background-color:#dfd">		elapsed_time = (double)std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(end - start).count();
+		sum_time += elapsed_time;</span>
+		//std::cout &lt;&lt; elapsed_time &lt;&lt; " msec" &lt;&lt; std::endl;
+
+		// ÅIt[ÉÈÁ½ç[vð²¯é
+<span style = "background-color:#dfd">		if (dataloader.get_frame_index() == dataloader.get_frame_num())</span>
+		{
+			break;
+		}
+	}
+<span style = "background-color:#dfd">	mean_elapsed_time = sum_time / dataloader.get_frame_num();</span>
+	//std::cout &lt;&lt; "mean: " &lt;&lt; mean_elapsed_time &lt;&lt; " msec" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	//ASSERT_TRUE(mean_elapsed_time &lt;= 500); //500msÈº¾Á½çAÆè ¦¸OK
+}</span>
+
+// 1t[Ìt@CoÍÔðeXg
+<span style = "background-color:#dfd">TEST_F(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {</span>
+	int ans = 0;
+	int iret = -1;
+<span style = "background-color:#dfd">	DataLoader dataloader;
+	FaceDetector facedetector;
+	Params params;
+	ParamLoader paramloader;
+	FileWriter filewriter;</span>
+
+<span style = "background-color:#dfd">	cv::Mat img;
+	std::vector&lt;cv::Rect&gt; faces;</span>
+
+	std::chrono::system_clock::time_point  start, end;
+	double elapsed_time, sum_time = 0.0, mean_elapsed_time;
+
+	// üÍf[^Ì^Cvð®æÉÝè
+<span style = "background-color:#dfd">	params.data_type = 0;
+	params.input_movie_path = INPUT_MOVIE_PATH2;
+	params.cascade_filepath = CASCADE_FILEPATH;
+	params.output_dirpath = OUTPUT_DIRPATH;</span>
+
+	// ®æÅú»
+<span style = "background-color:#dfd">	iret = dataloader.initialize(params);</span>
+
+	// ®æf[^ðI[v
+<span style = "background-color:#dfd">	iret = dataloader.open_data();</span>
+
+	// çoíÌú»
+<span style = "background-color:#dfd">	iret = facedetector.initialize(params);</span>
+
+	// t@CoÍíÌú»
+<span style = "background-color:#dfd">	iret = filewriter.initialize(params);</span>
+
+	// oÍt@CðI[v
+<span style = "background-color:#dfd">	iret = filewriter.open_file();</span>
+
+	while (1)
+	{
+		// 1t[¸Âæèo·
+<span style = "background-color:#dfd">		iret = dataloader.grab_image(img);</span>
+
+		// t[©çço
+<span style = "background-color:#dfd">		iret = facedetector.detect_face(img, faces);</span>
+
+		// oÍt@CÉ«Ý
+<span style = "background-color:#dfd">		start = std::chrono::system_clock::now(); // vªJnÔ
+		iret = filewriter.output_file(dataloader, img, faces);
+		end = std::chrono::system_clock::now();  // vªI¹Ô</span>
+
+		// Évµ½Ôð~bÉÏ·
+		//elapsed_time = (double)std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(end - start).count();
+<span style = "background-color:#dfd">		elapsed_time = (double)std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(end - start).count();
+		sum_time += elapsed_time;</span>
+		//std::cout &lt;&lt; elapsed_time &lt;&lt; " microsec" &lt;&lt; std::endl;
+
+
+		// ÅIt[ÉÈÁ½ç[vð²¯é
+<span style = "background-color:#dfd">		if (dataloader.get_frame_index() == dataloader.get_frame_num())</span>
+		{
+			break;
+		}
+	}
+<span style = "background-color:#dfd">	mean_elapsed_time = sum_time / dataloader.get_frame_num();</span>
+	//std::cout &lt;&lt; "mean: " &lt;&lt; mean_elapsed_time &lt;&lt; " microsec" &lt;&lt; std::endl;
+<span style = "background-color:#dfd">	//ASSERT_TRUE(mean_elapsed_time &lt;= 200); //200microsecÈº¾Á½çAÆè ¦¸OK
+}</span>
+// ###ÔÌeXg±±ÜÅ###</pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>

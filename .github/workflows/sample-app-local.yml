@@ -30,14 +30,15 @@ jobs:
       run: | 
         set PATH=C:\3rdparty\Cppcheck;%PATH%
         cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
-        rmdir /s /q Cppcheck
-        mkdir Cppcheck
-        xcopy cppcheck-result.xml Cppcheck
+        rmdir /s /q cppcheck
+        mkdir cppcheck
+        xcopy cppcheck-result.xml cppcheck
 
     - uses: actions/upload-artifact@v3
+      name: Upload-cppcheck
       with: 
-        name: Cppcheck
-        path: Cppcheck
+        name: cppcheck
+        path: cppcheck
 
   Test:
     name: Test
@@ -52,6 +53,20 @@ jobs:
         MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
+        rmdir /s /q coverage
+        OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
+        xcopy LastCoverageResults.log coverage\
+        rmdir /s /q artifacts1
+        mkdir artifacts1
+        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
+        xcopy sample-app\sample-app\x64\Release\sample-app.pdb artifacts1
+        xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
+
+    - name: actions/upload-artifact@v3
+      name: Upload-coverage
+      with:
+        name: coverage
+        path: coverage
         
     - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
@@ -61,19 +76,8 @@ jobs:
         path: sample-app/unittest/x64/Release/test_result.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
-    - name: Function-Test
-      shell: cmd
-      run: |
-        echo "#######"
-        echo "Function Test"
-        echo "#######"
-        rmdir /s /q artifacts1
-        mkdir artifacts1
-        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
-        xcopy sample-app\sample-app\x64\Release\sample-app.pdb artifacts1
-        xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
-
     - uses: actions/upload-artifact@v3
+      name: Upload-artifacts1
       with:
         name: artifacts1
         path: artifacts1
@@ -113,6 +117,7 @@ jobs:
         xcopy sample-app\integrationtest\x64\Release\config.ini artifacts2
 
     - uses: actions/upload-artifact@v3
+      name: Upload-artifacts2
       with: 
         name: artifacts2
         path: artifacts2
