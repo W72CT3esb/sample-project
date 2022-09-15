@@ -28,7 +28,7 @@ jobs:
     - name: Cppcheck
       shell: cmd
       run: | 
-        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        set PATH=C:\3rdparty\Cppcheck;%PATH%
         cppcheck --quiet --xml --enable=warning,style,performance,portability --language=c++ -j 2 --template=vs --project=sample-app\sample-app\sample-app.vcxproj
 
   Test:
