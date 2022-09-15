@@ -20,8 +20,8 @@ jobs:
         MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\x64\Release
 
-  Code Check:
-    name: Code Check
+  Code-Check:
+    name: Code-Check
     needs: Build
     runs-on: self-hosted
     steps:
@@ -33,7 +33,7 @@ jobs:
 
   Test:
     name: Test
-    needs: Code Check
+    needs: Code-Check
     runs-on: self-hosted
     steps:
     - name: Unit Test
