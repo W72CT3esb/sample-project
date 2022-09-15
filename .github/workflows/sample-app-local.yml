@@ -50,6 +50,7 @@ jobs:
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+        set PATH=C:\3rdparty\OpenCppCoverage;%PATH%
         MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
