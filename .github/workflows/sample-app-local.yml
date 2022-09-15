@@ -30,7 +30,7 @@ jobs:
       run: |
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         cd sample-app\x64\Release
-        .\unittest.exe --gtest_output=xml:test_result.xml
+        .\unittesta.exe --gtest_output=xml:test_result.xml
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
