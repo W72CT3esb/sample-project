@@ -131,7 +131,7 @@ jobs:
 
   Deploy-Production-env:
     name: Deploy-Production-env
-    needs: Integration-Test
+    needs: Deploy-Test-Env-and-Integration-Test
     runs-on: self-hosted
     steps:
     - uses: actions/download-artifact@v3
