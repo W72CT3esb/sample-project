@@ -32,9 +32,9 @@ jobs:
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\Scripts\;%PATH%
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\;%PATH%
         cppcheck --quiet --xml  --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj 2>cppcheck-result.xml
-        pip install cppcheck-junit
+        python -m pip install cppcheck-junit
         cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
-        pip uninstall cppcheck-junit
+        python -m pip uninstall cppcheck-junit
 
     - name: Code-Check-Report
       uses: dorny/test-reporter@v1
