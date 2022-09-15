@@ -71,6 +71,7 @@ jobs:
         mkdir artifacts1
         xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
         xcopy sample-app\sample-app\x64\Release\sample-app.pdb artifacts1
+        xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
 
     - uses: actions/upload-artifact@v3
       with:
@@ -103,11 +104,13 @@ jobs:
         mkdir artifacts2
         xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
         xcopy artifacts1\sample-app.pdb sample-app\integrationtest\x64\Release
+        xcopy artifacts1\config.ini sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
         .\integrationtest.exe
         cd ..\..\..\..\
-        xcopy artifacts1\sample-app.exe artifacts2
-        xcopy artifacts1\sample-app.pdb artifacts2
+        xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2
+        xcopy sample-app\integrationtest\x64\Release\sample-app.pdb artifacts2
+        xcopy sample-app\integrationtest\x64\Release\config.ini artifacts2
 
     - uses: actions/upload-artifact@v3
       with: 
@@ -126,13 +129,13 @@ jobs:
     #     name: my-artifact
     #     path: path/to/artifacts
 
-  # deploy:
-  #   name: deploy-job
-  #   needs: test
-  #   runs-on: self-hosted
-  #   steps:
-  #   - uses: actions/download-artifact@v3
-  #     name: deploy
-  #     with:
-  #       name: my-artifact
-  #       path: C:\Users\NES\Desktop\deploy
+  Deploy:
+    name: Deploy
+    needs: Integration-Test
+    runs-on: self-hosted
+    steps:
+    - uses: actions/download-artifact@v3
+      name: deploy-artifact2
+      with:
+        name: artifact2
+        path: C:\Users\NES\Desktop\deploy
