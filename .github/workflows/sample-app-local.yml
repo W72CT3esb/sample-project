@@ -64,32 +64,38 @@ jobs:
         echo "#######"
         echo "Function Test"
         echo "#######"
-        rmdir /s /q artifacts
+        rmdir /s /q artifacts1
         mkdir artifacts
-        xcopy sample-app\x64\Release artifacts
+        xcopy sample-app\x64\Release\sample-app.exe artifacts1
+        xcopy sample-app\x64\Release\sample-app.pdb artifacts1
 
     - uses: actions/upload-artifact@v3
       with:
-        name: artifacts
-        path: artifacts
+        name: artifacts1
+        path: artifacts1
 
-  # integrationtest:
-  #   name: integrationtest-job
-  #   needs: unittest
-  #   runs-on: self-hosted
-  #   steps:
-  #   - name: integration-test
-  #     shell: cmd
-  #     run: | 
-  #       set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-  #       cd sample-app\x64\Release
-  #       .\integrationtest.exe
-  #       fc /n C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv
-  #       echo %ERRORLEVEL%
-  #       cd ..\..\..\
-  #       rmdir /s /q path\to\artifacts
-  #       mkdir path\to\artifacts
-  #       xcopy sample-app\x64\Release path\to\artifacts
+  Integration-Test:
+    name: Integration-Test
+    needs: Test
+    runs-on: self-hosted
+    steps:
+    - uses: actions/download-artifact@v3
+      name: download-artifacts1
+      with:
+        name: new-artifacts1
+        path: ./
+
+    # - name: Integration-Test
+    #   shell: cmd
+    #   run: | 
+    #     set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+    #     cd sample-app\x64\Release
+    #     .\integrationtest.exe
+    #     cd ..\..\..\
+    #     rmdir /s /q artifacts2
+    #     mkdir artifacts2
+    #     xcopy sample-app\x64\Release\sample-app.exe artifacts2
+    #     xcopy sample-app\x64\Release\sample-app.pdb artifacts2
 
   #   - uses: actions/upload-artifact@v3
   #     with: 
