@@ -31,12 +31,12 @@ jobs:
         set PATH=C:\3rdparty\Cppcheck;%PATH%
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\Scripts\;%PATH%
         set PATH=C:\Users\NES\AppData\Local\Programs\Python\Python38\;%PATH%
-        del /Q cppcheck-result.xml
-        del /Q cppcheck-junit.xml
-        cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj 2>cppcheck-result.xml
-        yes | python -m pip install cppcheck-junit
-        cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
-        python -m pip uninstall --yes cppcheck-junit
+#        del /Q cppcheck-result.xml
+#        del /Q cppcheck-junit.xml
+#        cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j 8 --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
+#        yes | python -m pip install cppcheck-junit
+#        cppcheck_junit cppcheck-result.xml cppcheck-junit.xml
+#        python -m pip uninstall --yes cppcheck-junit
 
     - name: Report
       uses: dorny/test-reporter@v1
