@@ -22,7 +22,7 @@ jobs:
 
   Code Check:
     name: Code Check
-    need: Build
+    needs: Build
     runs-on: self-hosted
     steps:
     - name: Cppcheck
