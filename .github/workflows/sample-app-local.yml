@@ -62,7 +62,7 @@ jobs:
         xcopy sample-app\sample-app\x64\Release\sample-app.pdb artifacts1
         xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
 
-    - name: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       name: Upload-coverage
       with:
         name: coverage
