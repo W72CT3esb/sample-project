@@ -16,9 +16,9 @@ jobs:
       shell: cmd
       run: |
         set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-        rmdir /s /q sample-app\x64\Release
-        MSBuild sample-app\sample-app.sln /t:rebuild /p:Configuration=Release;Platform=x64
-        xcopy sample-app\sample-app\config.ini sample-app\x64\Release
+        rmdir /s /q sample-app\sample-app\x64\Release
+        MSBuild sample-app\sample-app\sample-app.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        xcopy sample-app\sample-app\config.ini sample-app\sample-app\x64\Release
 
   Code-Check:
     name: Code-Check
@@ -47,9 +47,12 @@ jobs:
     - name: Unit-Test
       shell: cmd
       run: |
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
         set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-        cd sample-app\x64\Release
+        MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
+        
     - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
@@ -66,8 +69,8 @@ jobs:
         echo "#######"
         rmdir /s /q artifacts1
         mkdir artifacts1
-        xcopy sample-app\x64\Release\sample-app.exe artifacts1
-        xcopy sample-app\x64\Release\sample-app.pdb artifacts1
+        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
+        xcopy sample-app\sample-app\x64\Release\sample-app.pdb artifacts1
 
     - uses: actions/upload-artifact@v3
       with:
@@ -85,27 +88,30 @@ jobs:
         rmdir /s /q artifacts1
 
     - uses: actions/download-artifact@v3
-      name: download-artifacts1
+      name: deploy-artifacts1
       with:
         name: artifacts1
-        path: ./new-artifacts1
+        path: artifacts1
 
-    # - name: Integration-Test
-    #   shell: cmd
-    #   run: | 
-    #     set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
-    #     cd sample-app\x64\Release
-    #     .\integrationtest.exe
-    #     cd ..\..\..\
-    #     rmdir /s /q artifacts2
-    #     mkdir artifacts2
-    #     xcopy sample-app\x64\Release\sample-app.exe artifacts2
-    #     xcopy sample-app\x64\Release\sample-app.pdb artifacts2
+    - name: Integration-Test
+      shell: cmd
+      run: | 
+        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
+        MSBuild sample-app\integrationtest\integrationtest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        rmdir /s /q artifacts2
+        mkdir artifacts2
+        xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
+        cd sample-app\integrationtest\x64\Release
+        .\integrationtest.exe
+        cd ..\..\..\..\
+        xcopy artifacts1\sample-app.exe artifacts2
+        xcopy artifacts1\sample-app.pdb artifacts2
 
-  #   - uses: actions/upload-artifact@v3
-  #     with: 
-  #       name: my-artifact
-  #       path: path/to/artifacts
+    - uses: actions/upload-artifact@v3
+      with: 
+        name: artifacts2
+        path: artifacts2
 
 #"C:\Program Files\WinMerge\WinMergeU.exe" C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv /minimize /noninteractive /u /or .\out.html
     # - name: copy
