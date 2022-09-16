@@ -5,8 +5,8 @@
 #include <sstream>
 #include <vector>
 
-std::string OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output\\result.csv";
-std::string ORIGINAL_OUTPUT_FILEPATH = "C:\\Users\\NES\\Desktop\\hayakawa\\CICD\\Output_original\\result.csv";
+std::string OUTPUT_FILEPATH = ".\\Output\\result.csv";
+std::string ORIGINAL_OUTPUT_FILEPATH = ".\\result_original.csv";
 
 // 総合テスト
 int calc_elapsed_time_Test(double &elapsed_time, int &fps);
@@ -46,7 +46,7 @@ int compare_outputfile_Test()
 {
 	int iret = -1;
 	// std::string cmd = "fc /n " + ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH;
-	std::string cmd = "\"C:\\Program Files\\WinMerge\\WinMergeU.exe\" "+ ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH + " /minimize /noninteractive /u /or .\\out.html";
+	std::string cmd = "WinMergeU "+ ORIGINAL_OUTPUT_FILEPATH + " " + OUTPUT_FILEPATH + " /minimize /noninteractive /u /or .\\out.html";
 	iret = system(cmd.c_str());
 	if (iret != 0) // コマンドを実行できない場合
 	{

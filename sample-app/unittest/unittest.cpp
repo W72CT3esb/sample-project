@@ -1544,7 +1544,6 @@ TEST_F(ProcessingTimeTest, FileWrtiter_output_file_elapsed_time_Test) {
 		sum_time += elapsed_time;
 		//std::cout << elapsed_time << " microsec" << std::endl;
 
-
 		// 最終フレームになったらループを抜ける
 		if (dataloader.get_frame_index() == dataloader.get_frame_num())
 		{

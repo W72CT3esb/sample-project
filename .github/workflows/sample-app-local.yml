@@ -112,13 +112,13 @@ jobs:
         xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
         xcopy artifacts1\sample-app.pdb sample-app\integrationtest\x64\Release
         xcopy artifacts1\config.ini sample-app\integrationtest\x64\Release
+        rmdir /s /q winmerge
+        mkdir winmerge
+        xcopy result_original.csv sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
         .\integrationtest.exe
         cd ..\..\..\..\
-        rmdir /s /q winmerge
-        mkdir winmerge
-        WinMergeU output_original\result.csv sample-app\integrationtest\x64\Release\Output\result.csv /minimize /noninteractive /u /or .\out.html
-        xcopy out.html winmerge
+        xcopy sample-app\integrationtest\x64\Release\out.html winmerge
         xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2
         xcopy sample-app\integrationtest\x64\Release\sample-app.pdb artifacts2
         xcopy sample-app\integrationtest\x64\Release\config.ini artifacts2
