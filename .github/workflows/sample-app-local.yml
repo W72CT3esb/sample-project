@@ -72,7 +72,7 @@ jobs:
         
     - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
+      if: success() || failure()
       with:
         name: Unit-Test-Result           # Name of the check run which will be created
         path: sample-app/unittest/x64/Release/test_result.xml    # Path to test results
