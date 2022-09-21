@@ -243,8 +243,6 @@ int DataLoader::get_filelist()
 {
 	HANDLE hFind;
 	WIN32_FIND_DATA win32fd;
-	std::vector<std::string> file_names;
-
 	std::vector<std::string> extension = { "png" ,"jpg", "bmp"};
 
 	for (int i = 0; i < extension.size(); i++)
