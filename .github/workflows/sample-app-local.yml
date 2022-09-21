@@ -70,6 +70,7 @@ jobs:
         xcopy sample-app\sample-app\x64\Release\sample-app.exe sample-app\functiontest\x64\Release
         cd sample-app\functiontest\x64\Release
         .\functiontest.exe
+        cd ..\..\..\..\
         rmdir /s /q artifacts1
         mkdir artifacts1
         xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
