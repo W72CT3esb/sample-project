@@ -12,8 +12,8 @@ jobs:
     - name: Set PATH
       shell: cmd
       run: | 
-        echo "C:\Program Files (x86)\MSBuild\14.0\Bin" >> $GITHUB_PATH
-        echo $GITHUB_PATH
+        "C:\Program Files (x86)\MSBuild\14.0\Bin" >> $env:GITHUB_PATH
+        echo $env:GITHUB_PATH
         MSBuild
 
 
