@@ -62,8 +62,6 @@ jobs:
     - name: Function-Test
       shell: cmd
       run: | 
-        set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         rmdir /s /q sample-app\functiontest\x64\Release
         MSBuild sample-app\functiontest\functiontest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\functiontest\x64\Release
