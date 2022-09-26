@@ -46,7 +46,6 @@ jobs:
     - name: Unit-Test
       shell: cmd
       run: |
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
@@ -72,7 +71,6 @@ jobs:
     - name: Function-Test
       shell: cmd
       run: | 
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         rmdir /s /q sample-app\functiontest\x64\Release
         MSBuild sample-app\functiontest\functiontest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\functiontest\x64\Release
@@ -110,7 +108,6 @@ jobs:
     - name: Integration-Test
       shell: cmd
       run: | 
-        set PATH=C:\3rdparty\opencv\build\x64\vc15\bin;%PATH%
         MSBuild sample-app\integrationtest\integrationtest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         rmdir /s /q artifacts2
         mkdir artifacts2
