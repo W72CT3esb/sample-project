@@ -1,0 +1,149 @@
+name: Test CI/CD
+on: 
+  push:
+   branches:
+    - main
+
+jobs:
+  Build:
+    name: Build
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Codebuild
+      shell: cmd
+      run: |
+        rmdir /s /q sample-app\sample-app\x64\
+        MSBuild sample-app\sample-app\sample-app.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        xcopy sample-app\sample-app\config.ini sample-app\sample-app\x64\Release
+
+  Code-Check:
+    name: Code-Check
+    needs: Build
+    runs-on: self-hosted
+    steps:
+    - name: Cppcheck
+      shell: cmd
+      run: | 
+        cppcheck --quiet --xml-version=2 --enable=warning,style,performance,portability -j %NUMBER_OF_PROCESSORS% --language=c++  --template=vs --project=sample-app\sample-app\sample-app.vcxproj --output-file=cppcheck-result.xml
+        rmdir /s /q cppcheck
+        mkdir cppcheck
+        xcopy cppcheck-result.xml cppcheck
+
+    - uses: actions/upload-artifact@v3
+      name: Upload-cppcheck
+      with: 
+        name: cppcheck
+        path: cppcheck
+
+  Test:
+    name: Test
+    needs: Code-Check
+    runs-on: self-hosted
+    steps:
+    - name: Unit-Test
+      shell: cmd
+      run: |
+        MSBuild sample-app\unittest\unittest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        cd sample-app\unittest\x64\Release
+        .\unittest.exe --gtest_output=xml:test_result.xml
+        cd ..\..\..\..\
+        rmdir /s /q coverage
+        OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
+        xcopy LastCoverageResults.log coverage\
+
+    - uses: actions/upload-artifact@v3
+      name: Upload-coverage
+      with:
+        name: coverage
+        path: coverage
+        
+    - name: Unit-Test-Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Unit-Test-Result           
+        path: sample-app/unittest/x64/Release/test_result.xml
+        reporter: jest-junit
+
+    - name: Function-Test
+      shell: cmd
+      run: | 
+        rmdir /s /q sample-app\functiontest\x64\Release
+        MSBuild sample-app\functiontest\functiontest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        xcopy sample-app\sample-app\config.ini sample-app\functiontest\x64\Release
+        xcopy sample-app\sample-app\x64\Release\sample-app.exe sample-app\functiontest\x64\Release
+        cd sample-app\functiontest\x64\Release
+        .\functiontest.exe
+        cd ..\..\..\..\
+        rmdir /s /q artifacts1
+        mkdir artifacts1
+        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
+        xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
+
+    - uses: actions/upload-artifact@v3
+      name: Upload-artifacts1
+      with:
+        name: artifacts1
+        path: artifacts1
+
+  Deploy-Test-Env-And-Integration-Test:
+    name: Deploy-Test-Env-And-Integration-Test
+    needs: Test
+    runs-on: self-hosted
+    steps:
+    - name: Delete-old-artifacts1
+      shell: cmd
+      run: | 
+        rmdir /s /q artifacts1
+
+    - uses: actions/download-artifact@v3
+      name: Deploy-artifacts1
+      with:
+        name: artifacts1
+        path: artifacts1
+
+    - name: Integration-Test
+      shell: cmd
+      run: | 
+        MSBuild sample-app\integrationtest\integrationtest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
+        rmdir /s /q artifacts2
+        mkdir artifacts2
+        xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
+        xcopy artifacts1\sample-app.pdb sample-app\integrationtest\x64\Release
+        xcopy artifacts1\config.ini sample-app\integrationtest\x64\Release
+        rmdir /s /q winmerge
+        mkdir winmerge
+        xcopy result_original.csv sample-app\integrationtest\x64\Release
+        cd sample-app\integrationtest\x64\Release
+        .\integrationtest.exe
+        cd ..\..\..\..\
+        xcopy sample-app\integrationtest\x64\Release\out.html winmerge
+        xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2
+        xcopy sample-app\integrationtest\x64\Release\sample-app.pdb artifacts2
+        xcopy sample-app\integrationtest\x64\Release\config.ini artifacts2
+
+    - uses: actions/upload-artifact@v3
+      name: Upload-winmerge
+      with: 
+        name: winmerge
+        path: winmerge
+      
+    - uses: actions/upload-artifact@v3
+      name: Upload-artifacts2
+      with: 
+        name: artifacts2
+        path: artifacts2
+
+  Deploy-Production-Env:
+    name: Deploy-Production-Env
+    needs: Deploy-Test-Env-And-Integration-Test
+    runs-on: self-hosted
+    steps:
+    - uses: actions/download-artifact@v3
+      name: Deploy-artifact2
+      with:
+        name: artifacts2
+        path: C:\Users\NES\Desktop\deploy
