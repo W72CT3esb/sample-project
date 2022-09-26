@@ -96,8 +96,8 @@ jobs:
         name: artifacts1
         path: artifacts1
 
-  Deploy-Test-Env-and-Integration-Test:
-    name: Deploy-Test-Env-and-Integration-Test
+  Deploy-Test-Env-And-Integration-Test:
+    name: Deploy-Test-Env-And-Integration-Test
     needs: Test
     runs-on: self-hosted
     steps:
@@ -147,9 +147,9 @@ jobs:
         name: artifacts2
         path: artifacts2
 
-  Deploy-Production-env:
-    name: Deploy-Production-env
-    needs: Deploy-Test-Env-and-Integration-Test
+  Deploy-Production-Env:
+    name: Deploy-Production-Env
+    needs: Deploy-Test-Env-And-Integration-Test
     runs-on: self-hosted
     steps:
     - uses: actions/download-artifact@v3
