@@ -12,7 +12,7 @@ jobs:
     - name: Set PATH
       shell: cmd
       run: | 
-        echo "C:\Program Files (x86)\MSBuild\14.0\Bin" >> $env:GITHUB_PATH
+        echo "{C:\Program Files (x86)\MSBuild\14.0\Bin}" >> $GITHUB_PATH
 
 
   Build:
@@ -27,7 +27,7 @@ jobs:
       shell: cmd
       run: |
         rmdir /s /q sample-app\sample-app\x64\
-        echo $env:GITHUB_PATH
+        echo GITHUB_PATH
         MSBuild sample-app\sample-app\sample-app.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\sample-app\x64\Release
 
