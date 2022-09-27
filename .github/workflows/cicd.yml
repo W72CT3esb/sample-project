@@ -78,42 +78,40 @@ jobs:
         cd sample-app\functiontest\x64\Release
         .\functiontest.exe
         cd ..\..\..\..\
-        rmdir /s /q artifacts1
-        mkdir artifacts1
-        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts1
-        xcopy sample-app\sample-app\x64\Release\config.ini artifacts1
+        rmdir /s /q artifacts
+        mkdir artifacts
+        xcopy sample-app\sample-app\x64\Release\sample-app.exe artifacts
+        xcopy sample-app\sample-app\x64\Release\config.ini artifacts
 
     - uses: actions/upload-artifact@v3
-      name: Upload-artifacts1
+      name: Upload-artifacts
       with:
-        name: artifacts1
-        path: artifacts1
+        name: artifacts
+        path: artifacts
 
   Deploy-Test-Env-And-Integration-Test:
     name: Deploy-Test-Env-And-Integration-Test
     needs: Test
     runs-on: self-hosted
     steps:
-    - name: Delete-old-artifacts1
+    - name: Delete-old-artifacts
       shell: cmd
       run: | 
-        rmdir /s /q artifacts1
+        rmdir /s /q artifacts
 
     - uses: actions/download-artifact@v3
-      name: Deploy-artifacts1
+      name: Deploy-artifacts
       with:
-        name: artifacts1
-        path: artifacts1
+        name: artifacts
+        path: artifacts
 
     - name: Integration-Test
       shell: cmd
       run: | 
         MSBuild sample-app\integrationtest\integrationtest.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
-        rmdir /s /q artifacts2
-        mkdir artifacts2
-        xcopy artifacts1\sample-app.exe sample-app\integrationtest\x64\Release
-        xcopy artifacts1\sample-app.pdb sample-app\integrationtest\x64\Release
-        xcopy artifacts1\config.ini sample-app\integrationtest\x64\Release
+        xcopy artifacts\sample-app.exe sample-app\integrationtest\x64\Release
+        xcopy artifacts\sample-app.pdb sample-app\integrationtest\x64\Release
+        xcopy artifacts\config.ini sample-app\integrationtest\x64\Release
         rmdir /s /q winmerge
         mkdir winmerge
         xcopy result_original.csv sample-app\integrationtest\x64\Release
@@ -122,21 +120,12 @@ jobs:
         WinMergeU .\result_original.csv .\Output\\result.csv /minimize /noninteractive /u /or .\out.html
         cd ..\..\..\..\
         xcopy sample-app\integrationtest\x64\Release\out.html winmerge
-        xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2
-        xcopy sample-app\integrationtest\x64\Release\sample-app.pdb artifacts2
-        xcopy sample-app\integrationtest\x64\Release\config.ini artifacts2
 
     - uses: actions/upload-artifact@v3
       name: Upload-winmerge
       with: 
         name: winmerge
         path: winmerge
-      
-    - uses: actions/upload-artifact@v3
-      name: Upload-artifacts2
-      with: 
-        name: artifacts2
-        path: artifacts2
 
   Deploy-Production-Env:
     name: Deploy-Production-Env
@@ -144,7 +133,7 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/download-artifact@v3
-      name: Deploy-artifact2
+      name: Deploy-artifact
       with:
-        name: artifacts2
+        name: artifacts
         path: C:\Users\NES\Desktop\deploy
