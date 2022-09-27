@@ -119,6 +119,7 @@ jobs:
         xcopy result_original.csv sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
         .\integrationtest.exe
+        WinMergeU .\result_original.csv .\Output\\result.csv /minimize /noninteractive /u /or .\out.html
         cd ..\..\..\..\
         xcopy sample-app\integrationtest\x64\Release\out.html winmerge
         xcopy sample-app\integrationtest\x64\Release\sample-app.exe artifacts2

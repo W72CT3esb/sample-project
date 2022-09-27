@@ -7,11 +7,11 @@
 #include <vector>
 
 std::string OUTPUT_FILEPATH = ".\\Output\\result.csv";
-std::string ORIGINAL_OUTPUT_FILEPATH = ".\\result_original.csv";
+//std::string ORIGINAL_OUTPUT_FILEPATH = ".\\result_original.csv";
 
 // 総合テスト
 int calc_elapsed_time_Test(double &elapsed_time, int &fps);
-int compare_outputfile_Test();
+// int compare_outputfile_Test();
 
 int main(void)
 {
@@ -30,6 +30,7 @@ int main(void)
 	}
 	std::cout << "[       OK ] IntegrationTest.elapsed_time_Test" << std::endl;
 
+	/*
 	// 出力ファイルを比較
 	std::cout << "[ RUN      ] IntegrationTest.compare_outputfile_Test" << std::endl;
 	iret = compare_outputfile_Test();
@@ -40,8 +41,10 @@ int main(void)
 		return -2;
 	}
 	std::cout << "[       OK ] IntegrationTest.compare_outputfile_Test" << std::endl;
+	*/
 }
 
+/*
 // 出力ファイルを比較する関数
 int compare_outputfile_Test()
 {
@@ -59,7 +62,7 @@ int compare_outputfile_Test()
 	}
 	return 0;
 }
-
+*/
 
 // 処理時間を計測する関数
 int calc_elapsed_time_Test(double &elapsed_time, int &fps)
