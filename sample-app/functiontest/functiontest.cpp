@@ -41,10 +41,17 @@ int ImageData_PositiveTest()
 	std::string str_conma_buf;
 	std::string output_filepath;
 	std::vector<std::string> line;
+	char data_type_pre[DEFINE_STRING_SIZE];
 	int frame_num = 0;
 	int image_file_num = 0;
 	int data_type = -1;
 	int iret = -1;
+
+	// 現在のdata_typeの情報を保存
+	GetPrivateProfileString("input", "data_type", "", data_type_pre, sizeof(data_type_pre), ".\\config.ini");
+
+	// 設定ファイル内のdata_typeを1:画像に変更
+	WritePrivateProfileString("input", "data_type", "1", ".\\config.ini");
 
 	// サンプルアプリ(sample-app.exe)の実行時間
 	iret = system(".\\sample-app.exe");
@@ -57,7 +64,7 @@ int ImageData_PositiveTest()
 
 	// 設定ファイルからdata_typeを取得（画像データかちゃんと確認）
 	data_type = GetPrivateProfileInt("input", "data_type", -1, ".\\config.ini");
-	if (data_type != 1)
+	if (data_type != 1) //画像以外のデータの場合失敗
 	{
 		return -2;
 	}
@@ -97,6 +104,10 @@ int ImageData_PositiveTest()
 	{
 		return -4;
 	}
+
+	// 設定ファイル内のdata_typeを前の情報に戻す
+	WritePrivateProfileString("input", "data_type", data_type_pre, ".\\config.ini");
+
 	return 0;
 }
 
