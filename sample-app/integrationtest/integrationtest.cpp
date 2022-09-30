@@ -108,7 +108,7 @@ int calc_elapsed_time_Test(double &elapsed_time, int &fps)
 	frame_num = atoi(str_conma_buf.c_str()) + 1;
 
 	// 取得したフレーム数をサンプルアプリの実行時間で割ってfpsを計算
-	fps =  (int)((double)frame_num / (elapsed_time * 0.001));
+	fps = (int)((double)frame_num / (elapsed_time * 0.001));
 
 	// ファイルを閉じる
 	ifs_csv_file.close();

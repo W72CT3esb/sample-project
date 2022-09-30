@@ -22,7 +22,7 @@ public:
 
 private:
 	cv::CascadeClassifier cascade; // カスケード分類器
-	std::string cascade_filepath; // カスケード分類器ファイルの絶対パス
+	std::string cascade_filepath; // カスケード分類器ファイルのパス
 	int face_detect_width; // 顔検出の横幅の閾値
 	int face_detect_height; // 顔検出の縦幅の閾値
 };

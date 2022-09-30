@@ -79,6 +79,7 @@ int DataLoader::initialize(const Params &params)
 	return 0;
 }
 
+/*
 // フレーム情報について表示する関数（デバッグ用）
 void DataLoader::print_info()
 {
@@ -87,6 +88,7 @@ void DataLoader::print_info()
 	std::cout << "フレームの幅:" << this->img_w << std::endl;
 	std::cout << "フレームのfps:" << this->fps << std::endl;
 }
+*/
 
 // 入力データをオープンする関数
 int DataLoader::open_data()	
@@ -140,6 +142,7 @@ int DataLoader::open_data()
 	return 0;
 }
 
+/*
 // 入力データが動画の場合にフレームごとに画像として保存する関数（デバッグ用）
 void DataLoader::save_frame(cv::Mat &img)
 {
@@ -148,6 +151,7 @@ void DataLoader::save_frame(cv::Mat &img)
 	oss << std::setfill('0') << std::setw(4) << this->frame_index;
 	//cv::imwrite("C:\\Users\\1134142029087\\Desktop\\data2\\pic_" + oss.str() + ".jpg", img);
 }
+*/
 
 // 動画を読み込む関数
 int DataLoader::load_mv(cv::Mat &img)
@@ -162,7 +166,7 @@ int DataLoader::load_mv(cv::Mat &img)
 		return -2;
 	}
 	//cv::resize(img, img, cv::Size(), 0.5, 0.5);
-	//std::cout << "frame: " << this->frame_index << std::endl;
+	std::cout << "frame: " << this->frame_index << std::endl;
 	//save_frame(img);
 	return 0;
 }
