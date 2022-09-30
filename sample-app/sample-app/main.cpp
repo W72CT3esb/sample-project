@@ -108,7 +108,8 @@ int main()
 		// ‰æ–Ê•\¦
 		cv::imshow("Window", img);
 		
-		if (cv::waitKey(10) == 'q') // "q"‚ª‰Ÿ‚³‚ê‚½‚çI—¹
+		// "q"‚ª‰Ÿ‚³‚ê‚½‚çI—¹
+		if (cv::waitKey(10) == 'q') 
 		{
 			break;
 		}
