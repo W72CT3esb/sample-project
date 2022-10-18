@@ -100,7 +100,7 @@ jobs:
       run: | 
         rmdir /s /q artifacts
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact
       name: Deploy-artifacts
       with:
         name: artifacts
@@ -138,7 +138,7 @@ jobs:
     needs: Deploy-Test-Env-And-Integration-Test
     runs-on: self-hosted
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact
       name: Deploy-artifact
       with:
         name: artifacts
