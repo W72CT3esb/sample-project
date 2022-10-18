@@ -15,6 +15,7 @@ jobs:
     - name: Codebuild
       shell: cmd
       run: |
+        echo "###"
         rmdir /s /q sample-app\sample-app\x64\
         MSBuild sample-app\sample-app\sample-app.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\sample-app\x64\Release
@@ -112,11 +113,16 @@ jobs:
         xcopy artifacts\sample-app.exe sample-app\integrationtest\x64\Release
         xcopy artifacts\sample-app.pdb sample-app\integrationtest\x64\Release
         xcopy artifacts\config.ini sample-app\integrationtest\x64\Release
+        cd sample-app\integrationtest\x64\Release
+        .\integrationtest.exe
+
+    - name: Accuracy-Check
+      shell: cmd
+      run: | 
         rmdir /s /q winmerge
         mkdir winmerge
         xcopy result_original.csv sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
-        .\integrationtest.exe
         WinMergeU .\result_original.csv .\Output\\result.csv /minimize /noninteractive /u /or .\out.html
         cd ..\..\..\..\
         xcopy sample-app\integrationtest\x64\Release\out.html winmerge
