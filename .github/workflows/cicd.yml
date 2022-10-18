@@ -138,7 +138,7 @@ jobs:
     needs: Deploy-Test-Env-And-Integration-Test
     runs-on: self-hosted
     steps:
-    - uses: actions/download-artifact
+    - uses: actions/download-artifact@v3
       name: Deploy-artifact
       with:
         name: artifacts
