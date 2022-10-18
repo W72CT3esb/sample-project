@@ -100,7 +100,7 @@ jobs:
       run: | 
         rmdir /s /q artifacts
 
-    - uses: actions/download-artifact
+    - uses: actions/download-artifact@v3
       name: Deploy-artifacts
       with:
         name: artifacts
