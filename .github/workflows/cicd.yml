@@ -51,15 +51,15 @@ jobs:
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
         cd ..\..\..\..\
-        rmdir /s /q coverage
-#        OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
-#        xcopy LastCoverageResults.log coverage\
+#        rmdir /s /q coverage
+        OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
+        xcopy LastCoverageResults.log coverage\
 
-#    - uses: actions/upload-artifact@v3
-#      name: Upload-coverage
-#      with:
-#        name: coverage
-#        path: coverage
+    - uses: actions/upload-artifact@v3
+      name: Upload-coverage
+      with:
+        name: coverage
+        path: coverage
         
     - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
