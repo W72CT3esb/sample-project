@@ -51,7 +51,16 @@ jobs:
         cd sample-app\unittest\x64\Release
         .\unittest.exe --gtest_output=xml:test_result.xml
         cd ..\..\..\..\
+        rmdir /s /q coverage
+        OpenCppCoverage --source sample-app\sample-app --export_type html:coverage -- sample-app\unittest\x64\Release\unittest.exe
+        xcopy LastCoverageResults.log coverage\
 
+    - uses: actions/upload-artifact@v3
+      name: Upload-coverage
+      with:
+        name: coverage
+        path: coverage
+        
     - name: Unit-Test-Report
       uses: dorny/test-reporter@v1
       if: success() || failure()
@@ -110,7 +119,7 @@ jobs:
     - name: Accuracy-Check
       shell: cmd
       run: | 
-        rmdir /s /q winmerge  
+        rmdir /s /q winmerge
         mkdir winmerge
         xcopy result_original.csv sample-app\integrationtest\x64\Release
         cd sample-app\integrationtest\x64\Release
