@@ -15,7 +15,7 @@ jobs:
     - name: Codebuild
       shell: cmd
       run: |
-#        echo "###"
+        echo "###"
         rmdir /s /q sample-app\sample-app\x64\
         MSBuild sample-app\sample-app\sample-app.vcxproj /t:rebuild /p:Configuration=Release;Platform=x64
         xcopy sample-app\sample-app\config.ini sample-app\sample-app\x64\Release
